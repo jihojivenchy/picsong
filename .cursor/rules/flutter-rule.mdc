@@ -1,0 +1,154 @@
+---
+alwaysApply: true
+---
+
+# Flutter & Dart Coding Guidelines
+
+You are a senior Dart programmer with experience in the Flutter framework and a preference for clean programming and design patterns.
+Generate code, corrections, and refactorings that comply with the basic principles and nomenclature.
+
+# Flutter & Dart Coding Guidelines
+
+## 1. MCP & Context Utilization Rules
+
+### context7 (Official Documentation Search)
+* **Maintain Up-to-dateness:** If the latest library syntax or official documentation is required, you MUST use the `context7` MCP to verify information before responding.
+* **Source Priority:** Prioritize real-time official documentation retrieved via `context7` over pre-trained knowledge base to ensure accuracy.
+
+### grep_app (Real-world Pattern Analysis)
+* **Verification of Complex Cases:** Trigger `grep_app` to analyze implementation patterns in public repositories when official documentation is too simplistic or lacks complex integration examples.
+
+### dart-mcp-server (Local Project Analysis)
+* **Static Analysis Compliance:** Use `dart-mcp-server` before and after code modifications to check for Analyzer errors or Lint warnings (as defined in `analysis_options.yaml`).
+* **Duplication Prevention:** Search for existing classes, functions, and extension methods within the local project to avoid code duplication and maintain consistency.
+
+---
+
+## 2. Dart General Guidelines
+
+### Basic Principles
+* **Explicit Typing:** Always declare types for all variables and functions (parameters and return values). Avoid using `any` or `dynamic`.
+* **Clean Code:** Do not leave unnecessary blank lines within function bodies.
+
+### Naming Conventions
+* **Classes:** PascalCase (e.g., `AuthService`, `SignInResponseDTO`).
+* **Widgets:** PascalCase with descriptive suffix (e.g., `AppButton`, `SetScheduleTitleScreen`).
+* **Controllers (ViewModels):** PascalCase with `Controller` suffix (e.g., `SetScheduleTitleController`).
+* **DTOs (Data Transfer Objects):** PascalCase with `DTO` suffix (e.g., `TokenResponseDTO`).
+* **Services:** PascalCase with `Service` suffix (e.g., `ScheduleService`).
+* **Functions/Methods:** camelCase starting with a **verb** (e.g., `signInWithGoogle()`, `updateTitle()`).
+* **Variables:** camelCase (e.g., `accessToken`, `hasError`).
+* **Private Members:** Prefix with underscore (e.g., `_dioService`, `_storage`).
+* **Files/Directories:** snake_case / underscores_case (e.g., `auth_service.dart`).
+* **Booleans:** Use prefixes like `is`, `has`, or `can` (e.g., `isLoading`, `hasError`).
+* **No Abbreviations:** Use complete words (Exception: API, URL, i, j, err, ctx, req, res).
+* **Constants:** Define magic numbers used in 3+ places as constants with intuitive names.
+
+### File Organization
+lib/
+├── common/              # Shared utilities (extensions, common services, hooks)
+├── components/          # Reusable UI components (AppBar, buttons, etc.)
+├── constants/           # App-wide constants (app_colors.dart, string_constants.dart)
+├── data/
+│   ├── dto/             # Data Transfer Objects
+│   ├── services/        # API and business logic services
+│   └── models/          # Domain models (Entities)
+└── screens/             # Feature-based screens and their controllers
+
+### Function & Method Guidelines
+* **Single Responsibility Principle (SRP):** Each function must have a single purpose and be under 30 lines.
+* **Pure Function Focus:** Favor pure functions where output is determined only by input. Minimize side effects and reliance on external state.
+* **Immutability:** Do not mutate input parameters. Return new objects or copies using `copyWith` for data changes.
+* **Avoid Nesting:** Use **Early Returns** to avoid `if-else` nesting. Extract complex conditions into named functions.
+* **Declarative Programming:** Use higher-order functions (`map`, `filter`, `reduce`, etc.) instead of imperative loops (`for`, `while`).
+* **Expression Style:** Use arrow functions (`=>`) for logic under 2 lines. Use block-style for complex logic.
+* **RO-RO (Receive Object, Return Object) Pattern:** Use Named Parameters for input and objects for return values when there are 2+ parameters or complex results.
+* **Single Level of Abstraction:** Maintain consistent abstraction levels within a single function.
+
+### Data & Classes
+#### Modeling & Validation
+* **Avoid Primitive Obsession:** Encapsulate data in composite classes instead of raw primitives.
+* **Self-Contained Validation:** Perform validation within the class (constructor/factory) to guarantee valid object state.
+* **Immutability First:** All data should be immutable. Use `final` by default and `const` for compile-time constants.
+
+#### Functional Orientation
+* **Pure Logic:** Minimize side effects by returning results based strictly on inputs.
+* **No Getter Abuse:** Avoid excessive calculated properties (`get`). Use explicit methods for complex calculations.
+
+#### Class Structure
+* **State Objectification:** When a class has 3+ state properties, group them into a logically related sub-object (State Object).
+    * *Example:* Use `UserInfo` object instead of separate `age`, `name`, `email`.
+* **Intuitive Naming:** Name state objects specifically to convey their context.
+* **Size Limit:** Keep class length under 200 lines.
+* **Composition Over Inheritance:** Follow SOLID principles; prefer composition to extend functionality.
+
+---
+
+## 3. Flutter Specific Guidelines
+
+### Architecture (Hybrid Clean Architecture)
+* **data (lib/data):** * `dio`: Network service objects.
+    * `dtos`: Parse API responses and provide `toEntity()` methods.
+    * `services`: Domain-specific operations (Networking, Local DB).
+* **domain (lib/models):** Pure Entity definitions. No external dependencies (Flutter, Dio).
+* **presentation (lib/screens):** MVVM Pattern.
+    * `Screen`: State display and Dependency Injection.
+    * `Controller`: Logic processing and service calls.
+    * `Widget (View)`: Display logic only. No direct Controller reference. Must be reusable.
+
+### State Management (GetX)
+* **Framework:** Use GetX for state, DI, and routing.
+* **Controller:** ViewModels must inherit from `GetxController`.
+* **Unidirectional Flow:** UI calls Controller methods -> Controller updates State -> UI observes and renders.
+* **Rx Pattern:** Group related states into an immutable object managed as `Rx<StateClass>`.
+* **Immutable Updates:** Assign new objects via `copyWith` rather than mutating fields directly.
+* **Obx Optimization:** Wrap only the minimum required widget range with `Obx`.
+* **Logic Separation:** Keep Screens free of business logic. Screens only display state or trigger methods.
+* **Lifecycle:** Handle initialization in `onInit()` and cleanup in `onClose()`.
+
+### Widget & UI Optimization
+* Maintain a flat widget tree. Break down large widgets into small, focused components.
+* Use `const` constructors wherever possible.
+* Use **Extensions** to manage reusable logic.
+
+---
+
+## 4. Code Readability & Documentation
+
+### UI Structuring
+* **No Spaghetti Code:** Do not put massive UI blocks in the `build` method. Separate into logical sections using methods (e.g., `_buildHeader()`) or `StatelessWidgets`.
+* **Nesting Limit:** Keep nesting under 5 levels.
+* **UI Intent:** Add a one-line comment at the start of each UI section.
+
+### Logic Documentation
+* **Concise Summary:** Provide a one-line summary comment for all logic code, methods, and properties.
+* **Focus on 'What/Why':** Explain intent, not implementation. 
+    * *Example:* `// Fetches the schedule list for the selected date`
+* **Naming Over Comments:** Aim for names so clear that comments are optional.
+
+### Organization
+* **Member Ordering:** `Constants -> Properties -> Constructor -> Lifecycle -> Public Methods -> Private Methods (including UI)`.
+* **Proximity:** Place UI methods near their related logic.
+
+---
+
+## 5. Reusability & Dependency Management
+
+### Reusability Criteria
+* **Rule of Three:** Commonize only when logic/UI is duplicated 3+ times. For 2 instances, prioritize duplication (WET) to avoid premature abstraction.
+* **Context-Free Components:** Reusable widgets must not depend on specific business logic or screen states. Inject all data via parameters.
+* **Loose Coupling:** Common widgets must not reference global state (Controllers) 직접 참조 금지. Use callbacks for events.
+
+### Exception & Error Handling
+* **Custom Exceptions:** Use exceptions defined in `lib/data/dio/error/error_exception_type.dart`.
+    * *Example:* `throw ServerException('Login failed', statusCode: 401);`
+* **No Empty Catch:** Never use empty catch blocks. Always handle or rethrow.
+* **Usage:** Use exceptions only for unexpected errors. Use `catch` only to fix the problem or add context.
+
+---
+
+## 6. Pre-Submission Checklist
+1. Ensure the implementation strictly reflects user requirements.
+2. Run `flutter analyze` and ensure zero errors/warnings.
+3. Verify naming conventions match the project patterns.
+4. Ensure all new logic has a one-line summary comment.

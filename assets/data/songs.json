@@ -1,0 +1,337 @@
+[
+  {
+    "id": "song_001",
+    "title": "단발머리",
+    "artist": "조용필",
+    "releaseDate": "1980.03.20",
+    "era": "1980s",
+    "genre": "발라드",
+    "lyricLines": [
+      { "text": "비에 젖은 풀잎처럼 단발머리 곱게 빗은 그소녀", "imagePrompt": "A girl with a neatly combed bob stands among rain-soaked blades of grass, her wet hair glistening exactly like the dewy grass around her" },
+      { "text": "반짝이는 눈망울이 내 마음에 되살아 나네", "imagePrompt": "A man presses a hand to his chest as the girl's bright sparkling eyes glow back to life from within his heart like a returning memory" },
+      { "text": "그 언젠가 나를 위해 꽃다발을 전해주던 그 소녀", "imagePrompt": "A girl warmly holds out a bouquet of flowers to a man, the moment she once gave it to him, tender remembered scene" },
+      { "text": "못잊을 그리움 남기고 그소녀 데려간 세월이 미워라", "imagePrompt": "A man reaches out in vain as the girl dissolves into scattering petals and drifts away on the current of passing time, deep longing on his face" }
+    ]
+  },
+  {
+    "id": "song_002",
+    "title": "어쩌다 마주친 그대",
+    "artist": "송골매",
+    "releaseDate": "1989.01",
+    "era": "1980s",
+    "genre": "록/메탈",
+    "lyricLines": [
+      { "text": "어쩌다 마주친 그대 모습에 내 마음을 빼앗겨 버렸네", "imagePrompt": "On a busy street, a man freezes the instant he meets a woman among the passing crowd; a glowing heart lifts from his chest and floats toward her" },
+      { "text": "어쩌다 마주친 그대 두눈이 내 마음을 사로잡아 버렸네", "imagePrompt": "A woman's two eyes meet a man's across the crowd; ribbons of light from her gaze wrap around his glowing heart and hold it captive" },
+      { "text": "그대에게 할말이 있는데 왜 이리 용기가 없을까", "imagePrompt": "A man stands before a woman with a half-formed word trembling at his lips, swallowing it back, fists clenched, unable to find the courage" },
+      { "text": "피어나는 꽃처럼 아름다운 그녀가 내 마음을 빼앗아 버렸네", "imagePrompt": "A woman blossoms open like a flower in full bloom, petals unfurling around her, while a man's glowing heart drifts helplessly toward her" },
+      { "text": "이슬처럼 영롱한 그대 고운 두 눈이 내 마음을 사로잡아 버렸네", "imagePrompt": "A woman's dewy, crystal-clear eyes beam soft light that wraps a man's glowing heart and pulls it toward her, leaving him unable to look away" }
+    ]
+  },
+  {
+    "id": "song_003",
+    "title": "매일 그대와",
+    "artist": "들국화",
+    "releaseDate": "1985.09.01",
+    "era": "1980s",
+    "genre": "록/메탈",
+    "lyricLines": [
+      { "text": "매일 그대와 아침 햇살 받으며", "imagePrompt": "A couple sits close together by a window, both bathed in warm streaming morning sunlight, sharing a calm everyday morning" },
+      { "text": "매일 그대와 눈을 뜨고파", "imagePrompt": "A couple lies side by side waking together at dawn, eyes slowly opening to meet each other's, soft morning light" },
+      { "text": "새벽비 내리는 거리도 저녁 노을 불 타는 하늘도", "imagePrompt": "A couple walks hand in hand down a street split between rainy dawn on one side and a sky burning with sunset on the other" },
+      { "text": "매일 그대와 밤의 품에 안겨", "imagePrompt": "A couple holds each other close beneath a deep starlit night sky, wrapped together in the embrace of night" }
+    ]
+  },
+  {
+    "id": "song_004",
+    "title": "사랑하기 때문에",
+    "artist": "유재하",
+    "releaseDate": "1987.08.20",
+    "era": "1980s",
+    "genre": "발라드",
+    "lyricLines": [
+      { "text": "처음 느낀 그대 눈빛은 혼자만의 오해였던가요", "imagePrompt": "A man recalls a woman's warm first glance now blurring into uncertainty, a question mark over him, wondering if it was only his own illusion" },
+      { "text": "해맑은 미소로 나를 바보로 만들었소", "imagePrompt": "A woman flashes a bright, innocent smile that leaves a man dazed and foolish, helplessly stunned by its radiance" },
+      { "text": "다시 돌아온 그대 위해 내 모든 것 드릴 테요", "imagePrompt": "A woman returns into a man's arms as he offers up his glowing heart in both open hands, giving her his everything" },
+      { "text": "우리 이대로 영원히 헤어지지 않으리", "imagePrompt": "A couple clasps hands tightly, an endless ribbon of light looping around them like an infinity symbol, vowing never to part" },
+      { "text": "나 오직 그대만을 사랑하기 때문에", "imagePrompt": "In a crowd of faded gray figures, a man turns toward the one glowing woman, his heart shining only for her, everyone else dimmed away" }
+    ]
+  },
+  {
+    "id": "song_005",
+    "title": "깊은 밤을 날아서",
+    "artist": "이문세",
+    "releaseDate": "1987.06.01",
+    "era": "1980s",
+    "genre": "발라드",
+    "lyricLines": [
+      { "text": "고운 그대 손을 잡고 밤하늘을 날아서 궁전으로 갈 수도 있어", "imagePrompt": "A man and woman hold hands and fly together across a starry night sky toward a glowing fairytale palace in the distance" },
+      { "text": "난 오직 그대 사랑하는 마음에 바보 같은 꿈꾸며", "imagePrompt": "A man drifts on a cloud lost in foolish lovestruck daydreams, dream-bubbles of his beloved floating around his head" },
+      { "text": "이룰 수 없는 저 꿈의 나라로 길을 잃고 헤매고 있어", "imagePrompt": "A man wanders lost and alone through an unreachable dreamland floating among distant clouds, searching for a way he cannot find" },
+      { "text": "그대 잠든 모습 바라보다가 입맞추고 날아 가고파", "imagePrompt": "A man gazes tenderly at his sleeping lover, leaning down for a soft goodnight kiss before flying off into the night" },
+      { "text": "난 오직 그대 사랑하는 마음에 밤하늘을 날아서", "imagePrompt": "A man soars across the vast night sky lifted by a glowing heart of love, the moon and stars trailing behind him" }
+    ]
+  },
+  {
+    "id": "song_006",
+    "title": "칵테일 사랑",
+    "artist": "마로니에",
+    "releaseDate": "1994.03.01",
+    "era": "1990s",
+    "genre": "댄스",
+    "lyricLines": [
+      { "text": "마음 울적한 날엔 거리를 걸어 보고 향기로운 칵테일에 취해도 보고", "imagePrompt": "A melancholy young woman strolls down a city street, then sits sipping a fragrant cocktail, cheeks flushed and tipsy, soft evening mood" },
+      { "text": "밤새도록 그리움에 편질 쓰고파", "imagePrompt": "A woman sits writing letter after letter through the night by lamplight, pages of longing piling around her, yearning for someone" }
+    ]
+  },
+  {
+    "id": "song_007",
+    "title": "마법의 성",
+    "artist": "더 클래식",
+    "releaseDate": "1994.07",
+    "era": "1990s",
+    "genre": "발라드",
+    "lyricLines": [
+      { "text": "믿을 수 있나요 나의 꿈 속에서 너는 마법에 빠진 공주란 걸", "imagePrompt": "In a dreamlike haze, a princess lies under a magic spell, sparkling enchantment swirling around her, a young man gazing in disbelief" },
+      { "text": "마법의 성을 지나 늪을 건너", "imagePrompt": "A young man journeys onward past a towering magic castle and wades across a misty swamp on a quest" },
+      { "text": "어둠의 동굴 속 멀리 그대가 보여", "imagePrompt": "Deep inside a dark cave, a young man sees the figure of his beloved glowing faintly far in the distance" }
+    ]
+  },
+  {
+    "id": "song_008",
+    "title": "쿵따리 샤바라",
+    "artist": "클론",
+    "releaseDate": "1996",
+    "era": "1990s",
+    "genre": "댄스",
+    "lyricLines": [
+      { "text": "마음이 울적하고 답답할 땐 산으로 올라가 소릴 한번 질러봐", "imagePrompt": "A man climbs to a mountaintop and shouts out loud at the open sky, releasing all his pent-up frustration, energetic and free" }
+    ]
+  },
+  {
+    "id": "song_009",
+    "title": "보라빛 향기",
+    "artist": "강수지",
+    "releaseDate": "1996.08.01",
+    "era": "1990s",
+    "genre": "댄스",
+    "lyricLines": [
+      { "text": "그대 모습은 보라빛처럼 살며시 다가왔지", "imagePrompt": "A figure approaches softly, wrapped in a gentle drifting purple haze, as a woman watches him draw near" },
+      { "text": "예쁜 두 눈엔 향기가 어려 잊을 수가 없었네", "imagePrompt": "A woman cannot look away from a person's pretty eyes, a shimmering purple fragrance lingering around them, unforgettable" },
+      { "text": "언제나 우리 웃을 수 있는 아름다운 얘기들을 만들어 가요", "imagePrompt": "A couple smiles brightly together, weaving beautiful storybook moments that float around them like glowing pages" },
+      { "text": "외로움이 다가와도 그대 슬퍼 하지마", "imagePrompt": "A woman gently comforts a lonely, downcast man as a shadow of solitude looms near, telling him not to be sad" },
+      { "text": "길을 걷다 마주치는 많은 사람들 중에 그댄 나에게 사랑을 건네 준 사람", "imagePrompt": "Among a crowd of many passersby on a street, one person steps forward and hands a woman a glowing heart of love" }
+    ]
+  },
+  {
+    "id": "song_010",
+    "title": "네모의 꿈",
+    "artist": "화이트",
+    "releaseDate": "1996.12.12",
+    "era": "1990s",
+    "genre": "발라드",
+    "lyricLines": [
+      { "text": "네모난 침대에서 일어나 눈을 떠보면 네모난 창문으로 보이는 똑같은 풍경", "imagePrompt": "A person wakes up in a square bed and opens their eyes to the same old scenery framed by a square window, everything boxy and identical" },
+      { "text": "네모난 테이블에 앉아 네모난 조간신문 본뒤", "imagePrompt": "A person sits at a square table reading a square morning newspaper, surrounded by boxy square shapes" },
+      { "text": "네모난 버스를 타고 네모난 건물지나", "imagePrompt": "A person rides a boxy square bus past rows of identical square buildings, the whole city made of squares" }
+    ]
+  },
+  {
+    "id": "song_011",
+    "title": "하늘을 달리다",
+    "artist": "이적",
+    "releaseDate": "2003.05.13",
+    "era": "2000s",
+    "genre": "록/메탈",
+    "lyricLines": [
+      { "text": "검은 절벽 끝 더 이상 발 디딜 곳 하나 없었지", "imagePrompt": "A man stands at the very edge of a sheer black cliff, no more ground left to step onto, staring down into the abyss below" },
+      { "text": "귓가에 울리는 그대의 뜨거운 목소리", "imagePrompt": "A glowing, fiery voice streams through the air into a man's ear; he flushes red and burns with passion as the heat of it spreads through him" },
+      { "text": "마른 하늘을 달려", "imagePrompt": "A man runs at full speed across a wide, dry cloudless sky, sprinting through the open air" },
+      { "text": "설혹 너무 태양 가까이 날아 두 다리 모두 녹아 내린다고 해도", "imagePrompt": "A man flies daringly close to the blazing sun, his two legs melting away like wax, yet still soaring upward undeterred" }
+    ]
+  },
+  {
+    "id": "song_012",
+    "title": "여행을 떠나요",
+    "artist": "이승기",
+    "releaseDate": "2008.08.07",
+    "era": "2000s",
+    "genre": "록/메탈",
+    "lyricLines": [
+      { "text": "푸른 언덕에 베낭을 메고", "imagePrompt": "A cheerful young man shoulders a backpack and strides across a bright green hill, off on a journey" },
+      { "text": "메아리 소리가 들려오는 계곡 속에 흐르는 물 찾아", "imagePrompt": "A man stands in a green valley cupping his ear to a returning echo, following the sound toward a flowing stream" }
+    ]
+  },
+  {
+    "id": "song_013",
+    "title": "풍선",
+    "artist": "동방신기",
+    "releaseDate": "2006.09.29",
+    "era": "2000s",
+    "genre": "댄스",
+    "lyricLines": [
+      { "text": "노란 풍선이 하늘을 날면", "imagePrompt": "A child watches a single yellow balloon float up and drift across the bright sky" },
+      { "text": "내 어릴 적 꿈은 노란 풍선을 타고 하늘 높이 날으는 사람", "imagePrompt": "A child rides a giant yellow balloon high into the sky, dreaming of soaring far above the world" },
+      { "text": "조그만 나의 꿈들을 풍선에 가득 싣고", "imagePrompt": "A child loads tiny glowing dreams into a yellow balloon until it brims full, ready to lift off" }
+    ]
+  },
+  {
+    "id": "song_014",
+    "title": "하루하루",
+    "artist": "BIGBANG",
+    "releaseDate": "2008.08.08",
+    "era": "2000s",
+    "genre": "랩/힙합",
+    "lyricLines": [
+      { "text": "파도처럼 부서진 내 맘", "imagePrompt": "A man stands at the shore as his glowing heart shatters apart like a crashing wave" },
+      { "text": "바람처럼 흔들리는 내 맘", "imagePrompt": "A man stands in gusting wind, his glowing heart trembling and swaying like a leaf about to be blown away" },
+      { "text": "연기처럼 사라진 내 사랑", "imagePrompt": "A man reaches out as the figure of his love dissolves into drifting smoke and vanishes" },
+      { "text": "한숨만 땅이 꺼지라 쉬죠", "imagePrompt": "A man slumps with a heavy sigh so deep the ground seems to sink beneath him, weighed down by sorrow" },
+      { "text": "내 가슴속에 먼지만 쌓이죠", "imagePrompt": "A man sits hollow as gray dust quietly settles and piles up inside his empty chest" },
+      { "text": "길을 걷다 너와 나 우리 마주친다 해도 못 본 척 하고서 그대로 가던 길 가줘", "imagePrompt": "A man and woman pass each other on a street, both pretending not to see, walking on without turning back" }
+    ]
+  },
+  {
+    "id": "song_015",
+    "title": "우산",
+    "artist": "에픽하이 (Feat. 윤하)",
+    "releaseDate": "2008.04.17",
+    "era": "2000s",
+    "genre": "랩/힙합",
+    "lyricLines": [
+      { "text": "어느새 빗물이 내 발목에 고이고", "imagePrompt": "A person stands in the rain as water quietly pools up around their ankles, soaked and still" },
+      { "text": "그대는 내 머리 위에 우산", "imagePrompt": "A person holds an umbrella over someone else's head in the rain, shielding them and getting wet themselves" }
+    ]
+  },
+  {
+    "id": "song_016",
+    "title": "좋은 날",
+    "artist": "아이유",
+    "releaseDate": "2010.12.09",
+    "era": "2010s",
+    "genre": "댄스",
+    "lyricLines": [
+      { "text": "눈물이 차올라서 고갤 들어 흐르지 못하게 또 살짝 웃어", "imagePrompt": "A woman tilts her face upward to keep brimming tears from spilling, forcing a small trembling smile" },
+      { "text": "눈물은 나오는데 활짝 웃어", "imagePrompt": "A woman beams a wide bright smile even as tears stream down her cheeks, joy and sorrow at once" }
+    ]
+  },
+  {
+    "id": "song_017",
+    "title": "강남스타일",
+    "artist": "싸이",
+    "releaseDate": "2012.07.15",
+    "era": "2010s",
+    "genre": "랩/힙합",
+    "lyricLines": [
+      { "text": "커피 한잔의 여유를 아는 품격있는 여자", "imagePrompt": "An elegant, classy woman calmly savoring a cup of coffee with poised composure" },
+      { "text": "밤이 오면 심장이 뜨거워지는 여자", "imagePrompt": "As night falls, the same woman transforms, her heart blazing hot, ready to come alive" },
+      { "text": "커피 식기도 전에 원샷 때리는 사나이", "imagePrompt": "A bold man gulps down his whole coffee in one shot before it even cools, brash and impatient" },
+      { "text": "오빤 강남스타일", "imagePrompt": "A stylish man poses with confident swagger, flaunting his fashionable look in front of a glowing \"Gangnam Station\" subway sign in the upscale district" }
+    ]
+  },
+  {
+    "id": "song_018",
+    "title": "빨간 맛",
+    "artist": "레드벨벳",
+    "releaseDate": "2017.07.09",
+    "era": "2010s",
+    "genre": "댄스",
+    "lyricLines": [
+      { "text": "빨간 맛 궁금해 Honey", "imagePrompt": "A girl leans in with curious sparkling eyes toward a vivid red treat, dying to know its taste" },
+      { "text": "깨물면 점점 녹아든 스트로베리 그 맛", "imagePrompt": "A girl bites into a red strawberry and melts with delight as its sweet flavor spreads" },
+      { "text": "일곱 개의 무지갯빛 문을 열어", "imagePrompt": "A girl flings open seven glowing rainbow-colored doors, each bursting with vivid color" },
+      { "text": "태양보다 빨간 네 사랑의 색깔", "imagePrompt": "A girl holds up a glowing heart redder than the blazing sun, the color of vivid love" },
+      { "text": "코너 캔디 샵 찾아 봐 Baby", "imagePrompt": "A girl skips toward a colorful candy shop on the street corner, searching it out excitedly" }
+    ]
+  },
+  {
+    "id": "song_019",
+    "title": "CHEER UP",
+    "artist": "트와이스",
+    "releaseDate": "2016.04.25",
+    "era": "2010s",
+    "genre": "댄스",
+    "lyricLines": [
+      { "text": "아까는 전화 못 받아서 미안해 친구를 만나느라 shy", "imagePrompt": "A girl holds a phone with an apologetic, shy smile, having missed a call while out with friends" },
+      { "text": "CHEER UP BABY CHEER UP BABY 좀 더 힘을 내", "imagePrompt": "A cheerful girl pumps her fists encouragingly, cheering someone on to take heart" },
+      { "text": "여자가 쉽게 맘을 주면 안돼 그래야 니가 날 더 좋아하게 될걸", "imagePrompt": "A girl playfully turns away, hiding her heart behind her back while a boy yearns for it" },
+      { "text": "답장을 못해줘서 미안해 친구를 만나느라 shy", "imagePrompt": "A girl glances shyly at her phone with unanswered messages, apologetic for not replying" }
+    ]
+  },
+  {
+    "id": "song_020",
+    "title": "양화대교",
+    "artist": "자이언티",
+    "releaseDate": "2014.09.22",
+    "era": "2010s",
+    "genre": "R&B/Soul",
+    "lyricLines": [
+      { "text": "우리 집에는 매일 나 홀로 있었지 아버지는 택시드라이버", "imagePrompt": "A lonely child sits alone in an empty home while his taxi-driver father works out on the streets" },
+      { "text": "택시드라이버 아버지 어디냐고 여쭤보면 항상 양화대교", "imagePrompt": "A child asks his taxi-driver father where he is, and the father always answers from atop a long river bridge" }
+    ]
+  },
+  {
+    "id": "song_021",
+    "title": "신호등",
+    "artist": "이무진",
+    "releaseDate": "2021.05.14",
+    "era": "2020s",
+    "genre": "록/메탈",
+    "lyricLines": [
+      { "text": "붉은색 푸른색 그 사이 3초 그 짧은 시간", "imagePrompt": "A man stands frozen at a crosswalk in the brief three-second gap between a red and a green traffic light, caught in hesitation" },
+      { "text": "노란색 빛을 내는 저기 저 신호등이", "imagePrompt": "A man gazes up at a traffic light glowing yellow, its uncertain amber light washing over his anxious face" }
+    ]
+  },
+  {
+    "id": "song_022",
+    "title": "Love Lee",
+    "artist": "AKMU(악뮤)",
+    "releaseDate": "2023.08.21",
+    "era": "2020s",
+    "genre": "댄스",
+    "lyricLines": [
+      { "text": "우산 없이 비가 와 홀딱 다 젖어도 좋아", "imagePrompt": "A young person laughs happily, soaked head to toe in the rain without an umbrella, not minding one bit" },
+      { "text": "Spell L.o.v.e.L.e.e", "imagePrompt": "A cheerful person playfully spells out glowing letters \"L-O-V-E\" floating in the air around them" },
+      { "text": "이름만 불러도 you can feel me", "imagePrompt": "A person calls out a name and a warm glowing wave of feeling ripples out toward another, connecting them" }
+    ]
+  },
+  {
+    "id": "song_023",
+    "title": "밤양갱",
+    "artist": "비비",
+    "releaseDate": "2024.02.13",
+    "era": "2020s",
+    "genre": "R&B/Soul",
+    "lyricLines": [
+      { "text": "달디달고 달디달고 달디단 밤양갱", "imagePrompt": "A person savors a sweet dark chestnut jelly bar, eyes closed in blissful sweetness, a melty glow around it" },
+      { "text": "내가 먹고 싶었던 건 달디단 밤양갱", "imagePrompt": "A person points longingly at a sweet chestnut jelly bar, this small treat the one thing they truly wanted" },
+      { "text": "아냐 내가 늘 바란 건 하나야 한 개뿐이야 달디단 밤양갱", "imagePrompt": "A person holds up a single sweet chestnut jelly bar, gesturing that this one little thing is all they ever wished for" }
+    ]
+  },
+  {
+    "id": "song_024",
+    "title": "LOVE DIVE",
+    "artist": "IVE",
+    "releaseDate": "2022.04.05",
+    "era": "2020s",
+    "genre": "댄스",
+    "lyricLines": [
+      { "text": "숨 참고 love dive", "imagePrompt": "A person takes a deep breath and boldly dives down into a vast shimmering sea of love, plunging in headfirst" }
+    ]
+  },
+  {
+    "id": "song_025",
+    "title": "고민중독",
+    "artist": "QWER",
+    "releaseDate": "2024.04.01",
+    "era": "2020s",
+    "genre": "록/메탈",
+    "lyricLines": [
+      { "text": "막상 네 앞에 서니 꽁꽁 얼어버렸다", "imagePrompt": "A girl stands before the boy she likes and freezes stiff, turned to ice from sheer nervousness" },
+      { "text": "숨겨왔던 나의 맘 절반의 반도 주지를 못했어", "imagePrompt": "A girl holds out only a tiny sliver of her glowing heart, unable to give even a quarter of her hidden feelings" },
+      { "text": "쏟아지는 맘을 멈출 수가 없을까?", "imagePrompt": "A girl tries in vain to hold back a flood of glowing hearts pouring out of her chest uncontrollably" },
+      { "text": "너의 작은 인사 한마디에 요란해져서", "imagePrompt": "A girl's heart bursts into a noisy flurry of fireworks at a single small hello from him" },
+      { "text": "아직은 준비가 안됐다구요 마음이 소용돌이쳐 어지럽다구", "imagePrompt": "A girl clutches her dizzy head as her feelings swirl into a whirlpool around her, not ready yet" }
+    ]
+  }
+]
