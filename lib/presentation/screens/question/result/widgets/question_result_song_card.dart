@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:picsong/domain/entities/era/era.dart';
-import 'package:picsong/domain/entities/song/song.dart';
+import 'package:picsong/domain/entities/question/question.dart';
 import 'package:picsong/presentation/common/extensions/era_extension.dart';
 import 'package:picsong/presentation/design_system/components/badge/app_badge.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
@@ -11,21 +11,24 @@ import 'package:picsong/presentation/design_system/foundation/app_shadows.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
 
-/// 정답 곡 정보 카드 — 곡명·메타·시대 뱃지와 대표 가사(플레이스홀더).
-class RevealSongCard extends StatelessWidget {
-  /// 가사 플레이스홀더 (저작권상 실제 가사 대신 사용)
-  static const String _lyricPlaceholder = '이 곡의 대표 가사 한 줄이 여기에 표시돼요';
-
+/// 정답 곡 정보 카드 — 곡명·메타·시대 뱃지와 이 문제로 출제된 가사.
+class QuestionResultSongCard extends StatelessWidget {
   /// 곡이 속한 시대
   final Era era;
 
-  /// 정답 곡
-  final Song song;
+  /// 공개할 문제 — 정답 곡과 출제된 가사
+  final Question question;
 
-  const RevealSongCard({super.key, required this.era, required this.song});
+  const QuestionResultSongCard({
+    super.key,
+    required this.era,
+    required this.question,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final String lyricText = question.lyricLine.text;
+    
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: BoxDecoration(
@@ -38,7 +41,7 @@ class RevealSongCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           _buildHead(),
-          _buildLyric(),
+          if (lyricText.isNotEmpty) _buildLyric(lyricText),
         ],
       ),
     );
@@ -74,24 +77,26 @@ class RevealSongCard extends StatelessWidget {
         ),
         const Gap(height: AppSpacing.xs),
         AppText(
-          text: song.title,
+          text: question.song.title,
           style: AppTypography.title2,
           color: AppColors.textStrong,
           maxLines: 2,
         ),
         const Gap(height: AppSpacing.xs),
         AppText(
-          text: '${song.artist} · ${song.year}년 · ${song.genre}',
+          text:
+              '${question.song.artist} · ${question.song.year}년 · ${question.song.genre}',
           style: AppTypography.body,
           color: AppColors.textBody,
-          maxLines: 1,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
       ],
     );
   }
 
-  /// 대표 가사 — 구분선 + 음표 아이콘
-  Widget _buildLyric() {
+  /// 이 문제로 출제된 가사 — 구분선 + 음표 아이콘
+  Widget _buildLyric(String lyricText) {
     return Container(
       margin: const EdgeInsets.only(top: AppSpacing.lg),
       padding: const EdgeInsets.only(top: AppSpacing.lg),
@@ -108,7 +113,7 @@ class RevealSongCard extends StatelessWidget {
           const Gap(width: AppSpacing.sm),
           Expanded(
             child: AppText(
-              text: '"$_lyricPlaceholder"',
+              text: '"$lyricText"',
               style: AppTypography.body,
               color: AppColors.textMuted,
               fontStyle: FontStyle.italic,

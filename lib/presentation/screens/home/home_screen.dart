@@ -5,7 +5,7 @@ import 'package:picsong/presentation/common/base/base_screen.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/screens/home/home_controller.dart';
-import 'package:picsong/presentation/screens/home/widgets/era_card.dart';
+import 'package:picsong/presentation/screens/home/widgets/era_item.dart';
 import 'package:picsong/presentation/screens/home/widgets/home_header.dart';
 
 /// 홈 화면
@@ -55,7 +55,7 @@ class HomeScreen extends BaseScreen<HomeController> {
               itemBuilder: (BuildContext context, int index) {
                 final Era era = Era.values[index];
 
-                return EraCard(
+                return EraItem(
                   era: era,
                   onTap: () => viewModel.onEraSelected(era),
                 );

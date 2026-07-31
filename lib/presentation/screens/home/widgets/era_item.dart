@@ -9,11 +9,11 @@ import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
 
 /// 시대 선택 카드
-class EraCard extends StatelessWidget {
+class EraItem extends StatelessWidget {
   final Era era;
   final VoidCallback onTap;
 
-  const EraCard({
+  const EraItem({
     super.key,
     required this.era,
     required this.onTap,

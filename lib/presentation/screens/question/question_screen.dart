@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picsong/domain/entities/era/era.dart';
+import 'package:picsong/domain/entities/question/question.dart';
 import 'package:picsong/presentation/common/base/base_screen.dart';
 import 'package:picsong/presentation/common/extensions/era_extension.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
@@ -21,13 +22,30 @@ class QuestionScreen extends BaseScreen<QuestionController> {
   /// 진행할 시대
   final Era era;
 
-  const QuestionScreen({super.key, required this.era});
+  /// 이번 라운드의 문제 목록
+  final List<Question> questionList;
+
+  /// 로딩 화면에서 미리 생성해둔 1번 문제 이미지 경로
+  final String firstImagePath;
+
+  const QuestionScreen({
+    super.key,
+    required this.era,
+    required this.questionList,
+    required this.firstImagePath,
+  });
 
   /// 뷰모델 초기화
   @override
   void onInit(BuildContext context) {
     super.onInit(context);
-    Get.put(QuestionController(era: era));
+    Get.put(
+      QuestionController(
+        era: era,
+        questionList: questionList,
+        firstImagePath: firstImagePath,
+      ),
+    );
   }
 
   /// 뷰모델 해제
@@ -45,6 +63,7 @@ class QuestionScreen extends BaseScreen<QuestionController> {
       centerTitle: true,
       titleColor: AppColors.textStrong,
       backButtonType: BackButtonType.xmark,
+      backButtonColor: AppColors.black,
       backgroundColor: AppColors.surfaceCanvas,
     );
   }
@@ -55,65 +74,56 @@ class QuestionScreen extends BaseScreen<QuestionController> {
     return Column(
       children: [
         Expanded(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.screenHorizontal,
-                  AppSpacing.xs,
-                  AppSpacing.screenHorizontal,
-                  AppSpacing.md,
-                ),
-                child: Obx(
-                  () => QuestionProgress(
-                    totalSteps: QuestionController.totalQuestions,
-                    currentStep: viewModel.qIndex.value,
-                    fillColor: era.color,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.screenHorizontal,
+            ),
+            child: Column(
+              children: <Widget>[
+                Obx(
+                  () => Padding(
+                    padding: const EdgeInsets.only(
+                      top: AppSpacing.lg,
+                      bottom: AppSpacing.lg,
+                    ),
+                    child: QuestionProgress(
+                      totalSteps: viewModel.questionList.length,
+                      currentStep: viewModel.qIndex.value,
+                      fillColor: era.color,
+                    ),
                   ),
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: AppSpacing.screenHorizontal),
-                // 생성 이미지 미연동 — 빈 URL이면 CachedImage가 대기(스켈레톤) 표시
-                child: QuestionImage(imageURL: ''),
-              ),
-              Expanded(
-                child: _buildPrompt(context),
-              ),
-            ],
-          ),
-        ),
-        QuestionInputBar(onSubmit: viewModel.submit),
-      ],
-    );
-  }
-
-  /// 질문 문구 + 보조 액션 (스크롤 영역)
-  Widget _buildPrompt(BuildContext context) {
-    return SingleChildScrollView(
-      padding:
-          const EdgeInsets.symmetric(horizontal: AppSpacing.screenHorizontal),
-      child: Column(
-        children: <Widget>[
-          const Gap(height: AppSpacing.lg),
-          AppText(
-            text: '이 그림이 떠올리게 하는 노래는?',
-            style: AppTypography.title3,
-            color: AppColors.textStrong,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-          ),
-          const Gap(height: AppSpacing.lg),
-          Obx(
-            () => QuestionActions(
-              hintUsed: viewModel.hintUsed.value,
-              onHintTapped: () => _openHint(context),
-              onRevealTapped: viewModel.revealAnswer,
+                Obx(() =>
+                    QuestionImage(imageURL: viewModel.clueImagePath.value)),
+                const Gap(height: AppSpacing.lg),
+                AppText(
+                  text: '이 그림이 떠올리게 하는 노래는?',
+                  style: AppTypography.title3,
+                  color: AppColors.textStrong,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                ),
+                const Gap(height: AppSpacing.lg),
+                Obx(
+                  () => QuestionActions(
+                    hintUsed: viewModel.hintUsed.value,
+                    onHintTapped: () => _openHint(context),
+                    onRevealTapped: viewModel.revealAnswer,
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+        Obx(
+          () => QuestionInputBar(
+            key: ValueKey<int>(viewModel.qIndex.value),
+            textController: viewModel.textController,
+            wrongAnswerSignal: viewModel.wrongAnswerSignal.value,
+            onSubmit: viewModel.submit,
+          ),
+        ),
+      ],
     );
   }
 

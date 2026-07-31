@@ -58,7 +58,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: AppText(text: title, fontSize: fontSize, color: titleColor),
       leadingWidth: leadingWidth,
       leading: isShowBackButton
-          ? _buildBackButton(appBarTheme.titleTextStyle?.color)
+          ? _buildBackButton(backButtonColor ?? appBarTheme.titleTextStyle?.color)
           : leadingWidget ?? const Gap(width: 10),
       actions: actions,
     );
@@ -73,8 +73,8 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
         return IconButton(
           icon: Image.asset(
             ImagePaths.close,
-            width: 24,
-            height: 24,
+            width: 16,
+            height: 16,
             color: color,
           ),
           onPressed: onBackTapped ?? () => Get.back(),

@@ -29,13 +29,17 @@ class QuestionProgress extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        for (int i = 0; i < totalSteps; i++) ...<Widget>[
-          if (i > 0) const Gap(width: _segmentGap),
-          Expanded(child: _buildSegment(filled: i <= currentStep)),
+    return SizedBox(
+      width: double.infinity,
+      height: _segmentHeight,
+      child: Row(
+        children: <Widget>[
+          for (int i = 0; i < totalSteps; i++) ...<Widget>[
+            if (i > 0) const Gap(width: _segmentGap),
+            Expanded(child: _buildSegment(filled: i <= currentStep)),
+          ],
         ],
-      ],
+      ),
     );
   }
 
