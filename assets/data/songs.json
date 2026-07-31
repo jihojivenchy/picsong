@@ -251,6 +251,7 @@
     "releaseDate": "2016.04.25",
     "era": "2010s",
     "genre": "댄스",
+    "acceptList": ["치어업", "치얼업", "취어럽"],
     "lyricLines": [
       { "text": "아까는 전화 못 받아서 미안해 친구를 만나느라 shy", "imagePrompt": "A girl holds a phone with an apologetic, shy smile, having missed a call while out with friends" },
       { "text": "CHEER UP BABY CHEER UP BABY 좀 더 힘을 내", "imagePrompt": "A cheerful girl pumps her fists encouragingly, cheering someone on to take heart" },
@@ -289,6 +290,7 @@
     "releaseDate": "2023.08.21",
     "era": "2020s",
     "genre": "댄스",
+    "acceptList": ["러브리", "러블리", "럽리"],
     "lyricLines": [
       { "text": "우산 없이 비가 와 홀딱 다 젖어도 좋아", "imagePrompt": "A young person laughs happily, soaked head to toe in the rain without an umbrella, not minding one bit" },
       { "text": "Spell L.o.v.e.L.e.e", "imagePrompt": "A cheerful person playfully spells out glowing letters \"L-O-V-E\" floating in the air around them" },
@@ -315,6 +317,7 @@
     "releaseDate": "2022.04.05",
     "era": "2020s",
     "genre": "댄스",
+    "acceptList": ["러브다이브", "럽다이브", "러브다입"],
     "lyricLines": [
       { "text": "숨 참고 love dive", "imagePrompt": "A person takes a deep breath and boldly dives down into a vast shimmering sea of love, plunging in headfirst" }
     ]
