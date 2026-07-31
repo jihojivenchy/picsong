@@ -43,3 +43,6 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# 클루 이미지 생성 실험 산출물 (tools/clue_gen)
+/tools/clue_gen/out/

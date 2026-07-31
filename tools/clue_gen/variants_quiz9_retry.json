@@ -1,0 +1,22 @@
+[
+  {
+    "label": "Q9_2a",
+    "prompt": "a traffic signal box with a red lamp lit and a green lamp lit at the same time, a man waiting below",
+    "note": "좌우 배치 대신 한 신호등에 두 색"
+  },
+  {
+    "label": "Q9_2b",
+    "prompt": "a young man waiting at a crossing, red and green signal lights glowing above him",
+    "note": "위쪽으로 단순화"
+  },
+  {
+    "label": "Q9_3a",
+    "prompt": "a traffic signal box with three round lamps, the middle yellow lamp glowing",
+    "note": "신호등 구조 명시"
+  },
+  {
+    "label": "Q9_3b",
+    "prompt": "close view of a yellow traffic light lamp",
+    "note": "최소 문장"
+  }
+]

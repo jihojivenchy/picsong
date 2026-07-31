@@ -1,0 +1,17 @@
+[
+  {
+    "label": "E_복잡_화풍앞",
+    "prompt": "simple black pen sketch on white paper, loose hand-drawn outlines, no shading, no color, a man waking up in a square bed, a square window, a square room, geometric boxy shapes",
+    "note": "복잡한 내용 + 화풍 앞"
+  },
+  {
+    "label": "F_복잡_화풍뒤",
+    "prompt": "a man waking up in a square bed, a square window, a square room, geometric boxy shapes, simple black pen sketch on white paper, loose hand-drawn outlines, no shading, no color",
+    "note": "복잡한 내용 + 화풍 뒤"
+  },
+  {
+    "label": "G_복잡_화풍짧게",
+    "prompt": "pen sketch, a man waking up in a square bed, a square window, a square room, geometric boxy shapes",
+    "note": "복잡한 내용 + 화풍 2단어"
+  }
+]

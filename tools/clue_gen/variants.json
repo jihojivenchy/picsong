@@ -1,0 +1,27 @@
+[
+  {
+    "label": "1_네모의꿈",
+    "prompt": "A person wakes up in a square bed and opens their eyes to the same old scenery framed by a square window, everything boxy and identical",
+    "note": "네모난 침대에서 일어나 네모난 창문으로 보이는 똑같은 풍경"
+  },
+  {
+    "label": "2_풍선",
+    "prompt": "A child watches a single yellow balloon float up and drift across the bright sky",
+    "note": "노란 풍선이 하늘을 날면"
+  },
+  {
+    "label": "3_우산",
+    "prompt": "A person holds an umbrella over someone else's head in the rain, shielding them and getting wet themselves",
+    "note": "그대는 내 머리 위에 우산"
+  },
+  {
+    "label": "4_신호등",
+    "prompt": "A man stands frozen at a crosswalk in the brief three-second gap between a red and a green traffic light, caught in hesitation",
+    "note": "붉은색 푸른색 그 사이 3초 그 짧은 시간"
+  },
+  {
+    "label": "5_쿵따리샤바라",
+    "prompt": "A man climbs to a mountaintop and shouts out loud at the open sky, releasing all his pent-up frustration, energetic and free",
+    "note": "산으로 올라가 소릴 한번 질러봐"
+  }
+]

@@ -1,0 +1,22 @@
+[
+  {
+    "label": "Q5_2a",
+    "prompt": "a man drinking coffee in one gulp, head tilted back, holding a cup to his mouth",
+    "note": "퀴즈5 2/3 재시도 a — 인물 우선"
+  },
+  {
+    "label": "Q5_2b",
+    "prompt": "a man tilting his head back to drain a coffee cup completely",
+    "note": "퀴즈5 2/3 재시도 b — 동작 단순화"
+  },
+  {
+    "label": "Q5_3a",
+    "prompt": "a man dancing gangnam style, arms crossed in front of chest, legs bouncing",
+    "note": "퀴즈5 3/3 재시도 a — 곡명 직접 사용"
+  },
+  {
+    "label": "Q5_3b",
+    "prompt": "a man in a suit dancing energetically, arms swinging in the air, no horse",
+    "note": "퀴즈5 3/3 재시도 b — 말 배제"
+  }
+]

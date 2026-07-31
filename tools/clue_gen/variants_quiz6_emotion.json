@@ -1,0 +1,17 @@
+[
+  {
+    "label": "E1_울적",
+    "prompt": "a sad lonely woman walking alone with her head down on a gray rainy street, melancholy blue mood",
+    "note": "울적함 표현 — 고개 숙임 + 비 + 푸른 톤"
+  },
+  {
+    "label": "E2_밤샘그리움",
+    "prompt": "a woman writing letters all night by warm lamplight, many crumpled letter papers piled on the desk, longing for someone",
+    "note": "밤새도록 = 쌓인 편지지, 그리움 = 표정"
+  },
+  {
+    "label": "E3_취함",
+    "prompt": "a tipsy woman with flushed red cheeks holding a colorful cocktail glass, dreamy drunk expression, warm bar lights",
+    "note": "취함 = 붉은 볼 + 몽롱한 표정, 향기로운 = 화려한 색"
+  }
+]

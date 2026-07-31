@@ -1,0 +1,17 @@
+[
+  {
+    "label": "Q4_1",
+    "prompt": "a person sitting up in a square bed, a square window on the wall showing the city outside",
+    "note": "퀴즈4 릴레이 1/3 — 네모 하나"
+  },
+  {
+    "label": "Q4_2",
+    "prompt": "a person sitting at a square table reading a square newspaper, square clock on the wall",
+    "note": "퀴즈4 릴레이 2/3 — 네모 여럿"
+  },
+  {
+    "label": "Q4_3",
+    "prompt": "a boxy square bus driving past a row of identical square buildings, everything made of squares",
+    "note": "퀴즈4 릴레이 3/3 — 온 세상이 네모"
+  }
+]

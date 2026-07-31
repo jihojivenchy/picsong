@@ -1,0 +1,5 @@
+[
+  {"label": "S1", "prompt": "a stoplight hanging above a road intersection", "note": "stoplight 어휘"},
+  {"label": "S2", "prompt": "a vertical traffic signal pole with three stacked lamps red yellow green", "note": "구조 상세"},
+  {"label": "S3", "prompt": "street intersection with traffic lights, cars stopped at the line", "note": "맥락 속 신호등"}
+]

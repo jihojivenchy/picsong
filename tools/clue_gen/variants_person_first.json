@@ -1,0 +1,22 @@
+[
+  {
+    "label": "P1_인물우선",
+    "prompt": "a man sitting up in bed, waking up, square bed, square window",
+    "note": "인물 우선 a — 사람을 주어로"
+  },
+  {
+    "label": "P2_행동명시",
+    "prompt": "a man just woke up and is sitting upright on the edge of a square bed",
+    "note": "인물 우선 b — 행동 구체화"
+  },
+  {
+    "label": "P3_단순선화",
+    "prompt": "simple stick figure person sitting up in a square bed, minimal doodle",
+    "note": "인물 우선 c — 졸라맨급 단순화"
+  },
+  {
+    "label": "P4_클로즈",
+    "prompt": "a person in pajamas sitting on a bed, stretching arms, bedroom with a square window",
+    "note": "인물 우선 d — 기지개 동작"
+  }
+]

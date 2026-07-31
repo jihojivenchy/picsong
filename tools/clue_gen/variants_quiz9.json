@@ -1,0 +1,17 @@
+[
+  {
+    "label": "Q9_1",
+    "prompt": "a young man standing alone at a crosswalk at night, empty city street",
+    "note": "퀴즈9 1/3 — 인물 주어, 모호한 정경"
+  },
+  {
+    "label": "Q9_2",
+    "prompt": "a young man hesitating, a glowing red traffic light on his left and a glowing green traffic light on his right",
+    "note": "퀴즈9 2/3 — 빨강/초록 대비"
+  },
+  {
+    "label": "Q9_3",
+    "prompt": "a traffic light glowing bright yellow against the night sky",
+    "note": "퀴즈9 3/3 — 제목 직결, 384px 확대"
+  }
+]

@@ -1,0 +1,6 @@
+[
+  {"label": "P1", "prompt": "a traffic light on a pole at a street corner", "note": "가장 단순"},
+  {"label": "P2", "prompt": "a traffic light seen from below against the sky", "note": "올려다본 시점"},
+  {"label": "P3", "prompt": "a traffic light standing at an empty intersection, city street behind", "note": "빈 교차로"},
+  {"label": "P4", "prompt": "a tall traffic signal pole at a crossing, road and buildings behind", "note": "신호등 기둥 강조"}
+]

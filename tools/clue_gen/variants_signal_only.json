@@ -1,0 +1,27 @@
+[
+  {
+    "label": "S_A",
+    "prompt": "a traffic light",
+    "note": "최소 단어"
+  },
+  {
+    "label": "S_B",
+    "prompt": "simple illustration of a traffic light, white background",
+    "note": "일러스트 프레이밍"
+  },
+  {
+    "label": "S_C",
+    "prompt": "traffic light icon, flat design, plain white background",
+    "note": "아이콘 프레이밍"
+  },
+  {
+    "label": "S_D",
+    "prompt": "a traffic light isolated on a white background, studio product photo",
+    "note": "제품 촬영 프레이밍"
+  },
+  {
+    "label": "S_E",
+    "prompt": "close-up of a traffic light box with three round lamps stacked vertically, blurred background",
+    "note": "구조 상세 + 배경 흐림"
+  }
+]

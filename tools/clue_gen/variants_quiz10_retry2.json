@@ -1,0 +1,6 @@
+[
+  {"label": "R1", "prompt": "a person with soaking wet hair plastered to their face, drenched clothes dripping, standing in heavy rain", "note": "우산 단어 자체를 제거"},
+  {"label": "R2", "prompt": "a drenched person standing in a downpour, water streaming down their face and coat", "note": "흠뻑 젖음 강조"},
+  {"label": "R3", "prompt": "a couple huddled close together under an umbrella in the rain", "note": "커플이 우산 하나 아래"},
+  {"label": "R4", "prompt": "a man shielding a woman with his umbrella, rain soaking his exposed arm", "note": "가려주는 행동 강조"}
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "label": "L1a_동굴",
+    "prompt": "a person standing inside a dark cave, a small glowing figure far away in the darkness",
+    "note": "동굴 재시도 a — 원 가사 의도(멀리 그대가 보여) 복원"
+  },
+  {
+    "label": "L1b_동굴",
+    "prompt": "dark cave interior with rocky ceiling, a bright glowing cave opening far ahead",
+    "note": "동굴 재시도 b — 천장 명시로 협곡화 방지"
+  },
+  {
+    "label": "L1c_동굴",
+    "prompt": "a person holding a lantern inside a dark stone cave tunnel",
+    "note": "동굴 재시도 c — 랜턴 인물, 터널 명시"
+  }
+]

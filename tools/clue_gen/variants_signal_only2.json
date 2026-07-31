@@ -1,0 +1,6 @@
+[
+  {"label": "T_A", "prompt": "a traffic light with a red lamp on top, a yellow lamp in the middle, and a green lamp at the bottom, white background", "note": "위치별 색 명시"},
+  {"label": "T_B", "prompt": "vertical traffic light with three lamps red amber green, plain background", "note": "간결 3색"},
+  {"label": "T_C", "prompt": "simple illustration of a traffic light showing red yellow and green lights, white background", "note": "일러스트 + 3색"},
+  {"label": "T_D", "prompt": "a traffic light box with three lamps, the red lamp glowing, white background", "note": "빨간불 점등"}
+]

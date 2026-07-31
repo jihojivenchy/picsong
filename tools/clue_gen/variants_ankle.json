@@ -1,0 +1,6 @@
+[
+  {"label": "A1", "prompt": "a person's feet and ankles standing in a puddle of rainwater on the street", "note": "발과 발목 주어"},
+  {"label": "A2", "prompt": "close view of two feet in shoes submerged in rainwater up to the ankles", "note": "발목까지 잠김 명시"},
+  {"label": "A3", "prompt": "legs from the knee down standing in shallow water on a wet street, rain falling", "note": "무릎 아래 프레이밍"},
+  {"label": "A4", "prompt": "looking down at your own feet standing in a puddle during rain", "note": "1인칭 시선"}
+]
