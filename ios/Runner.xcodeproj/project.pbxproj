@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
+		3331BC533013660D0053B3BA /* StableDiffusion in Frameworks */ = {isa = PBXBuildFile; productRef = 3331BC523013660D0053B3BA /* StableDiffusion */; };
+		33B831CA3016274100A6AABD /* ClueGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B831C93016273900A6AABD /* ClueGenerator.swift */; };
+		33B831E0301625AB00A6AABD /* TextEncoder.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = 33B831D0301625AB00A6AABD /* TextEncoder.mlmodelc */; };
+		33B831E1301625AB00A6AABD /* Unet.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = 33B831D1301625AB00A6AABD /* Unet.mlmodelc */; };
+		33B831E2301625AB00A6AABD /* VAEDecoder.mlmodelc in Resources */ = {isa = PBXBuildFile; fileRef = 33B831D2301625AB00A6AABD /* VAEDecoder.mlmodelc */; };
+		33B831E3301625AB00A6AABD /* vocab.json in Resources */ = {isa = PBXBuildFile; fileRef = 33B831D3301625AB00A6AABD /* vocab.json */; };
+		33B831E4301625AB00A6AABD /* merges.txt in Resources */ = {isa = PBXBuildFile; fileRef = 33B831D4301625AB00A6AABD /* merges.txt */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		64263F78003811DA6CC19E1C /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58429CB9A4C3986AFD75803 /* Pods_Runner.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -47,6 +54,12 @@
 		2B40E7BA742BE92C7D3F7D68 /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		33B831C93016273900A6AABD /* ClueGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClueGenerator.swift; sourceTree = "<group>"; };
+		33B831D0301625AB00A6AABD /* TextEncoder.mlmodelc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = TextEncoder.mlmodelc; path = "~/dev/picsong-coreml/out-384-b1/Resources/TextEncoder.mlmodelc"; sourceTree = "<absolute>"; };
+		33B831D1301625AB00A6AABD /* Unet.mlmodelc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Unet.mlmodelc; path = "~/dev/picsong-coreml/out-384-b1/Resources/Unet.mlmodelc"; sourceTree = "<absolute>"; };
+		33B831D2301625AB00A6AABD /* VAEDecoder.mlmodelc */ = {isa = PBXFileReference; lastKnownFileType = folder; name = VAEDecoder.mlmodelc; path = "~/dev/picsong-coreml/out-384-b1/Resources/VAEDecoder.mlmodelc"; sourceTree = "<absolute>"; };
+		33B831D3301625AB00A6AABD /* vocab.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; name = vocab.json; path = "~/dev/picsong-coreml/out-384-b1/Resources/vocab.json"; sourceTree = "<absolute>"; };
+		33B831D4301625AB00A6AABD /* merges.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = merges.txt; path = "~/dev/picsong-coreml/out-384-b1/Resources/merges.txt"; sourceTree = "<absolute>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				64263F78003811DA6CC19E1C /* Pods_Runner.framework in Frameworks */,
+				3331BC533013660D0053B3BA /* StableDiffusion in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +118,18 @@
 			path = RunnerTests;
 			sourceTree = "<group>";
 		};
+		33B831F0301625AB00A6AABD /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				33B831D0301625AB00A6AABD /* TextEncoder.mlmodelc */,
+				33B831D1301625AB00A6AABD /* Unet.mlmodelc */,
+				33B831D2301625AB00A6AABD /* VAEDecoder.mlmodelc */,
+				33B831D3301625AB00A6AABD /* vocab.json */,
+				33B831D4301625AB00A6AABD /* merges.txt */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		8D52014E9D269B2909840106 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -114,7 +140,6 @@
 				2B40E7BA742BE92C7D3F7D68 /* Pods-RunnerTests.release.xcconfig */,
 				F0D7DFEF0256E804914273B2 /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -153,6 +178,8 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				33B831F0301625AB00A6AABD /* Models */,
+				33B831C93016273900A6AABD /* ClueGenerator.swift */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -239,6 +266,9 @@
 				Base,
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
+			packageReferences = (
+				3331BC513013660D0053B3BA /* XCLocalSwiftPackageReference "ml-stable-diffusion" */,
+			);
 			productRefGroup = 97C146EF1CF9000F007C117D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -262,6 +292,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
+				33B831E0301625AB00A6AABD /* TextEncoder.mlmodelc in Resources */,
+				33B831E1301625AB00A6AABD /* Unet.mlmodelc in Resources */,
+				33B831E2301625AB00A6AABD /* VAEDecoder.mlmodelc in Resources */,
+				33B831E3301625AB00A6AABD /* vocab.json in Resources */,
+				33B831E4301625AB00A6AABD /* merges.txt in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
@@ -397,6 +432,7 @@
 			files = (
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				33B831CA3016274100A6AABD /* ClueGenerator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,7 +509,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -489,7 +525,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = GJYW6KHZHH;
+				DEVELOPMENT_TEAM = MNAZDR4A9U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -498,8 +534,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.max.picsong;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
@@ -603,7 +644,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -654,7 +695,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
@@ -672,7 +713,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = GJYW6KHZHH;
+				DEVELOPMENT_TEAM = MNAZDR4A9U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -681,9 +722,14 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.max.picsong;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -695,7 +741,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
-				DEVELOPMENT_TEAM = GJYW6KHZHH;
+				DEVELOPMENT_TEAM = MNAZDR4A9U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -704,8 +750,13 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.max.picsong;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -744,6 +795,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		3331BC513013660D0053B3BA /* XCLocalSwiftPackageReference "ml-stable-diffusion" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../picsong-coreml/ml-stable-diffusion";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3331BC523013660D0053B3BA /* StableDiffusion */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StableDiffusion;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 97C146E61CF9000F007C117D /* Project object */;
 }
