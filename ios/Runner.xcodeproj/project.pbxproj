@@ -11,17 +11,19 @@
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3331BC533013660D0053B3BA /* StableDiffusion in Frameworks */ = {isa = PBXBuildFile; productRef = 3331BC523013660D0053B3BA /* StableDiffusion */; };
 		33B831CA3016274100A6AABD /* ClueGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B831C93016273900A6AABD /* ClueGenerator.swift */; };
+		A1C0DE0001B7045DB0000002 /* AppChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0DE0001B7045DB0000001 /* AppChannel.swift */; };
+		A1C0DE0001B7045DB0000004 /* ClueChannelBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0DE0001B7045DB0000003 /* ClueChannelBridge.swift */; };
+		A1C0DE0001B7045DB0000006 /* ModelProgressPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0DE0001B7045DB0000005 /* ModelProgressPayload.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		64263F78003811DA6CC19E1C /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58429CB9A4C3986AFD75803 /* Pods_Runner.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
-		7F331319CDC1DE01B7045DB0 /* ModelProgressStreamHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D0F9F358183E37517BA3ED /* ModelProgressStreamHandler.swift */; };
+		7F331319CDC1DE01B7045DB0 /* ModelInstallChannelBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7D0F9F358183E37517BA3ED /* ModelInstallChannelBridge.swift */; };
 		8BAED533D7CB17E3BEC93519 /* ModelInstallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28B169E2783F631C41F2E9D6 /* ModelInstallState.swift */; };
 		958771FB76624830B401F054 /* ModelManifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = A53CB96B0864C933BFA54CAC /* ModelManifest.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		B3CDD23941C6A11C15AA06B8 /* ModelInstallerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5C342790E0D11E8E94F8A3 /* ModelInstallerError.swift */; };
-		B6A13054A18820DE289C440C /* NativeLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = F639EA0E9ACBDA37DCDED3AF /* NativeLog.swift */; };
 		B9790F7905D88FB8D092B7AC /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D81B5B9FCA1E092B8D9BD307 /* Pods_RunnerTests.framework */; };
 		EED93675333394B0969CF485 /* ModelInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B85F86BD87F99B454A67826E /* ModelInstaller.swift */; };
 /* End PBXBuildFile section */
@@ -58,6 +60,9 @@
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B831C93016273900A6AABD /* ClueGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClueGenerator.swift; sourceTree = "<group>"; };
+		A1C0DE0001B7045DB0000001 /* AppChannel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppChannel.swift; sourceTree = "<group>"; };
+		A1C0DE0001B7045DB0000003 /* ClueChannelBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClueChannelBridge.swift; sourceTree = "<group>"; };
+		A1C0DE0001B7045DB0000005 /* ModelProgressPayload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelProgressPayload.swift; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,11 +80,10 @@
 		D58429CB9A4C3986AFD75803 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D81B5B9FCA1E092B8D9BD307 /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3FAA394B7AD9A1298ED5ADB /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
-		E7D0F9F358183E37517BA3ED /* ModelProgressStreamHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelProgressStreamHandler.swift; sourceTree = "<group>"; };
+		E7D0F9F358183E37517BA3ED /* ModelInstallChannelBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelInstallChannelBridge.swift; sourceTree = "<group>"; };
 		ED079693965843CEA1F5BF5D /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		F0D7DFEF0256E804914273B2 /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
 		F211F6BF49A98B7083AEE29D /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
-		F639EA0E9ACBDA37DCDED3AF /* NativeLog.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NativeLog.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,7 +138,8 @@
 				0B5C342790E0D11E8E94F8A3 /* ModelInstallerError.swift */,
 				A53CB96B0864C933BFA54CAC /* ModelManifest.swift */,
 				B85F86BD87F99B454A67826E /* ModelInstaller.swift */,
-				E7D0F9F358183E37517BA3ED /* ModelProgressStreamHandler.swift */,
+				E7D0F9F358183E37517BA3ED /* ModelInstallChannelBridge.swift */,
+				A1C0DE0001B7045DB0000005 /* ModelProgressPayload.swift */,
 			);
 			name = ModelInstall;
 			path = ModelInstall;
@@ -199,7 +204,8 @@
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 				8C09FF4263E207FCD357C18E /* ModelInstall */,
-				F639EA0E9ACBDA37DCDED3AF /* NativeLog.swift */,
+				A1C0DE0001B7045DB0000001 /* AppChannel.swift */,
+				A1C0DE0001B7045DB0000003 /* ClueChannelBridge.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -238,7 +244,6 @@
 				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				71A0F00A993F37320B5C371E /* [CP] Embed Pods Frameworks */,
-				A3D7CE752110DCC0C488D6FA /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -383,23 +388,6 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build";
 		};
-		A3D7CE752110DCC0C488D6FA /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		ECDBA1C39B585D2A603B3255 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -444,8 +432,10 @@
 				B3CDD23941C6A11C15AA06B8 /* ModelInstallerError.swift in Sources */,
 				958771FB76624830B401F054 /* ModelManifest.swift in Sources */,
 				EED93675333394B0969CF485 /* ModelInstaller.swift in Sources */,
-				7F331319CDC1DE01B7045DB0 /* ModelProgressStreamHandler.swift in Sources */,
-				B6A13054A18820DE289C440C /* NativeLog.swift in Sources */,
+				7F331319CDC1DE01B7045DB0 /* ModelInstallChannelBridge.swift in Sources */,
+				A1C0DE0001B7045DB0000002 /* AppChannel.swift in Sources */,
+				A1C0DE0001B7045DB0000004 /* ClueChannelBridge.swift in Sources */,
+				A1C0DE0001B7045DB0000006 /* ModelProgressPayload.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

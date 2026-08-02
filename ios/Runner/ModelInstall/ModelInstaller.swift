@@ -46,7 +46,7 @@ final class ModelInstaller: NSObject {
     var modelDirectory: URL { supportDirectory.appending(path: "models") }
 
     /// 진행률 구독자(Flutter EventChannel sink) — 델리게이트 큐에서만 접근한다
-    private var progressHandler: (([String: Any]) -> Void)?
+    private var progressHandler: ((ModelProgressPayload) -> Void)?
 
     /// 현재 상태 — 델리게이트 큐에서만 변경한다
     private var state: ModelInstallState = .notInstalled
@@ -104,7 +104,7 @@ final class ModelInstaller: NSObject {
             do {
                 try prepareStagingDirectory()
             } catch {
-                NativeLog.write("[ModelInstaller] 작업장 준비 실패: \(error)")
+                NSLog("%@", "[ModelInstaller] 작업장 준비 실패: \(error)")
                 transition(to: .failed)
                 return
             }
@@ -130,7 +130,7 @@ final class ModelInstaller: NSObject {
     ///
     /// 진행률 구독자를 붙이거나(핸들러) 뗀다(nil). 붙는 즉시 현재 스냅샷을 한 번 보낸다.
     ///
-    func attachProgressHandler(_ handler: (([String: Any]) -> Void)?) {
+    func attachProgressHandler(_ handler: ((ModelProgressPayload) -> Void)?) {
         delegateQueue.addOperation { [self] in
             progressHandler = handler
             emitProgress(force: true)
@@ -146,7 +146,7 @@ final class ModelInstaller: NSObject {
         delegateQueue.addOperation { [self] in
             if isInstalled() {
                 state = .ready
-                NativeLog.write("[ModelInstaller] 설치 확인됨")
+                NSLog("%@", "[ModelInstaller] 설치 확인됨")
             } else if let staged: ModelManifest = loadStagedManifest() {
                 manifest = staged
                 receivedBytes = stagedBytes(of: staged)
@@ -155,7 +155,7 @@ final class ModelInstaller: NSObject {
         session.getAllTasks { [self] tasks in
             guard !tasks.isEmpty, state != .ready else { return }
             state = .downloading
-            NativeLog.write("[ModelInstaller] 진행 중 전송 \(tasks.count)건 재연결")
+            NSLog("%@", "[ModelInstaller] 진행 중 전송 \(tasks.count)건 재연결")
         }
     }
 
@@ -172,7 +172,7 @@ final class ModelInstaller: NSObject {
         }
         let requiredBytes: Int64 = pending.reduce(0) { $0 + $1.bytes } + Self.diskSpaceMargin
         guard availableDiskSpace() > requiredBytes else {
-            NativeLog.write("[ModelInstaller] 저장 공간 부족 — \(requiredBytes) bytes 필요")
+            NSLog("%@", "[ModelInstaller] 저장 공간 부족 — \(requiredBytes) bytes 필요")
             transition(to: .failed)
             return
         }
@@ -269,7 +269,7 @@ private extension ModelInstaller {
             try FileManager.default.removeItem(at: destination)
         }
         try FileManager.default.moveItem(at: url, to: destination)
-        NativeLog.write("[ModelInstaller] manifest 수신 — \(downloaded.files.count)개 파일, \(downloaded.totalBytes) bytes")
+        NSLog("%@", "[ModelInstaller] manifest 수신 — \(downloaded.files.count)개 파일, \(downloaded.totalBytes) bytes")
         adopt(downloaded)
     }
 
@@ -311,9 +311,9 @@ private extension ModelInstaller {
             try FileManager.default.moveItem(at: stagingDirectory, to: modelDirectory)
             try excludeFromBackup(modelDirectory)
             transition(to: .ready)
-            NativeLog.write("[ModelInstaller] 설치 완료")
+            NSLog("%@", "[ModelInstaller] 설치 완료")
         } catch {
-            NativeLog.write("[ModelInstaller] 설치 확정 실패: \(error)")
+            NSLog("%@", "[ModelInstaller] 설치 확정 실패: \(error)")
             transition(to: .failed)
         }
     }
@@ -324,7 +324,7 @@ private extension ModelInstaller {
     func scheduleRetry(for tag: String) {
         retryCounts[tag, default: 0] += 1
         guard retryCounts[tag, default: 0] <= Self.maxRetryCount else {
-            NativeLog.write("[ModelInstaller] \(tag) 재시도 소진")
+            NSLog("%@", "[ModelInstaller] \(tag) 재시도 소진")
             transition(to: .failed)
             session.getAllTasks { tasks in tasks.forEach { $0.cancel() } }
             return
@@ -345,12 +345,12 @@ private extension ModelInstaller {
         let now: CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
         guard force || now - lastProgressAt >= Self.progressInterval else { return }
         lastProgressAt = now
-        guard let handler: ([String: Any]) -> Void = progressHandler else { return }
-        let snapshot: [String: Any] = [
-            "state": state.rawValue,
-            "receivedBytes": receivedBytes.values.reduce(0, +),
-            "totalBytes": manifest?.totalBytes ?? 0,
-        ]
+        guard let handler: (ModelProgressPayload) -> Void = progressHandler else { return }
+        let snapshot: ModelProgressPayload = ModelProgressPayload(
+            state: state,
+            receivedBytes: receivedBytes.values.reduce(0, +),
+            totalBytes: manifest?.totalBytes ?? 0
+        )
         DispatchQueue.main.async { handler(snapshot) }
     }
 
@@ -381,7 +381,7 @@ extension ModelInstaller: URLSessionDownloadDelegate {
         guard let tag: String = downloadTask.taskDescription else { return }
         guard let response = downloadTask.response as? HTTPURLResponse, response.statusCode == 200 else {
             let statusCode: Int = (downloadTask.response as? HTTPURLResponse)?.statusCode ?? -1
-            NativeLog.write("[ModelInstaller] \(tag) HTTP \(statusCode)")
+            NSLog("%@", "[ModelInstaller] \(tag) HTTP \(statusCode)")
             scheduleRetry(for: tag)
             return
         }
@@ -394,7 +394,7 @@ extension ModelInstaller: URLSessionDownloadDelegate {
                 try verifyAndStage(holding, entryPath: tag)
             }
         } catch {
-            NativeLog.write("[ModelInstaller] \(tag) 처리 실패: \(error)")
+            NSLog("%@", "[ModelInstaller] \(tag) 처리 실패: \(error)")
             try? FileManager.default.removeItem(at: holding)
             scheduleRetry(for: tag)
         }
@@ -421,7 +421,7 @@ extension ModelInstaller: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         guard let error: Error = error, let tag: String = task.taskDescription else { return }
         guard (error as NSError).code != NSURLErrorCancelled else { return }
-        NativeLog.write("[ModelInstaller] \(tag) 전송 실패: \(error.localizedDescription)")
+        NSLog("%@", "[ModelInstaller] \(tag) 전송 실패: \(error.localizedDescription)")
         scheduleRetry(for: tag)
     }
 

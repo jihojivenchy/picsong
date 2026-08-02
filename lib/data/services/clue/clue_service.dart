@@ -1,10 +1,24 @@
 import 'package:flutter/services.dart';
 import 'package:picsong/data/dio/error/error_exception_type.dart';
 
+/// 클루 생성 채널 계약 — iOS `AppChannel.Clue`(Runner/AppChannel.swift)와
+/// 문자열이 정확히 일치해야 한다
+abstract class _Channel {
+  /// MethodChannel: Dart → 네이티브 생성 요청
+  static const String method = 'picsong/clue_generator';
+
+  /// 클루 이미지 한 장 생성
+  static const String generate = 'generate';
+
+  /// generate 호출 시 전달하는 인자 키
+  static const String promptArgument = 'prompt';
+  static const String seedArgument = 'seed';
+}
+
 /// 온디바이스 클루 이미지 생성 서비스
 class ClueService {
-  /// 네이티브 생성기와 연결된 채널 — iOS AppDelegate와 이름을 맞춘다
-  static const MethodChannel _channel = MethodChannel('picsong/clue_generator');
+  /// 네이티브 생성기와 연결된 채널
+  static const MethodChannel _channel = MethodChannel(_Channel.method);
 
   /// 모든 클루에 공통으로 붙는 화풍 프리픽스 — 이미지 프롬프트 규칙
   static const String _stylePrefix =
@@ -20,8 +34,11 @@ class ClueService {
   }) async {
     try {
       final String? path = await _channel.invokeMethod<String>(
-        'generate',
-        <String, dynamic>{'prompt': '$_stylePrefix$scene', 'seed': seed},
+        _Channel.generate,
+        <String, dynamic>{
+          _Channel.promptArgument: '$_stylePrefix$scene',
+          _Channel.seedArgument: seed,
+        },
       );
       if (path == null || path.isEmpty) {
         throw ClueGenerationException('클루 이미지 경로를 받지 못했습니다');

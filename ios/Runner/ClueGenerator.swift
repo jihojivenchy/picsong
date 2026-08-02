@@ -33,7 +33,7 @@ struct ClueGenerator {
         }
         let url: URL = try savePNG(image, seed: seed)
         let elapsed: String = String(format: "%.1f", CFAbsoluteTimeGetCurrent() - startedAt)
-        NativeLog.write("[ClueGenerator] 생성 완료 \(elapsed)초")
+        NSLog("%@", "[ClueGenerator] 생성 완료 \(elapsed)초")
         return url
     }
 
@@ -48,7 +48,7 @@ struct ClueGenerator {
         let pipeline: StableDiffusionPipeline = try makePipeline()
         try pipeline.loadResources()
         let elapsed: String = String(format: "%.1f", CFAbsoluteTimeGetCurrent() - startedAt)
-        NativeLog.write("[ClueGenerator] 파이프라인 준비 \(elapsed)초")
+        NSLog("%@", "[ClueGenerator] 파이프라인 준비 \(elapsed)초")
         loadedPipeline = pipeline
         return pipeline
     }
