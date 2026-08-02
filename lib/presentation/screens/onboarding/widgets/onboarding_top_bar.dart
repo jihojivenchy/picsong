@@ -21,7 +21,7 @@ class OnboardingTopBar extends StatelessWidget {
   /// 진행 비율 (0.0 ~ 1.0)
   final double progress;
 
-  /// 건너뛰기 콜백 — null이면 건너뛰기를 노출하지 않는다
+  /// 건너뛰기 콜백
   final VoidCallback? onSkip;
 
   const OnboardingTopBar({

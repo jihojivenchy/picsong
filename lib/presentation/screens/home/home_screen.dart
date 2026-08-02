@@ -46,7 +46,7 @@ class HomeScreen extends BaseScreen<HomeController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const HomeHeader(),
+          HomeHeader(onInfoTapped: viewModel.onInfoTapped),
           Expanded(
             child: ListView.separated(
               physics: const BouncingScrollPhysics(),

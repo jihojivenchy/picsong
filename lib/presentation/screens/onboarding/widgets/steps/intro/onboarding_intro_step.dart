@@ -23,7 +23,7 @@ class OnboardingIntroStep extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          const Gap(height: AppSpacing.lg),
+          const Gap(height: AppSpacing.xxxl),
           const AppText(
             text: '그림 한 장으로\n노래를 맞혀보세요',
             style: AppTypography.title1,

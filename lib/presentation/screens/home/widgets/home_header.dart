@@ -8,7 +8,13 @@ import 'package:picsong/presentation/design_system/foundation/app_typography.dar
 
 /// 홈 상단 헤더
 class HomeHeader extends StatelessWidget {
-  const HomeHeader({super.key});
+  /// 정보 아이콘 크기
+  static const double _infoIconSize = 22;
+
+  /// 앱 정보 화면 열기
+  final VoidCallback onInfoTapped;
+
+  const HomeHeader({super.key, required this.onInfoTapped});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +22,21 @@ class HomeHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         const Gap(height: AppSpacing.xl),
-        const PicSongLogo(fontSize: 32),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            const PicSongLogo(fontSize: 32),
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: onInfoTapped,
+              child: const Icon(
+                Icons.info_outline_rounded,
+                size: _infoIconSize,
+                color: AppColors.textSubtle,
+              ),
+            ),
+          ],
+        ),
         const Gap(height: AppSpacing.xl),
         AppText(
           text: '어떤 시절의 노래로 놀아볼까요?',
