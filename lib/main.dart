@@ -9,10 +9,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:picsong/presentation/common/services/app_size.dart';
 import 'package:picsong/presentation/screens/splash/splash_screen.dart';
+import 'package:picsong/utils/services/native_log_bridge.dart';
 import 'package:toastification/toastification.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // 네이티브 로그를 터미널에서 보이게 연결
+  NativeLogBridge.listen();
 
   WidgetsBinding.instance.addObserver(_DeepLinkRouteObserver());
 

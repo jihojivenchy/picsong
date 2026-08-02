@@ -33,7 +33,7 @@ struct ClueGenerator {
         }
         let url: URL = try savePNG(image, seed: seed)
         let elapsed: String = String(format: "%.1f", CFAbsoluteTimeGetCurrent() - startedAt)
-        NSLog("%@", "[ClueGenerator] 생성 완료 \(elapsed)초")
+        NativeLog.write("[ClueGenerator] 생성 완료 \(elapsed)초")
         return url
     }
 
@@ -48,19 +48,19 @@ struct ClueGenerator {
         let pipeline: StableDiffusionPipeline = try makePipeline()
         try pipeline.loadResources()
         let elapsed: String = String(format: "%.1f", CFAbsoluteTimeGetCurrent() - startedAt)
-        NSLog("%@", "[ClueGenerator] 파이프라인 준비 \(elapsed)초")
+        NativeLog.write("[ClueGenerator] 파이프라인 준비 \(elapsed)초")
         loadedPipeline = pipeline
         return pipeline
     }
 
     ///
-    /// 앱 번들 루트의 CoreML 리소스로 파이프라인을 만든다.
+    /// 다운로드해 설치한 CoreML 리소스로 파이프라인을 만든다.
     ///
     private static func makePipeline() throws -> StableDiffusionPipeline {
         let configuration = MLModelConfiguration()
         configuration.computeUnits = .cpuAndNeuralEngine
         return try StableDiffusionPipeline(
-            resourcesAt: Bundle.main.bundleURL,
+            resourcesAt: ModelInstaller.shared.modelDirectory,
             controlNet: [],
             configuration: configuration,
             disableSafety: true,
