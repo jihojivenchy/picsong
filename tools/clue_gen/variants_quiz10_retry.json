@@ -1,6 +1,0 @@
-[
-  {"label": "Q10_1a", "prompt": "a person standing in the pouring rain without an umbrella, completely soaked, water pooling at their feet", "note": "우산 없음 명시"},
-  {"label": "Q10_1b", "prompt": "a soaked person standing in a flooded street, rain falling hard, no umbrella", "note": "침수된 거리"},
-  {"label": "Q10_2a", "prompt": "two people walking close together sharing one single umbrella in the rain", "note": "우산 하나를 함께"},
-  {"label": "Q10_2b", "prompt": "a tall man tilting his umbrella to cover a woman beside him, his shoulder soaked in the rain", "note": "우산을 기울여 씌워줌"}
-]

@@ -1,5 +1,0 @@
-[
-  {"label": "RG1", "prompt": "street intersection, one traffic light glowing red and another traffic light glowing green", "note": "교차로 두 신호등"},
-  {"label": "RG2", "prompt": "a red pedestrian signal and a green pedestrian signal at a crosswalk", "note": "보행 신호 두 개"},
-  {"label": "RG3", "prompt": "a car stopped at a crossing, red signal ahead and green signal further down the road", "note": "차 시점 앞뒤 신호"}
-]
