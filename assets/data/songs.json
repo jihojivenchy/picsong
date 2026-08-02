@@ -285,16 +285,13 @@
   },
   {
     "id": "song_022",
-    "title": "Love Lee",
-    "artist": "AKMU(악뮤)",
-    "releaseDate": "2023.08.21",
+    "title": "리무진",
+    "artist": "BE'O(비오)",
+    "releaseDate": "2021.11.20",
     "era": "2020s",
-    "genre": "댄스",
-    "acceptList": ["러브리", "러블리", "럽리"],
+    "genre": "랩/힙합",
     "lyricLines": [
-      { "text": "우산 없이 비가 와 홀딱 다 젖어도 좋아", "imagePrompt": "A young person laughs happily, soaked head to toe in the rain without an umbrella, not minding one bit" },
-      { "text": "Spell L.o.v.e.L.e.e", "imagePrompt": "A cheerful person playfully spells out glowing letters \"L-O-V-E\" floating in the air around them" },
-      { "text": "이름만 불러도 you can feel me", "imagePrompt": "A person calls out a name and a warm glowing wave of feeling ripples out toward another, connecting them" }
+      { "text": "커다란 리무진에서 내가 내리지", "imagePrompt": "A man stepping out through the open door of a long black limousine, one foot on the ground" }
     ]
   },
   {
@@ -312,29 +309,26 @@
   },
   {
     "id": "song_024",
-    "title": "LOVE DIVE",
-    "artist": "IVE",
-    "releaseDate": "2022.04.05",
+    "title": "Teddy Bear",
+    "artist": "STAYC(스테이씨)",
+    "releaseDate": "2023.02.14",
     "era": "2020s",
     "genre": "댄스",
-    "acceptList": ["러브다이브", "럽다이브", "러브다입"],
+    "acceptList": ["테디베어"],
     "lyricLines": [
-      { "text": "숨 참고 love dive", "imagePrompt": "A person takes a deep breath and boldly dives down into a vast shimmering sea of love, plunging in headfirst" }
+      { "text": "바라만 봐 Just like Teddy Bear", "imagePrompt": "A brown teddy bear sitting upright with its short round arms held out, stitched eyes and soft worn fur" }
     ]
   },
   {
     "id": "song_025",
-    "title": "고민중독",
-    "artist": "QWER",
-    "releaseDate": "2024.04.01",
+    "title": "회전목마",
+    "artist": "sokodomo",
+    "releaseDate": "2021.11.13",
     "era": "2020s",
-    "genre": "록/메탈",
+    "genre": "랩/힙합",
     "lyricLines": [
-      { "text": "막상 네 앞에 서니 꽁꽁 얼어버렸다", "imagePrompt": "A girl stands before the boy she likes and freezes stiff, turned to ice from sheer nervousness" },
-      { "text": "숨겨왔던 나의 맘 절반의 반도 주지를 못했어", "imagePrompt": "A girl holds out only a tiny sliver of her glowing heart, unable to give even a quarter of her hidden feelings" },
-      { "text": "쏟아지는 맘을 멈출 수가 없을까?", "imagePrompt": "A girl tries in vain to hold back a flood of glowing hearts pouring out of her chest uncontrollably" },
-      { "text": "너의 작은 인사 한마디에 요란해져서", "imagePrompt": "A girl's heart bursts into a noisy flurry of fireworks at a single small hello from him" },
-      { "text": "아직은 준비가 안됐다구요 마음이 소용돌이쳐 어지럽다구", "imagePrompt": "A girl clutches her dizzy head as her feelings swirl into a whirlpool around her, not ready yet" }
+      { "text": "빙빙 돌아가는 회전목마처럼", "imagePrompt": "A large carousel with rows of painted horses under a striped canopy roof, standing in an empty amusement park" },
+      { "text": "인생은 회전목마", "imagePrompt": "A single carved carousel horse on a tall spiral pole, ornate saddle and flowing carved mane" }
     ]
   }
 ]
