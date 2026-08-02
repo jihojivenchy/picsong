@@ -211,8 +211,8 @@
     "era": "2010s",
     "genre": "댄스",
     "lyricLines": [
-      { "text": "눈물이 차올라서 고갤 들어 흐르지 못하게 또 살짝 웃어", "imagePrompt": "A woman tilts her face upward to keep brimming tears from spilling, forcing a small trembling smile" },
-      { "text": "눈물은 나오는데 활짝 웃어", "imagePrompt": "A woman beams a wide bright smile even as tears stream down her cheeks, joy and sorrow at once" }
+      { "text": "눈물이 차올라서 고갤 들어 흐르지 못하게 또 살짝 웃어", "imagePrompt": "A woman with her chin tilted up toward the sky, eyes brimming and glistening with tears, wet eyelashes, lips curved into a gentle smile" },
+      { "text": "눈물은 나오는데 활짝 웃어", "imagePrompt": "A woman with a wide open-mouthed smile and eyes squeezed shut, thick tears running down both cheeks" }
     ]
   },
   {
@@ -237,11 +237,11 @@
     "era": "2010s",
     "genre": "댄스",
     "lyricLines": [
-      { "text": "빨간 맛 궁금해 Honey", "imagePrompt": "A girl leans in with curious sparkling eyes toward a vivid red treat, dying to know its taste" },
-      { "text": "깨물면 점점 녹아든 스트로베리 그 맛", "imagePrompt": "A girl bites into a red strawberry and melts with delight as its sweet flavor spreads" },
-      { "text": "일곱 개의 무지갯빛 문을 열어", "imagePrompt": "A girl flings open seven glowing rainbow-colored doors, each bursting with vivid color" },
-      { "text": "태양보다 빨간 네 사랑의 색깔", "imagePrompt": "A girl holds up a glowing heart redder than the blazing sun, the color of vivid love" },
-      { "text": "코너 캔디 샵 찾아 봐 Baby", "imagePrompt": "A girl skips toward a colorful candy shop on the street corner, searching it out excitedly" }
+      { "text": "빨간 맛 궁금해 Honey", "imagePrompt": "A girl holds a bright red round candy close to her open mouth, wide eyes fixed on the glossy red sweet" },
+      { "text": "깨물면 점점 녹아든 스트로베리 그 맛", "imagePrompt": "A girl bites into a huge bright red strawberry, red juice on her lips and fingers, the vivid red fruit filling the frame" },
+      { "text": "일곱 개의 무지갯빛 문을 열어", "imagePrompt": "A girl pushes open a tall rainbow-striped door, a row of red orange yellow green blue doors standing side by side behind her" },
+      { "text": "태양보다 빨간 네 사랑의 색깔", "imagePrompt": "A girl holds a huge glossy bright red heart in both hands, a small pale yellow sun low in the sky behind her" },
+      { "text": "코너 캔디 샵 찾아 봐 Baby", "imagePrompt": "A girl stands at a street corner shop with a striped awning, tall glass jars of colorful candy filling the window" }
     ]
   },
   {
@@ -267,8 +267,8 @@
     "era": "2010s",
     "genre": "R&B/Soul",
     "lyricLines": [
-      { "text": "우리 집에는 매일 나 홀로 있었지 아버지는 택시드라이버", "imagePrompt": "A lonely child sits alone in an empty home while his taxi-driver father works out on the streets" },
-      { "text": "택시드라이버 아버지 어디냐고 여쭤보면 항상 양화대교", "imagePrompt": "A child asks his taxi-driver father where he is, and the father always answers from atop a long river bridge" }
+      { "text": "우리 집에는 매일 나 홀로 있었지 아버지는 택시드라이버", "imagePrompt": "A small boy sits alone on the floor of an empty bare room, a yellow taxi parked on the street outside the window" },
+      { "text": "택시드라이버 아버지 어디냐고 여쭤보면 항상 양화대교", "imagePrompt": "A wide multi-lane concrete bridge spanning a very broad river, tall city apartment towers along the far bank, a yellow taxi driving across" }
     ]
   },
   {
