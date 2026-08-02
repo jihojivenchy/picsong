@@ -35,51 +35,25 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   get_it: ^8.0.2
   get: ^4.6.6
-  permission_handler: ^12.0.0+1
-  dots_indicator: ^2.1.1
-  device_info_plus: ^11.1.1
-  dio: ^5.5.0+1
-  flutter_secure_storage: ^9.2.1
   intl: ^0.19.0
-  shared_preferences: ^2.0.18
-  fluttertoast: ^8.2.12
   url_launcher: ^6.3.2
 
   # UI
-  flutter_svg: ^2.0.17
-  flutter_animate: ^4.5.2
-  video_player: ^2.8.2
   cached_network_image: ^3.4.1
   flutter_easyloading: ^3.0.5         # 로딩 UI 처리
-  image_picker: ^1.1.2
   cupertino_icons: ^1.0.8
   shimmer: ^3.0.0
-  photo_view: ^0.15.0
-  focus_detector_v2: ^3.1.0+1
-  webview_flutter: ^4.13.0
-  webview_flutter_android: ^4.10.13
-  flutter_html: ^3.0.0
-  flutter_inappwebview: ^6.1.5
   custom_refresh_indicator: ^4.0.1 # 커스텀 풀-투-리프레시 인디케이터
 
   # 커스텀 스킴 딥링크
-  app_links: ^6.4.1
 
   # Map
-  geolocator: ^14.0.2              # 위치 서비스
 
   # Firebase
-  firebase_core: ^3.15.0
-  firebase_messaging: ^15.2.8
 
   # 로컬 알림
-  flutter_local_notifications: ^19.3.0
 
   # 로그인
-  kakao_flutter_sdk_user: ^1.9.5
-  sign_in_with_apple: ^7.0.1
-  flutter_naver_login: ^2.1.1
-  google_sign_in: ^6.3.0
 
   path_provider: any
 
@@ -90,24 +64,20 @@ dependencies:
   hive_flutter: ^1.1.0
 
   # 이미지 크롭
-  image_cropper: ^8.0.2
 
   # 토스트 알림
   toastification: ^3.0.3
 
   # Lottie 애니메이션
-  lottie: ^3.3.2
 
   # 로거
   talker: ^4.5.2
-  talker_dio_logger: ^4.5.2
 
   # 앱 버전 정보
   package_info_plus: ^8.3.0
 
   path: any
   http_parser: any
-  mobile_scanner: ^7.2.0
   collection: any
 dev_dependencies:
   flutter_test:
@@ -134,7 +104,6 @@ flutter:
   assets:
     - assets/
     - assets/icons/
-    - assets/lottie/
     - assets/data/
   fonts:
     - family: Pretendard
