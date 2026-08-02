@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:picsong/data/services/clue/clue_service.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/question/question.dart';
+import 'package:picsong/domain/entities/question/question_result.dart';
 import 'package:picsong/domain/entities/song/song.dart';
 import 'package:picsong/domain/services/scoring/scoring_service.dart';
 import 'package:picsong/presentation/screens/question/result/question_result_screen.dart';
+import 'package:picsong/presentation/screens/round_result/round_result_screen.dart';
 import 'package:picsong/utils/services/app_logger.dart';
 
 /// 힌트 시트에 표시할 항목(라벨-값 쌍).
@@ -40,6 +42,9 @@ class QuestionController extends GetxController {
   /// 채점 서비스
   final ScoringService _scoringService = ScoringService();
 
+  /// 지금까지 푼 문제의 결과
+  final List<QuestionResult> _resultList = <QuestionResult>[];
+
   /// 오답 안내를 트리거하는 변경 신호
   final RxInt wrongAnswerSignal = 0.obs;
 
@@ -48,9 +53,6 @@ class QuestionController extends GetxController {
 
   /// 현재 문제 인덱스 (0-based)
   final RxInt qIndex = 0.obs;
-
-  /// 현재 문제의 힌트 사용 여부 (문제당 1회)
-  final RxBool hintUsed = false.obs;
 
   /// 현재 문제의 클루 이미지 경로 — 비어 있으면 생성 대기
   final RxString clueImagePath = ''.obs;
@@ -78,14 +80,6 @@ class QuestionController extends GetxController {
   }
 
   ///
-  /// 힌트 사용 처리 — 문제당 1회만 허용
-  ///
-  void useHint() {
-    if (hintUsed.value) return;
-    hintUsed.value = true;
-  }
-
-  ///
   /// 정답 제출 — 정답이면 결과 화면으로 이동, 오답이면 안내를 표시
   ///
   void submit(String guess) {
@@ -108,20 +102,21 @@ class QuestionController extends GetxController {
   void revealAnswer() => _goToQuestionResult(isCorrect: false);
 
   ///
-  /// 다음 단계 진행 — 마지막이면 홈 복귀, 아니면 다음 문제
+  /// 다음 단계 진행 — 마지막이면 라운드 결과, 아니면 다음 문제
   ///
   void goToNext() {
     if (_isLastQuestion) {
-      // TODO: RoundResultScreen 구현 시 라운드 결과 화면으로 교체
-      Get.until((Route<dynamic> route) => route.isFirst);
+      Get.off(
+        () => RoundResultScreen(
+          era: era,
+          resultList: List<QuestionResult>.unmodifiable(_resultList),
+        ),
+      );
       return;
     }
 
     // 다음 문제로 이동
     qIndex.value++;
-
-    // 힌트 사용 여부 초기화
-    hintUsed.value = false;
 
     // 다음 문제의 이미지 생성
     _generateClueImage();
@@ -155,9 +150,22 @@ class QuestionController extends GetxController {
   }
 
   ///
+  /// 문제 결과를 라운드에 기록
+  ///
+  void _recordResult({required bool isCorrect}) {
+    _resultList.add(
+      QuestionResult(
+        question: currentQuestion,
+        isCorrect: isCorrect,
+      ),
+    );
+  }
+
+  ///
   /// 문제 결과 화면으로 이동
   ///
   void _goToQuestionResult({required bool isCorrect}) {
+    _recordResult(isCorrect: isCorrect);
     Get.to(
       () => QuestionResultScreen(
         era: era,

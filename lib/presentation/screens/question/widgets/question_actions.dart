@@ -8,9 +8,6 @@ import 'package:picsong/presentation/design_system/foundation/app_typography.dar
 
 /// 문제 보조 액션 — 힌트 보기 / 답안 공개.
 class QuestionActions extends StatelessWidget {
-  /// 힌트 사용 여부 (사용 시 힌트 칩 비활성)
-  final bool hintUsed;
-
   /// 힌트 보기 탭
   final VoidCallback onHintTapped;
 
@@ -19,7 +16,6 @@ class QuestionActions extends StatelessWidget {
 
   const QuestionActions({
     super.key,
-    required this.hintUsed,
     required this.onHintTapped,
     required this.onRevealTapped,
   });
@@ -39,14 +35,13 @@ class QuestionActions extends StatelessWidget {
 
   /// 힌트 칩 — 사용 전 코랄 강조, 사용 후 비활성 톤
   Widget _buildHintChip() {
-    final Color tint = hintUsed ? AppColors.textSubtle : AppColors.primary;
     return _buildChip(
-      onTap: hintUsed ? null : onHintTapped,
-      background: hintUsed ? AppColors.surfaceSunken : AppColors.primarySoft,
+      onTap: onHintTapped,
+      background: AppColors.primarySoft,
       icon: Icons.lightbulb_outline,
-      iconColor: tint,
-      label: hintUsed ? '힌트 사용함' : '힌트 보기',
-      labelColor: tint,
+      iconColor: AppColors.primary,
+      label: '힌트 보기',
+      labelColor: AppColors.primary,
     );
   }
 

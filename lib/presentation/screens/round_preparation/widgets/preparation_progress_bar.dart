@@ -5,23 +5,28 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 import 'package:picsong/presentation/design_system/foundation/app_radius.dart';
 
-/// 시대색 진행바.
+/// 라운드 준비 진행바 (시대색).
 ///
-/// [duration] 동안 0→100%로 차오르며 끝으로 갈수록 느려진다(기대감).
-/// 진행률은 시각 표현일 뿐 — 전환 트리거는 컨트롤러가 담당한다.
-class EraProgressBar extends HookWidget {
+/// 최악의 경우(콜드 ANE 컴파일 ~60초)에 맞춰 차오르며 끝으로 갈수록 느려진다.
+/// **실제 진행률이 아니라 경과 시간 기반 연출이다** — 전환 트리거는 컨트롤러가 담당한다.
+class PreparationProgressBar extends HookWidget {
+  /// 0→최대치 진행 시간 — 콜드 ANE 컴파일 실측(~60초)에 맞췄다
+  static const Duration _fillDuration = Duration(seconds: 60);
+
+  /// 최대 채움 비율 — 준비가 끝나기 전에 100%에 닿아 "다 됐다"고 거짓말하지 않는다
+  static const double _maxFill = 0.9;
+
   /// 채움 색 (시대 강조색)
   final Color fillColor;
 
-  /// 0→100% 진행 시간
-  final Duration duration;
-
-  const EraProgressBar({super.key, required this.fillColor, required this.duration});
+  const PreparationProgressBar({super.key, required this.fillColor});
 
   @override
   Widget build(BuildContext context) {
     final bool reduce = MediaQuery.of(context).disableAnimations;
-    final AnimationController progress = useAnimationController(duration: duration);
+    final AnimationController progress = useAnimationController(
+      duration: _fillDuration,
+    );
     useEffect(() {
       if (reduce) {
         progress.value = 1.0;
@@ -43,7 +48,7 @@ class EraProgressBar extends HookWidget {
           builder: (BuildContext context, _) {
             return FractionallySizedBox(
               alignment: Alignment.centerLeft,
-              widthFactor: _eased(progress.value),
+              widthFactor: _eased(progress.value) * _maxFill,
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   color: fillColor,

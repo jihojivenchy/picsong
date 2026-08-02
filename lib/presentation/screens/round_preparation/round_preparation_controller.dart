@@ -13,18 +13,15 @@ import 'package:picsong/presentation/common/services/app_toast_service.dart';
 import 'package:picsong/presentation/screens/question/question_screen.dart';
 import 'package:picsong/utils/services/app_logger.dart';
 
-/// 로딩(그림 생성) 화면 컨트롤러
-class LoadingController extends GetxController {
-  /// 진행률 바 연출 시간 — 실제 생성 시간과는 무관하다
-  static const Duration generationDuration = Duration(seconds: 3);
-
+/// 라운드 준비(곡 선정 + 첫 그림 생성) 화면 컨트롤러
+class RoundPreparationController extends GetxController {
   /// 한 라운드의 문제 수
   static const int _questionCount = 5;
 
   /// 생성 대상 시대
   final Era era;
 
-  LoadingController({required this.era});
+  RoundPreparationController({required this.era});
 
   /// 곡 데이터 서비스
   final SongService _songService = SongService();
@@ -43,16 +40,21 @@ class LoadingController extends GetxController {
   }
 
   ///
-  /// 라운드를 구성하고 첫 문제 이미지를 생성한 뒤 퀴즈 화면으로 진입
+  /// 라운드 준비
   ///
   Future<void> _prepareRound() async {
     try {
+      // 퀴즈 리스트 구성
       final List<Question> questionList = await _buildQuestionList();
+
+      // 첫 문제 이미지 생성
       final Question first = questionList.first;
       final String firstImagePath = await _clueService.generateClueImage(
         scene: first.lyricLine.imagePrompt,
         seed: first.imageSeed,
       );
+
+      // 퀴즈 화면 진입
       if (isClosed) return;
       Get.off(
         () => QuestionScreen(
@@ -68,18 +70,25 @@ class LoadingController extends GetxController {
   }
 
   ///
-  /// 시대의 곡을 조회해 이번 라운드의 문제 목록을 만든다
+  /// 퀴즈 리스트 구성
   ///
   Future<List<Question>> _buildQuestionList() async {
+    // 시대의 곡 목록 조회
     final List<Song> songList = await _songService.fetchSongListOf(era);
+
+    // 퀴즈 리스트 구성
     final List<Question> questionList = _roundService.buildRound(
       songList: songList,
       count: _questionCount,
       random: Random(),
     );
+
+    // 퀴즈 리스트가 비어있으면 예외 발생
     if (questionList.isEmpty) {
       throw SongDataException('${era.label} 곡을 찾지 못했습니다');
     }
+
+    // 퀴즈 리스트 반환
     return questionList;
   }
 

@@ -9,9 +9,6 @@ import 'package:picsong/presentation/design_system/foundation/app_radius.dart';
 import 'package:picsong/presentation/design_system/foundation/app_shadows.dart';
 
 /// 그림 생성 연출 액자.
-///
-/// 시대색·코랄 물감 blob이 캔버스 안에서 번지고(bloom), 렌더 시머가 가로지르며,
-/// 중앙 스파크 배지가 숨쉬듯 펄스한다. reduced-motion 시 정지 상태로 표시한다.
 class GenerationCanvas extends HookWidget {
   /// 액자 한 변 길이
   static const double _size = 280;

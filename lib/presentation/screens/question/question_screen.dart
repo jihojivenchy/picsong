@@ -104,12 +104,14 @@ class QuestionScreen extends BaseScreen<QuestionController> {
                   maxLines: 2,
                 ),
                 const Gap(height: AppSpacing.lg),
-                Obx(
-                  () => QuestionActions(
-                    hintUsed: viewModel.hintUsed.value,
-                    onHintTapped: () => _openHint(context),
-                    onRevealTapped: viewModel.revealAnswer,
-                  ),
+                QuestionActions(
+                  onHintTapped: () {
+                    HintBottomSheet.show(
+                      context,
+                      hints: viewModel.currentHints,
+                    );
+                  },
+                  onRevealTapped: viewModel.revealAnswer,
                 ),
               ],
             ),
@@ -125,11 +127,5 @@ class QuestionScreen extends BaseScreen<QuestionController> {
         ),
       ],
     );
-  }
-
-  /// 힌트 사용 처리 후 힌트 시트 표시
-  void _openHint(BuildContext context) {
-    viewModel.useHint();
-    HintBottomSheet.show(context, hints: viewModel.currentHints);
   }
 }
