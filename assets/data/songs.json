@@ -296,15 +296,15 @@
   },
   {
     "id": "song_023",
-    "title": "밤양갱",
-    "artist": "비비",
-    "releaseDate": "2024.02.13",
+    "title": "Cookie",
+    "artist": "뉴진스",
+    "releaseDate": "2022.08.01",
     "era": "2020s",
-    "genre": "R&B/Soul",
+    "genre": "댄스",
+    "acceptList": ["쿠키"],
     "lyricLines": [
-      { "text": "달디달고 달디달고 달디단 밤양갱", "imagePrompt": "A person savors a sweet dark chestnut jelly bar, eyes closed in blissful sweetness, a melty glow around it" },
-      { "text": "내가 먹고 싶었던 건 달디단 밤양갱", "imagePrompt": "A person points longingly at a sweet chestnut jelly bar, this small treat the one thing they truly wanted" },
-      { "text": "아냐 내가 늘 바란 건 하나야 한 개뿐이야 달디단 밤양갱", "imagePrompt": "A person holds up a single sweet chestnut jelly bar, gesturing that this one little thing is all they ever wished for" }
+      { "text": "내가 만든 쿠키 너를 위해 구웠지", "imagePrompt": "A tray of freshly baked chocolate chip cookies just out of the oven, warm steam rising from them" },
+      { "text": "내가 만든 쿠키 너무 부드러우니", "imagePrompt": "A single round chocolate chip cookie with one bite taken out of its edge, crumbs scattered beside it" }
     ]
   },
   {
@@ -329,6 +329,19 @@
     "lyricLines": [
       { "text": "빙빙 돌아가는 회전목마처럼", "imagePrompt": "A large carousel with rows of painted horses under a striped canopy roof, standing in an empty amusement park" },
       { "text": "인생은 회전목마", "imagePrompt": "A single carved carousel horse on a tall spiral pole, ornate saddle and flowing carved mane" }
+    ]
+  },
+  {
+    "id": "song_026",
+    "title": "후라이의 꿈",
+    "artist": "AKMU(악뮤)",
+    "releaseDate": "2023.08.21",
+    "era": "2020s",
+    "genre": "포크/블루스",
+    "acceptList": ["후라이", "계란후라이", "계란프라이"],
+    "lyricLines": [
+      { "text": "따뜻한 밥 위에 누워 자는 계란 fry fry 같이 나른하게", "imagePrompt": "A sunny-side-up fried egg resting on a mound of warm white rice in a bowl, round yellow yolk at the center" },
+      { "text": "고민 하나 없이 퍼져 있는 계란 fry fry 같이 나른하게", "imagePrompt": "A single sunny-side-up fried egg spread wide in a black pan, its round yolk sitting at the center" }
     ]
   }
 ]
