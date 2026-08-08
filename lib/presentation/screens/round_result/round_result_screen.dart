@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/question/question_result.dart';
-import 'package:picsong/presentation/common/base/base_screen.dart';
+import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
 import 'package:picsong/presentation/design_system/components/button/app_button.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
@@ -11,7 +11,7 @@ import 'package:picsong/presentation/screens/round_result/widgets/round_result_v
 import 'package:picsong/presentation/screens/round_result/widgets/round_result_row.dart';
 
 /// 라운드 결과 화면 — 점수 요약 + 문제별 정오 리스트.
-class RoundResultScreen extends BaseScreen {
+class RoundResultScreen extends LegacyBaseScreen {
   /// 방금 진행한 시대
   final Era era;
 

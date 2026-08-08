@@ -1,12 +1,23 @@
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 
-/// Scaffold 골격과 화면 라이프사이클을 제공하는 베이스.
-/// 뷰모델(Cubit)이 필요한 화면은 BaseCubitScreen을 상속한다.
 @immutable
-abstract class BaseScreen extends StatelessWidget {
-  const BaseScreen({super.key});
+abstract class LegacyBaseScreen<T extends GetxController> extends GetView<T> {
+  const LegacyBaseScreen({super.key, this.tag});
+
+  @override
+  final String? tag;
+
+  // GetView의 controller가 tag를 사용하도록 정의
+  @override
+  T get controller => Get.find<T>(tag: tag);
+
+  /// 뷰모델
+  @protected
+  T get viewModel => controller;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +139,7 @@ abstract class BaseScreen extends StatelessWidget {
   @protected
   void onInit(BuildContext context) {}
 
-  /// 화면이 사라질 때 호출
+  /// 화면이 사라질 때 호출 
   @protected
   void onDispose(BuildContext context) {}
 

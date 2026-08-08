@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:picsong/presentation/common/base/base_screen.dart';
+import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 import 'package:picsong/presentation/screens/splash/splash_controller.dart';
 import 'package:picsong/presentation/screens/splash/widgets/splash_body.dart';
 
-class SplashScreen extends BaseScreen<SplashController> {
+class SplashScreen extends LegacyBaseScreen<SplashController> {
   const SplashScreen({super.key});
 
   /// 뷰모델 초기화

@@ -16,7 +16,8 @@
 이 디렉터리의 모든 `.dart`는 다음을 **import해서는 안 된다**.
 
 * `package:flutter/*`
-* `package:get/*`
+* `package:flutter_bloc/*`, `package:bloc/*`, `package:equatable/*`
+* `package:go_router/*`
 * `package:dio/*`
 * `package:hive/*`, `package:firebase_*`
 * `lib/data/**`, `lib/presentation/**`, `lib/utils/**` 중 위 패키지에 의존하는 코드
@@ -49,7 +50,7 @@
 * `domain/services/`의 public 메서드는 순수 함수로 작성한다.
   * 같은 입력이면 항상 같은 출력을 반환한다.
   * 입력 객체/리스트를 직접 변경하지 않고 새 객체/리스트를 반환한다.
-  * 시간, 랜덤, 저장소, 네트워크, 플랫폼, GetX, Logger, Toast를 직접 참조하지 않는다.
+  * 시간, 랜덤, 저장소, 네트워크, 플랫폼, Cubit, Logger, Toast를 직접 참조하지 않는다.
   * `DateTime.now()`가 필요하면 현재 시간을 파라미터로 받는다.
 * 도메인 서비스는 상태를 보관하지 않는다. 모든 메서드는 입력값을 받아 결과값을 반환한다.
 * 여러 값을 받아야 하면 named parameter를 사용한다.
@@ -103,7 +104,7 @@ enum MeetingType {
 * `DTO` 접미사 금지 — 그건 data 계층 명명이다.
 
 ## 8. 금지 사항
-* GetX 의존(`GetxController`, `Rx<>`) 금지.
+* Bloc 의존(`Cubit`, `Bloc`, `Equatable`) 금지 — 화면 State는 presentation 소관이다. (`Async<T>`처럼 순수 Dart로만 쓴 상태 표현 엔티티는 허용.)
 * `BuildContext`, `Widget` 참조 금지.
 * 정적 상수 외에 전역 가변 상태 금지.
 * 단일 호출처를 위한 추상화/인터페이스 신설 금지(Rule of Three → 루트 CLAUDE.md).

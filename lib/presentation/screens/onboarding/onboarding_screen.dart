@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:picsong/presentation/common/base/base_screen.dart';
+import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
 import 'package:picsong/presentation/common/services/dialog_service.dart';
 import 'package:picsong/presentation/design_system/components/dialog/app_dialog.dart';
 import 'package:picsong/presentation/screens/onboarding/onboarding_controller.dart';
@@ -11,7 +11,7 @@ import 'package:picsong/presentation/screens/onboarding/widgets/steps/intro/onbo
 import 'package:picsong/presentation/screens/onboarding/widgets/steps/second/onboarding_on_device_step.dart';
 
 /// 온보딩(최초 1회) 화면 — 4스텝을 한 화면 안에서 전환한다
-class OnboardingScreen extends BaseScreen<OnboardingController> {
+class OnboardingScreen extends LegacyBaseScreen<OnboardingController> {
   const OnboardingScreen({super.key});
 
   /// 뷰모델 초기화

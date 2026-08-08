@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:picsong/presentation/common/base/base_screen.dart';
+import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
 import 'package:picsong/presentation/design_system/components/button/app_button.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
@@ -15,7 +15,7 @@ import 'package:picsong/presentation/screens/prompt_lab/widgets/prompt_trial_ite
 ///
 /// 배치마다 별도 실험실로 뜬다 — 태그로 컨트롤러를 나눠 결과가 섞이지 않는다.
 ///
-class PromptLabScreen extends BaseScreen<PromptLabController> {
+class PromptLabScreen extends LegacyBaseScreen<PromptLabController> {
   /// 이 실험실이 실행할 배치
   final PromptLabBatch batch;
 

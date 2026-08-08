@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picsong/domain/entities/era/era.dart';
-import 'package:picsong/presentation/common/base/base_screen.dart';
+import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
 import 'package:picsong/presentation/common/extensions/era_extension.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
@@ -15,7 +15,7 @@ import 'package:picsong/presentation/screens/round_preparation/widgets/generatio
 import 'package:picsong/presentation/screens/round_preparation/widgets/preparation_caption.dart';
 
 /// 라운드 준비 화면 — 곡을 뽑고 첫 클루 이미지를 생성하는 동안 보여준다
-class RoundPreparationScreen extends BaseScreen<RoundPreparationController> {
+class RoundPreparationScreen extends LegacyBaseScreen<RoundPreparationController> {
   /// 생성 대상 시대
   final Era era;
 

@@ -1,11 +1,23 @@
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-/// Scaffold 없이 라이프사이클만 제공하는 경량 베이스 위젯.
-/// 뷰모델(Cubit)이 필요한 뷰는 BaseCubitView를 상속한다.
+/// Scaffold 없이 컨트롤러만 바인딩하는 경량 베이스 위젯
 @immutable
-abstract class BaseView extends StatelessWidget {
-  const BaseView({super.key});
+abstract class LegacyBaseView<T extends GetxController> extends GetView<T> {
+  const LegacyBaseView({super.key, this.tag});
+
+  @override
+  final String? tag;
+
+  // GetView의 controller가 tag를 사용하도록 정의
+  @override
+  T get controller => Get.find<T>(tag: tag);
+
+  /// 뷰모델
+  @protected
+  T get viewModel => controller;
 
   @override
   Widget build(BuildContext context) {

@@ -8,15 +8,15 @@ and refactorings that comply with the basic principles and nomenclature.
 
 ## 1. 프로젝트 개요
 
-- **프로젝트명:** (TODO: 이름 정하면 넣어주세요) (Flutter 모바일 앱)
+- **프로젝트명:** 픽송(picsong) (Flutter 모바일 앱)
 - **SDK:** Dart ^3.6.2 / Flutter 3.35.x (stable)
-- **상태관리:** GetX (get: ^4.6.6)
+- **상태관리:** Bloc (flutter_bloc: ^9.1.1) — **Cubit 기본**, 상태는 Equatable 불변 State
+- **라우팅:** go_router (2단계 도입 예정)
 - **UI 로컬 상태:** flutter_hooks (^0.21.2)
-- **DI:** get_it (^8.0.2)
-- **네트워크:** Dio (^5.5.0+1)
+- **DI:** DI 컨테이너 없음 — Service는 사용처에서 직접 생성한다.
 - **로컬DB:** Hive (hive_flutter)
-- **보안저장소:** flutter_secure_storage
-- **Firebase:** firebase_core, firebase_messaging
+- **로거:** talker (`AppLogger`)
+- **토스트/로딩:** toastification (`AppToastService`) / flutter_easyloading
 
 ### 주요 명령어
 
@@ -33,7 +33,7 @@ Hybrid Clean Architecture. **편집할 파일의 계층에 맞는 CLAUDE.md를 �
 |---|---|---|
 | API·스토리지·SDK 연동, Service/DTO | `lib/data/` | `lib/data/CLAUDE.md` |
 | 엔티티·순수 도메인 로직 | `lib/domain/` | `lib/domain/CLAUDE.md` |
-| 화면·컨트롤러·위젯 (MVVM+GetX) | `lib/presentation/` | `lib/presentation/CLAUDE.md` |
+| 화면·뷰모델(Cubit)·위젯 (MVVM+Bloc) | `lib/presentation/` | `lib/presentation/CLAUDE.md` |
 | 디자인 토큰·재사용 컴포넌트 | `lib/presentation/design_system/` | `lib/presentation/design_system/CLAUDE.md` |
 | 도메인 무관 범용 유틸 | `lib/utils/` | `lib/utils/CLAUDE.md` |
 
@@ -59,12 +59,13 @@ Hybrid Clean Architecture. **편집할 파일의 계층에 맞는 CLAUDE.md를 �
 * 단일 책임 원칙을 따름
 
 ### 3-4. 순수함수 / 부수효과 분리
-* 비즈니스 로직은 **side-effect shell + pure core**로 나눈다. 계산·변환·검증·필터·정렬은 순수 함수로, I/O·상태 반영·로깅·토스트는 shell에서 처리한다. (계층별 적용은 domain/presentation CLAUDE.md)
+* 비즈니스 로직은 **side-effect shell + pure core**로 나눈다. 계산·변환·검증·필터·정렬은 순수 함수로, I/O·상태 반영(emit)·로깅·토스트는 shell에서 처리한다. (계층별 적용은 domain/presentation CLAUDE.md)
 
 ### 3-5. 문서화 & 멤버 정렬
 * **주석 형식:** 프로퍼티는 1줄(`/// 설명`), 메서드는 3줄 블록(`///` → `/// 설명` → `///`). **What/Why** 중심(구현 설명 아님).
 * **이름 우선:** 주석이 필요 없을 만큼 명확한 이름을 먼저 짓는다. 항상 직관적이고, 일관된 표현으로 네이밍
-* **멤버 순서:** `상수 → 프로퍼티 → 생성자 → 라이프사이클 → public 메서드 → private 메서드`.
+* **멤버 순서:** `생성자 주입 프로퍼티 → 생성자 → 상수 → 일반 프로퍼티 → 라이프사이클 → public 메서드 → private 메서드`. 생성자는 주입 프로퍼티 선언 바로 아래에 붙인다.
+* **영역 구분:** 클래스 안에서 메서드 영역을 나눌 때는 `// MARK: - <영역명>` 주석을 사용한다(계층별 영역 구성은 각 CLAUDE.md).
 
 ### 3-6. Rule of Three
 * 로직/UI가 **3회 이상** 중복될 때만 공통화한다. 2회면 중복(WET)을 허용해 섣부른 추상화를 피한다.

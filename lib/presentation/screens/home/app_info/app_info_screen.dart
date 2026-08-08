@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:picsong/presentation/common/base/base_screen.dart';
+import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/components/text/app_text.dart';
@@ -11,7 +11,7 @@ import 'package:picsong/presentation/screens/home/app_info/app_info_controller.d
 import 'package:picsong/presentation/screens/home/app_info/widgets/app_info_section.dart';
 
 /// 앱 정보 화면 — Stability AI 라이선스 표시 의무를 이행하는 자리
-class AppInfoScreen extends BaseScreen<AppInfoController> {
+class AppInfoScreen extends LegacyBaseScreen<AppInfoController> {
   /// 🚨 라이선스 §4a(iii)가 요구하는 지정 문구 — **번역·변형 금지**
   static const String _poweredBy = 'Powered by Stability AI';
 

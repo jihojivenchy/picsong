@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picsong/domain/entities/era/era.dart';
-import 'package:picsong/presentation/common/base/base_screen.dart';
+import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/screens/home/home_controller.dart';
@@ -11,7 +11,7 @@ import 'package:picsong/presentation/screens/prompt_lab/prompt_lab_batch.dart';
 import 'package:picsong/presentation/screens/prompt_lab/prompt_lab_screen.dart';
 
 /// 홈 화면
-class HomeScreen extends BaseScreen<HomeController> {
+class HomeScreen extends LegacyBaseScreen<HomeController> {
   const HomeScreen({super.key});
 
   /// 뷰모델 초기화

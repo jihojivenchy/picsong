@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/question/question.dart';
 import 'package:picsong/domain/entities/song/scene_count.dart';
-import 'package:picsong/presentation/common/base/base_screen.dart';
+import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
 import 'package:picsong/presentation/common/extensions/era_extension.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
@@ -20,7 +20,7 @@ import 'package:picsong/presentation/screens/question/widgets/question_input_bar
 import 'package:picsong/presentation/screens/question/widgets/question_progress.dart';
 
 /// 퀴즈(문제 풀이) 화면
-class QuestionScreen extends BaseScreen<QuestionController> {
+class QuestionScreen extends LegacyBaseScreen<QuestionController> {
   /// 진행할 시대
   final Era era;
 

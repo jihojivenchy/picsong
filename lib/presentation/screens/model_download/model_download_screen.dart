@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picsong/domain/entities/era/era.dart';
-import 'package:picsong/presentation/common/base/base_screen.dart';
+import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 import 'package:picsong/presentation/screens/model_download/model_download_controller.dart';
 import 'package:picsong/presentation/screens/model_download/widgets/model_download_body.dart';
 
 /// 모델 다운로드 화면 — 완료 즉시 선택한 시대의 게임으로 들어간다
-class ModelDownloadScreen extends BaseScreen<ModelDownloadController> {
+class ModelDownloadScreen extends LegacyBaseScreen<ModelDownloadController> {
   /// 다운로드를 마치면 진입할 게임의 시대
   final Era era;
 
