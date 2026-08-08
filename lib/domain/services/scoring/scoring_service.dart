@@ -22,8 +22,17 @@ class ScoringService {
   bool _isClose(String guess, String target) {
     if (target.isEmpty) return false;
     if (guess == target) return true;
-    final int tolerance = target.length <= 4 ? 1 : 2;
+    final int tolerance = _toleranceOf(target.length);
     return _levenshtein(guess, target) <= tolerance;
+  }
+
+  ///
+  /// 정답 길이에 따른 허용 오타 수 (순수)
+  /// 2글자 이하는 한 글자만 틀려도 다른 단어가 되므로 오차를 허용하지 않는다
+  ///
+  int _toleranceOf(int targetLength) {
+    if (targetLength <= 2) return 0;
+    return targetLength <= 4 ? 1 : 2;
   }
 
   /// 비교용 정규화 — 소문자화 + 공백/문장부호 제거 (순수)

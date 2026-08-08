@@ -4,8 +4,12 @@ import 'package:picsong/data/services/clue/clue_service.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/question/question.dart';
 import 'package:picsong/domain/entities/question/question_result.dart';
+import 'package:picsong/domain/entities/question/question_scene.dart';
 import 'package:picsong/domain/entities/song/song.dart';
 import 'package:picsong/domain/services/scoring/scoring_service.dart';
+import 'package:picsong/presentation/common/services/app_toast_service.dart';
+import 'package:picsong/presentation/design_system/foundation/app_motion.dart';
+import 'package:picsong/presentation/screens/image_detail/image_detail_screen.dart';
 import 'package:picsong/presentation/screens/question/result/question_result_screen.dart';
 import 'package:picsong/presentation/screens/round_result/round_result_screen.dart';
 import 'package:picsong/utils/services/app_logger.dart';
@@ -54,8 +58,11 @@ class QuestionController extends GetxController {
   /// 현재 문제 인덱스 (0-based)
   final RxInt qIndex = 0.obs;
 
-  /// 현재 문제의 클루 이미지 경로 — 비어 있으면 생성 대기
-  final RxString clueImagePath = ''.obs;
+  /// 지금까지 공개된 클루 이미지 경로 목록 — 마지막 항목이 빈 문자열이면 생성 중
+  final RxList<String> clueImagePathList = <String>[].obs;
+
+  /// 현재 문제의 장면을 아직 그리는 중인지 — 다 그려지기 전에는 답안 공개를 막는다
+  final RxBool isGeneratingScenes = false.obs;
 
   /// 현재 문제
   Question get currentQuestion => questionList[qIndex.value];
@@ -69,8 +76,8 @@ class QuestionController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // 첫 이미지 반영
-    clueImagePath.value = firstImagePath;
+    // 로딩 화면이 첫 장면을 미리 뽑아뒀다. 나머지 장면을 이어서 채운다
+    _generateScenes(firstImagePath: firstImagePath);
   }
 
   @override
@@ -97,9 +104,43 @@ class QuestionController extends GetxController {
   }
 
   ///
-  /// 답안 공개 — 문제 결과 화면으로 이동
+  /// 답안 공개 — 그림이 다 그려진 뒤에만 연다
   ///
-  void revealAnswer() => _goToQuestionResult(isCorrect: false);
+  /// 결과 화면은 그림 목록을 스냅샷으로 받으므로, 그리는 중에 열면
+  /// 못 채운 칸이 그대로 남는다.
+  ///
+  void revealAnswer() {
+    if (isGeneratingScenes.value) {
+      AppToastService.show('그림을 아직 그리고 있어요');
+      return;
+    }
+    _goToQuestionResult(isCorrect: false);
+  }
+
+  ///
+  /// 클루 그림 크게 보기 — 아직 채워지지 않은 자리는 빼고 넘긴다
+  ///
+  void openSceneDetail(int index) {
+    final List<String> scenePathList = clueImagePathList.toList();
+    final List<String> revealedPathList =
+        scenePathList.where((String path) => path.isNotEmpty).toList();
+    final int initialIndex = scenePathList
+        .take(index)
+        .where((String path) => path.isNotEmpty)
+        .length;
+    Get.to(
+      () => ImageDetailScreen(
+        imagePathList: revealedPathList,
+        initialIndex: initialIndex,
+      ),
+      opaque: false,
+      // 뒤 화면이 비치는 라우트라 뒤 화면이 밀려나면 안 된다.
+      // fullscreenDialog는 canTransitionTo를 막아 뒤 화면의 퇴장 애니메이션을 끈다.
+      fullscreenDialog: true,
+      transition: Transition.fadeIn,
+      duration: AppMotion.durationBase,
+    );
+  }
 
   ///
   /// 다음 단계 진행 — 마지막이면 라운드 결과, 아니면 다음 문제
@@ -118,8 +159,8 @@ class QuestionController extends GetxController {
     // 다음 문제로 이동
     qIndex.value++;
 
-    // 다음 문제의 이미지 생성
-    _generateClueImage();
+    // 다음 문제의 장면 전부 생성
+    _generateScenes();
 
     // 텍스트 필드 초기화
     textController.clear();
@@ -129,23 +170,34 @@ class QuestionController extends GetxController {
   }
 
   ///
-  /// 현재 문제의 클루 이미지를 온디바이스로 생성해 상태에 반영
+  /// 현재 문제의 클루 장면을 앞에서부터 순서대로 생성해 채운다
   ///
-  Future<void> _generateClueImage() async {
-    // 이미지 경로 초기화
-    clueImagePath.value = '';
+  /// [firstImagePath]가 있으면 첫 장면은 그것을 쓰고 둘째 장면부터 생성한다.
+  /// 생성 전 자리는 빈 문자열이며, 화면은 이를 로딩으로 표시한다.
+  ///
+  Future<void> _generateScenes({String firstImagePath = ''}) async {
+    final List<QuestionScene> sceneList = currentQuestion.sceneList;
+    isGeneratingScenes.value = true;
+    clueImagePathList.assignAll(
+      List<String>.filled(sceneList.length, '')..[0] = firstImagePath,
+    );
+    for (int index = 0; index < sceneList.length; index++) {
+      if (clueImagePathList[index].isNotEmpty) continue;
+      clueImagePathList[index] = await _generateScene(sceneList[index]);
+    }
+    isGeneratingScenes.value = false;
+  }
 
-    // 현재 문제 정보 조회
-    final Question question = currentQuestion;
-
+  /// 장면 하나를 생성해 파일 경로를 반환, 실패하면 빈 문자열
+  Future<String> _generateScene(QuestionScene scene) async {
     try {
-      // 이미지 생성 요청
-      clueImagePath.value = await _clueService.generateClueImage(
-        scene: question.lyricLine.imagePrompt,
-        seed: question.imageSeed,
+      return await _clueService.generateClueImage(
+        scene: scene.imagePrompt,
+        seed: scene.imageSeed,
       );
     } catch (error) {
       AppLogger.error('클루 이미지 생성 실패', error: error);
+      return '';
     }
   }
 
@@ -170,7 +222,8 @@ class QuestionController extends GetxController {
       () => QuestionResultScreen(
         era: era,
         question: currentQuestion,
-        imagePath: clueImagePath.value,
+        imagePathList: clueImagePathList.toList(),
+        onSceneTapped: openSceneDetail,
         isCorrect: isCorrect,
         isLast: _isLastQuestion,
         onNext: goToNext,

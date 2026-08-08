@@ -50,8 +50,8 @@ class RoundPreparationController extends GetxController {
       // 첫 문제 이미지 생성
       final Question first = questionList.first;
       final String firstImagePath = await _clueService.generateClueImage(
-        scene: first.lyricLine.imagePrompt,
-        seed: first.imageSeed,
+        scene: first.firstScene.imagePrompt,
+        seed: first.firstScene.imageSeed,
       );
 
       // 퀴즈 화면 진입

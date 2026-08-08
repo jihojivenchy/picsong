@@ -71,7 +71,7 @@ class QuestionResultSongCard extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         AppText(
-          text: '이 그림이 담은 노래',
+          text: '이 그림들이 담은 노래',
           style: AppTypography.caption,
           color: AppColors.textSubtle,
         ),

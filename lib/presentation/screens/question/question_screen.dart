@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/question/question.dart';
+import 'package:picsong/domain/entities/song/scene_count.dart';
 import 'package:picsong/presentation/common/base/base_screen.dart';
 import 'package:picsong/presentation/common/extensions/era_extension.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/components/text/app_text.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
+import 'package:picsong/presentation/design_system/foundation/app_radius.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
 import 'package:picsong/presentation/screens/question/question_controller.dart';
 import 'package:picsong/presentation/screens/question/widgets/hint_bottom_sheet.dart';
 import 'package:picsong/presentation/screens/question/widgets/question_actions.dart';
-import 'package:picsong/presentation/screens/question/widgets/question_image.dart';
+import 'package:picsong/presentation/screens/question/widgets/scene/question_scene_view.dart';
 import 'package:picsong/presentation/screens/question/widgets/question_input_bar.dart';
 import 'package:picsong/presentation/screens/question/widgets/question_progress.dart';
 
@@ -93,8 +95,19 @@ class QuestionScreen extends BaseScreen<QuestionController> {
                     ),
                   ),
                 ),
-                Obx(() =>
-                    QuestionImage(imageURL: viewModel.clueImagePath.value)),
+                Obx(
+                  () => QuestionSceneView(
+                    sceneCount: viewModel.currentQuestion.lyricLine.sceneCount,
+                    imagePathList: viewModel.clueImagePathList.toList(),
+                    onSceneTapped: viewModel.openSceneDetail,
+                  ),
+                ),
+                const Gap(height: AppSpacing.lg),
+                Obx(
+                  () => _buildCaption(
+                    viewModel.currentQuestion.lyricLine.sceneCount,
+                  ),
+                ),
                 const Gap(height: AppSpacing.lg),
                 AppText(
                   text: '이 그림이 떠올리게 하는 노래는?',
@@ -128,4 +141,43 @@ class QuestionScreen extends BaseScreen<QuestionController> {
       ],
     );
   }
+
+  ///
+  /// 그림들이 가사 한 줄이라는 규칙을 알리는 안내 칩
+  ///
+  Widget _buildCaption(SceneCount sceneCount) {
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(AppRadius.sm),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const Icon(
+            Icons.auto_awesome,
+            size: 14,
+            color: AppColors.textMuted,
+          ),
+          const Gap(width: AppSpacing.xs),
+          AppText(
+            text: _captionTextOf(sceneCount),
+            style: AppTypography.caption,
+            color: AppColors.textMuted,
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 장수에 맞는 안내 문구
+  String _captionTextOf(SceneCount sceneCount) => switch (sceneCount) {
+        SceneCount.one => '이 그림이 가사 한 줄을 나타냅니다',
+        SceneCount.two => '두 그림이 가사 한 줄을 나타냅니다',
+        SceneCount.three => '세 그림이 가사 한 줄을 나타냅니다',
+      };
 }
