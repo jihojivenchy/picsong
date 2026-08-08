@@ -79,6 +79,7 @@ dependencies:
   path: any
   http_parser: any
   collection: any
+  photo_view: ^0.15.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
