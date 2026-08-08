@@ -3,15 +3,20 @@ import UIKit
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
-  /// 플랫폼 채널 모듈 — 앱 생명주기 동안 유지하기 위해 보관한다.
+  /// 플랫폼 채널 브릿지
   private var clueBridge: ClueChannelBridge?
+
+  /// 모델 설치 채널 브릿지
   private var modelInstallBridge: ModelInstallChannelBridge?
 
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    // 플러터 플러그인 등록
     GeneratedPluginRegistrant.register(with: self)
+
+    // 플랫폼 채널 등록
     registerChannels()
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
@@ -33,15 +38,20 @@ import UIKit
     ModelInstaller.shared.backgroundCompletionHandler = completionHandler
   }
 
-  /// 플랫폼 채널 모듈을 등록한다 — 채널 이름·메서드 계약은 AppChannel이 소유한다.
+  /// 플랫폼 채널 모듈을 등록한다
   private func registerChannels() {
+    // 루트 컨트롤러 조회
     guard let controller = window?.rootViewController as? FlutterViewController else { return }
+
+    // 메시지 브로커 조회
     let messenger: FlutterBinaryMessenger = controller.binaryMessenger
 
+    // 클루 채널 등록
     let clueBridge = ClueChannelBridge()
     clueBridge.register(messenger: messenger)
     self.clueBridge = clueBridge
 
+    // 모델 설치 채널 등록
     let modelInstallBridge = ModelInstallChannelBridge()
     modelInstallBridge.register(messenger: messenger)
     self.modelInstallBridge = modelInstallBridge

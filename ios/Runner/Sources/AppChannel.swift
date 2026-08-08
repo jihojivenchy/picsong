@@ -23,10 +23,12 @@ enum AppChannel {
         enum Argument {
             static let prompt: String = "prompt"
             static let seed: String = "seed"
+            /// 디노이징 스텝 수 — 선택값, 없으면 기본값을 쓴다
+            static let steps: String = "steps"
         }
     }
 
-    /// 모델 다운로드·설치 — Dart `ModelInstallService`(model_install_service.dart)
+    /// 모델 다운로드·설치
     enum ModelInstall {
         /// MethodChannel: Dart → 네이티브 제어(start/state)
         static let method: String = "picsong/model_installer"

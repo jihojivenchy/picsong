@@ -11,7 +11,7 @@ import Foundation
 /// 모델 다운로드·검증·설치를 소유하는 싱글톤.
 /// 상태의 소유자는 이 객체다 — Dart는 조회·표시만 한다.
 final class ModelInstaller: NSObject {
-    // MARK: 상수
+    // MARK: - 상수
 
     /// 백그라운드 세션 식별자 — 앱 재실행 시 같은 값으로 만들어야 진행 중 전송을 되찾는다
     static let sessionIdentifier: String = "picsong.model.installer"
@@ -37,7 +37,7 @@ final class ModelInstaller: NSObject {
 
     static let shared: ModelInstaller = ModelInstaller()
 
-    // MARK: 프로퍼티
+    // MARK: - 프로퍼티
 
     /// iOS가 백그라운드 이벤트 전달 후 호출을 요구하는 완료 핸들러 — AppDelegate가 넣어준다
     var backgroundCompletionHandler: (() -> Void)?
@@ -95,20 +95,32 @@ final class ModelInstaller: NSObject {
     // MARK: public
 
     ///
-    /// 다운로드를 시작한다. 진행 중이거나 설치돼 있으면 아무것도 하지 않는다.
+    /// 다운로드 시작
     ///
     func start() {
         delegateQueue.addOperation { [self] in
+            // 진행 중이거나 설치돼 있으면 아무것도 하지 않음
             guard state == .notInstalled || state == .failed else { return }
+
+            // 완료를 백그라운드에서 알리기 위한 권한 — 거절해도 다운로드는 진행된다
+            ModelInstallNotifier.requestAuthorization()
+
+            // 재시도 횟수 초기화
             retryCounts = [:]
+
             do {
+                // 임시 디렉토리 준비 (검증 후 최종 설치 폴더로 승격)
                 try prepareStagingDirectory()
             } catch {
                 NSLog("%@", "[ModelInstaller] 작업장 준비 실패: \(error)")
                 transition(to: .failed)
                 return
             }
+
+            // 다운로드 상태로 전환
             transition(to: .downloading)
+
+            // 임시 디렉토리에서 manifest.json 로드 후 처리 (manifest.json은 어떤 파일들을 다운로드해야 하는지 적힌 목록표)
             if let staged: ModelManifest = loadStagedManifest() {
                 adopt(staged)
             } else {
@@ -180,15 +192,21 @@ final class ModelInstaller: NSObject {
     }
 
     ///
-    /// [taskDescription]이 가리키는 파일의 백그라운드 다운로드를 등록한다.
-    /// URL은 항상 resolve 루트에서 새로 만든다 — 해석된 CDN 주소를 저장하지 않는다
+    /// 다운로드 등록
     ///
     private func enqueueDownload(taskDescription: String) {
+        // 파일 경로 생성 (manifest.json은 따로 처리)
         let relativePath: String =
             taskDescription == Self.manifestTag ? Self.manifestFileName : taskDescription
+
+        // 다운로드 작업 생성
         let task: URLSessionDownloadTask =
             session.downloadTask(with: Self.repoBase.appending(path: relativePath))
+
+        // 작업 설명 설정
         task.taskDescription = taskDescription
+
+        // 시작
         task.resume()
     }
 
@@ -226,7 +244,9 @@ final class ModelInstaller: NSObject {
         Dictionary(uniqueKeysWithValues: manifest.files.filter(isStaged).map { ($0.path, $0.bytes) })
     }
 
-    /// 작업장의 manifest — 있으면 이전 회차가 어디까지 왔는지의 기준
+    ///
+    /// manifest 조회
+    ///
     private func loadStagedManifest() -> ModelManifest? {
         try? ModelManifest.load(from: stagingDirectory.appending(path: Self.manifestFileName))
     }
@@ -332,10 +352,11 @@ private extension ModelInstaller {
         enqueueDownload(taskDescription: tag)
     }
 
-    /// 상태를 바꾸고 즉시 알린다
+    /// 상태를 바꾸고 즉시 알린다 — 백그라운드라면 로컬 알림으로도 알린다
     func transition(to newState: ModelInstallState) {
         state = newState
         emitProgress(force: true)
+        ModelInstallNotifier.notify(state: newState)
     }
 
     ///

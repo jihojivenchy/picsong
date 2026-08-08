@@ -41,14 +41,20 @@ final class ClueChannelBridge {
             result(FlutterError(code: "invalid_arguments", message: "prompt와 seed가 필요합니다", details: nil))
             return
         }
-        generate(prompt: prompt, seed: UInt32(truncatingIfNeeded: seed), result: result)
+        let steps: Int? = arguments?[AppChannel.Clue.Argument.steps] as? Int
+        generate(
+            prompt: prompt,
+            seed: UInt32(truncatingIfNeeded: seed),
+            steps: steps,
+            result: result
+        )
     }
 
     /// 백그라운드에서 한 장 생성하고 파일 경로를 돌려준다.
-    private func generate(prompt: String, seed: UInt32, result: @escaping FlutterResult) {
+    private func generate(prompt: String, seed: UInt32, steps: Int?, result: @escaping FlutterResult) {
         queue.async {
             do {
-                let url: URL = try ClueGenerator.generate(prompt: prompt, seed: seed)
+                let url: URL = try ClueGenerator.generate(prompt: prompt, seed: seed, steps: steps)
                 DispatchQueue.main.async { result(url.path) }
             } catch {
                 DispatchQueue.main.async {
