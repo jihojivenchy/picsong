@@ -1,3 +1,6 @@
+import 'package:picsong/data/services/clue/clue_service.dart';
+import 'package:picsong/domain/services/round/round_service.dart';
+
 /// 실험 한 건 — 보낼 프롬프트와 받은 결과
 class PromptTrial {
   /// 결과 화면에 붙는 짧은 라벨
@@ -39,7 +42,7 @@ class PromptTrial {
 
 /// 실험실 하나가 실행할 배치 — 실험실은 배치 하나당 하나씩 뜬다
 class PromptLabBatch {
-  /// GetX 인스턴스 구분 태그 — 실험실마다 컨트롤러와 결과가 따로 산다
+  /// 뷰모델 캐시 키 — 실험실마다 뷰모델과 결과가 따로 산다
   final String tag;
 
   /// 앱바에 표시할 실험실 이름
@@ -63,42 +66,44 @@ class PromptLabBatch {
 /// 늘리는 이유는 **배치를 여러 벌 살려두기 위해서**다.
 ///
 abstract class PromptLabBatches {
-  /// 실험 기본 시드 — 조건 차이만 보려면 시드를 고정해야 한다
+  /// 실험 기본 시드 — **게임이 쓰는 시드를 그대로 가져온다**
   ///
-  /// 채택 직전 검증에는 이 값 대신 **게임이 실제로 쓸 시드**를 넘긴다.
-  /// 게임 시드는 곡 번호에서 파생된다 — `RoundService._imageSeedOf` 참조.
-  /// `곡번호 * 1000 + 가사줄 순번 * 10 + 장면 순번` (song_039 첫 장면 → 39000)
-  static const int _fixedSeed = 8888;
+  /// 곡 번호에서 시드를 파생하던 시절에는 실험실 채택본과 게임 화면이 서로 달랐다.
+  /// 같은 숫자를 양쪽이 따로 들고 있으면 언젠가 또 갈라지므로 직접 참조한다.
+  static const int _fixedSeed = RoundService.imageSeed;
 
-  /// 게임이 실제로 붙이는 화풍 프리픽스 — 3토큰
-  static const String _prefix = 'gouache painting, ';
+  /// 화풍 프리픽스 — **게임이 붙이는 것을 그대로 가져온다**
+  ///
+  /// 실험실은 `generateRawImage`로 프리픽스까지 직접 만들어 보내므로,
+  /// 이 값이 게임과 다르면 같은 장면을 써도 다른 그림이 나온다.
+  static const String _prefix = ClueService.stylePrefix;
 
   ///
-  /// 56차 배치 — 53차 7번(**다리가 주어인 문장**) 하나만 벌린다
+  /// 58차 배치 — 「칵테일 사랑」(song_006) 첫째 줄 3장 구성
   ///
-  /// 「하늘을 달리다」(song_011) — "설혹 너무 태양 가까이 날아 두 다리 모두 녹아 내린다고 해도".
-  /// 3장 중 둘은 채택됐다.
-  /// ```
-  /// 1장 태양 a blazing sun high in an empty sky, bright yellow light spreading outward
-  /// 2장 비행 a person flying close to the sun            (53차 3번)
-  /// ```
-  /// 남은 3장은 53차 7번 `melting legs on a human figure`가 유력 후보다.
-  /// **그 문장 골격은 건드리지 않는다** — `melting legs`를 맨 앞에 두는 어순이
-  /// 53차에서 유일하게 살아남은 형태이고, §4-1(그리려는 것이 주어)에도 맞는다.
+  /// "마음 울적한 날엔 거리를 걸어 보고 향기로운 칵테일에 취해도 보고"
   ///
-  /// 바꾸는 것은 넷뿐이다.
-  /// ① **대상 명사**(2~3번) — `human figure`가 인체 모형처럼 나올 수 있다.
-  ///    `person`·`man`으로 바꿨을 때 사람다워지는지 본다.
-  /// ② **상태 어휘**(4~5번) — 진행형 대신 완료형(`melted`), 그리고 `dissolving`.
-  ///    §4-18대로 진행 상태가 무시된다면 완료형이 더 유리할 수 있다.
-  /// ③ **녹음의 증거·부위**(6~7번) — 흘러내리는 자국을 명시하거나(§4-3),
-  ///    다리 대신 하반신 전체로 범위를 넓힌다.
-  /// ④ **맥락과 길이**(8~9번) — 가사대로 하늘을 넣은 형태, 그리고 최단형.
-  ///    9번은 사람 없이 다리만 부르는데, §4-9대로라면 복수 `legs`가 오히려
-  ///    사람을 불러올 수 있다. 그렇게 나오면 그게 최선의 문장이다.
+  /// - 1장: 쓸쓸히 거리를 걷는 여자
+  /// - 2장: 칵테일
+  /// - 3장: 취한 여자
   ///
-  /// 1번은 53차 7번 원본이다. 시드가 같아 같은 그림이 나오므로 맨 위에서
-  /// **비교 기준선** 노릇을 한다.
+  /// **`향기로운`은 버렸다.** 후각은 그릴 수 없다(§7). 칵테일 잔이 그 자리를 대신한다.
+  ///
+  /// 조각마다 1번이 요청 그대로의 리터럴이고, 2·3번이 그 변형이다.
+  ///
+  /// ① **울적함(1~3번)** — 감정 단독은 §6의 제외 대상이라 **물리적 증거**로 옮긴다.
+  ///    §4-3이 「울적하다 → 숙인 고개」를 직접 처방해 뒀다. 3번은 §4-11대로
+  ///    뒷모습으로 잡아 얼굴 붕괴 여지를 없애고, 빈 거리로 쓸쓸함을 만든다.
+  ///
+  /// ② **칵테일(4~6번)은 가장 쉽다.** 잔은 실루엣이 특징적인 단독 피사체다.
+  ///    다만 **색은 넣지 않는다** — 칵테일은 표준색이 없어서 §4-5의 색 흘림에
+  ///    정면으로 걸린다. 레몬만 예외로 쓴다(노랑이 내장색).
+  ///
+  /// ③ **취함(7~9번)이 승부처다.** §4-3이 「취하다 → 붉게 상기된 볼, 감은 눈」을
+  ///    처방했지만 그 뒤 §4-18에서 `eyes closed`가 24차에 6장 중 5장 실패했다.
+  ///    그래서 눈은 건드리지 않고 `flushed`만 쓴다 — 색 단어가 아니라 상태어라
+  ///    §4-5의 색 흘림에서도 비교적 안전하다. 8번은 §4-18의 성공 패턴대로
+  ///    **상태를 지시하는 대신 그 상태가 당연한 상황**(테이블에 엎드림)을 준다.
   ///
   /// 시드는 8888 고정.
   ///
@@ -106,51 +111,52 @@ abstract class PromptLabBatches {
     tag: 'prompt-lab-1',
     title: '프롬프트 실험실 1',
     trialList: <PromptTrial>[
-      // 기준선 — 53차 7번 원본
-      _trial(1, '기준선 — 53차 7번', 'melting legs on a human figure'),
+      // 거리를 걷는 여자 — 울적함은 숙인 고개로 옮긴다(§4-3)
+      _trial(1, '거리 — 리터럴', 'a woman walking alone down a city street'),
+      _trial(2, '거리 — 숙인 고개',
+          'a woman walking alone down a street, head lowered'),
+      _trial(3, '거리 — 뒷모습',
+          'a woman seen from behind walking down an empty street'),
 
-      // 대상 명사 — `human figure`가 인체 모형처럼 나올 위험을 본다
-      _trial(2, '대상 — person', 'melting legs on a person'),
-      _trial(3, '대상 — man', 'melting legs on a man'),
+      // 칵테일 — 색은 넣지 않는다(§4-5). 잔의 형태만 바꾼다
+      _trial(4, '칵테일 — 리터럴', 'a cocktail glass on a table'),
+      _trial(5, '칵테일 — 마티니 잔',
+          'a martini glass with a slice of lemon on the rim'),
+      _trial(6, '칵테일 — 롱드링크',
+          'a tall cocktail glass with ice and a straw'),
 
-      // 상태 어휘 — 진행형이 무시된다면 완료형이 유리할 수 있다(§4-18)
-      _trial(4, '완료형', 'melted legs on a human figure'),
-      _trial(5, '용해', 'dissolving legs on a human figure'),
-
-      // 녹음의 증거·부위 — 흘러내린 자국, 그리고 하반신 전체
-      _trial(6, '흘러내림 자국',
-          'melting legs on a human figure, drips running down'),
-      _trial(7, '하반신 전체', 'a melting lower body on a human figure'),
-
-      // 맥락과 길이 — 가사대로 하늘, 그리고 최단형
-      _trial(8, '하늘 맥락', 'melting legs on a human figure in the sky'),
-      _trial(9, '최단', 'melting legs'),
+      // 취한 여자 — 눈은 건드리지 않는다(§4-18). 표정·상황·소품으로 나눈다
+      _trial(7, '취함 — 리터럴', 'a drunk woman with flushed cheeks'),
+      _trial(8, '취함 — 상황',
+          'a woman resting her head on a table, a glass beside her'),
+      _trial(9, '취함 — 소품',
+          'a woman holding a cocktail glass, flushed face'),
     ],
   );
 
   ///
-  /// 57차 배치 — 「깊은 밤을 날아서」(song_005) 첫째 줄 3장 구성
+  /// 59차 배치 — 「네모의 꿈」(song_010) 첫째 줄 2장 구성. **색 통일이 승부처다**
   ///
-  /// "고운 그대 손을 잡고 밤하늘을 날아서 궁전으로 갈 수도 있어"
+  /// "네모난 침대에서 일어나 눈을 떠보면 네모난 창문으로 보이는 똑같은 풍경"
   ///
-  /// - 1장: 손을 잡는 모습
-  /// - 2장: 밤하늘을 나는 모습 — 넷째 줄 채택본을 그대로 쓴다
-  /// - 3장: 궁전
+  /// - 1장: 네모난 침대에서 일어나는 사람
+  /// - 2장: 네모난 창문을 보는 사람
   ///
-  /// 2장은 이미 답이 있으므로(`a person flying in the night sky`) 확인용 1건만
-  /// 싣고, 나머지 8건을 손잡기와 궁전에 4·4로 나눈다.
+  /// **`square`만으로는 아무것도 달라지지 않는다.** 침대도 창문도 원래 사각형이라
+  /// 그 단어가 화면에 만드는 변화가 없다. 두 장을 「네모의 꿈」으로 읽히게 하는
+  /// 건 결국 **두 장이 같은 색을 공유하는 것**뿐이다. 색을 변수로 돌리는 이유다.
   ///
-  /// ① **손잡기(1~4번)는 §4-9에 정면으로 걸린다.** 문서가 `both hands`를
-  ///    실패 사례로 못 박았다 — 복수 신체 부위는 전신 인물로 되돌아가거나
-  ///    한쪽만 그려진다. 그런데 손잡기는 손이 둘인 게 본질이라 단수 프레이밍이
-  ///    불가능하다. 그래서 갈래를 둘로 벌린다. **사람을 주어로 두면**(1~2번)
-  ///    전신으로 되돌아가도 그게 곧 정답 그림이고, **손만 부르면**(3~4번)
-  ///    §4-9대로 깨질 위험을 무릅쓰고 손 클로즈업을 노린다.
+  /// **그런데 그게 §4-5 정면이다.** 침대와 창문은 표준색이 없는 대상이라
+  /// 색을 붙이면 옆으로 샌다(「좋은 날」에서 빨강이 눈 대신 눈물 자국에 붙었다).
+  /// 다만 하트는 `A red heart shape, flat solid color`로 성공했다 — 9번이
+  /// 그 표현을 그대로 이식해, 색이 안 붙는 게 대상 탓인지 표현 탓인지 가른다.
   ///
-  /// ② **궁전(6~9번)은 song_007과 겹치면 안 된다.** 「마법의 성」이 이미
-  ///    `a fairytale castle with tall pointed towers on a hill`을 쓰고 있다.
-  ///    뾰족한 탑이 또 나오면 두 곡의 그림이 헷갈린다. 그래서 castle이 아니라
-  ///    **palace의 도상**(넓은 대칭 파사드·돔·기둥)으로 몰아간다.
+  /// **어순 트레이드오프가 하나 더 있다.** 요청대로 사람을 주어로 두면
+  /// (`a person sitting up in a square bed`) 침대가 12번째로 밀려 §1에 걸린다.
+  /// 그래서 1·5번만 리터럴로 두고, 2~8번은 **네모난 사물을 주어로 올렸다**(§4-1).
+  ///
+  /// 색은 침대·창문에 같은 순서로 걸었다 — **2·6(파랑) / 3·7(빨강) / 4·8(노랑)**
+  /// 짝으로 보면 한 색이 두 장 모두에서 버티는지 바로 읽힌다.
   ///
   /// 시드는 8888 고정.
   ///
@@ -158,27 +164,36 @@ abstract class PromptLabBatches {
     tag: 'prompt-lab-2',
     title: '프롬프트 실험실 2',
     trialList: <PromptTrial>[
-      // 손잡기 A — 사람이 주어. 전신으로 되돌아가도 그게 정답 그림이다
-      _trial(1, '커플 — 최단', 'a couple holding hands'),
-      _trial(2, '커플 — 뒷모습',
-          'a couple holding hands, seen from behind'),
+      // 침대 — 1번만 요청 그대로의 리터럴, 나머지는 침대를 주어로 올린다
+      _trial(1, '침대 — 리터럴(무색)', 'a person sitting up in a square bed'),
+      _trial(2, '침대 — 파랑', 'a blue square bed with a person sitting up'),
+      _trial(3, '침대 — 빨강', 'a red square bed with a person sitting up'),
+      _trial(4, '침대 — 노랑', 'a yellow square bed with a person sitting up'),
 
-      // 손잡기 B — 손만 부른다. §4-9대로라면 깨지는 쪽이다
-      _trial(3, '손만 — 복수(대조군)', 'two hands clasped together'),
-      _trial(4, '손만 — 단수 프레이밍', 'a hand holding another hand'),
+      // 창문 — 침대와 같은 색 순서로 건다. 짝지어 비교하기 위해서다
+      _trial(5, '창문 — 리터럴(무색)', 'a person looking out a square window'),
+      _trial(6, '창문 — 파랑',
+          'a blue square window with a person looking out'),
+      _trial(7, '창문 — 빨강',
+          'a red square window with a person looking out'),
+      _trial(8, '창문 — 노랑',
+          'a yellow square window with a person looking out'),
 
-      // 밤하늘 비행 — 넷째 줄 채택본. 시드가 같아 확인용이다
-      _trial(5, '비행 — 채택본', 'a person flying in the night sky'),
-
-      // 궁전 — castle이 아니라 palace의 도상으로 간다
-      _trial(6, '궁전 — 대칭 파사드',
-          'a grand palace with a wide symmetric facade'),
-      _trial(7, '궁전 — 돔과 아치', 'a golden palace with domes and arches'),
-      _trial(8, '궁전 — 기둥', 'a white marble palace with tall columns'),
-      _trial(9, '궁전 — 밤하늘 맥락',
-          'a fairytale palace glowing in the night sky'),
+      // 색만 진단 — 하트가 성공한 표현을 이식해 색이 사물에 붙는지 본다(§4-5)
+      _trial(9, '색 진단 — 평면색', 'a blue square window, flat solid color'),
     ],
   );
+
+  /// 실험실 배치 전체 — 라우트가 tag로 배치를 되찾는 데 쓴다
+  static final List<PromptLabBatch> values = <PromptLabBatch>[first, second];
+
+  ///
+  /// tag에 해당하는 배치 (미상이면 첫 배치)
+  ///
+  static PromptLabBatch fromTag(String tag) => values.firstWhere(
+        (PromptLabBatch batch) => batch.tag == tag,
+        orElse: () => first,
+      );
 
   ///
   /// 게임과 같은 프리픽스를 붙여 실험 한 건을 만든다

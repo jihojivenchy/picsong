@@ -24,7 +24,11 @@ class ClueService {
   ///
   /// 실기기 실측(2026-08-03): 프리픽스가 21토큰이던 시절 핵심 명사가 34번째로
   /// 밀려 전부 누락됐다. 앞 7토큰 안에 들어와야 그려진다.
-  static const String _stylePrefix = 'gouache painting, ';
+  ///
+  /// **실험실이 이 상수를 직접 참조한다**(`PromptLabBatches._prefix`).
+  /// 실험실은 프리픽스를 직접 붙여 보내므로, 두 곳이 갈라지면 실험실에서
+  /// 채택한 그림이 게임에서 재현되지 않는다.
+  static const String stylePrefix = 'gouache painting, ';
 
   ///
   /// 가사 장면([scene]) 묘사로 클루 이미지를 생성하고 저장된 로컬 파일 경로를 반환
@@ -37,7 +41,7 @@ class ClueService {
       final String? path = await _channel.invokeMethod<String>(
         _Channel.generate,
         <String, dynamic>{
-          _Channel.promptArgument: '$_stylePrefix$scene',
+          _Channel.promptArgument: '$stylePrefix$scene',
           _Channel.seedArgument: seed,
         },
       );

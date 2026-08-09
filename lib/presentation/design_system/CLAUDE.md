@@ -17,14 +17,14 @@
 컴포넌트는 어떤 화면에 놓여도 동작해야 한다.
 
 * 특정 화면/피처의 비즈니스 로직, 화면 상태 참조 금지.
-* 특정 Controller 참조 금지 — `Get.find<XController>()` / `Get.put()` 금지. 데이터는 생성자 파라미터로, 이벤트는 콜백으로 받는다.
-* 허용되는 GetX 사용(기존 관례):
-  * 자기 자신을 닫는 `Get.back()` (bottom sheet / dialog / 앱바 뒤로가기 기본 동작)
-  * 제네릭 Rx를 **파라미터로 받는** 컴포넌트 (예: `DsAnimatedSwitcher`의 `Rx<Ds<T>>`)
+* 특정 Cubit 참조 금지 — `BlocProvider`/`BlocBuilder`/`context.read<XCubit>()` 금지. 데이터는 생성자 파라미터로, 이벤트는 콜백으로 받는다.
+* 허용되는 관례:
+  * 자기 자신을 닫는 `Navigator.of(context).pop()` (bottom sheet / dialog / 앱바 뒤로가기 기본 동작)
+  * 제네릭 `Async<T>`를 **파라미터로 받는** 컴포넌트 (예: `AsyncAnimatedSwitcher`) — 값만 받을 뿐 구독은 호출부(Screen) 책임이다.
 
 ## 3. 의존성 규칙
-* **허용:** Flutter SDK, `foundation/` 토큰, `lib/domain/entities/`의 순수 엔티티(`Ds<T>`, `Region` 등).
-* **금지:** `lib/data/`(Service·DTO·Dio), `lib/presentation/screens/`. screens를 import하는 순간 재사용 컴포넌트가 아니다.
+* **허용:** Flutter SDK, `foundation/` 토큰, `lib/domain/entities/`의 순수 엔티티(`Async<T>`, `Era` 등).
+* **금지:** `lib/data/`(Service·DTO·Dio), `lib/presentation/screens/`, `package:flutter_bloc`(컴포넌트가 Cubit을 알면 재사용 컴포넌트가 아니다), `package:go_router`(화면 이동은 Screen 소관 — 닫기는 `Navigator.pop`).
 
 ## 4. 새 컴포넌트 추가 전 체크
 1. 기존 컴포넌트에 variant/파라미터 추가로 해결되는지 먼저 검토한다.

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
@@ -59,7 +59,7 @@ class ImageDetailViewer extends HookWidget {
       if (!isDragging.value) return;
       // 닫히는 중에는 제자리로 되돌리는 애니메이션을 시작하지 않는다
       if (dragOffset.value.abs() > _dismissDistance) {
-        Get.back<void>();
+        context.pop();
         return;
       }
       isDragging.value = false;
@@ -83,7 +83,7 @@ class ImageDetailViewer extends HookWidget {
               dragOffset: dragOffset,
               isDragging: isDragging,
             ),
-            _buildCloseButton(),
+            _buildCloseButton(context),
             if (imagePathList.length > 1) _buildIndicator(currentIndex.value),
           ],
         ),
@@ -190,13 +190,13 @@ class ImageDetailViewer extends HookWidget {
   ///
   /// 좌상단 닫기 버튼
   ///
-  Widget _buildCloseButton() {
+  Widget _buildCloseButton(BuildContext context) {
     return Positioned(
       top: 0,
       left: 0,
       child: SafeArea(
         child: IconButton(
-          onPressed: () => Get.back<void>(),
+          onPressed: () => context.pop(),
           icon: const Icon(Icons.close, color: AppColors.white, size: 28),
         ),
       ),

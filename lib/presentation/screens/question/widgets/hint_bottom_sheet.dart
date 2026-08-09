@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:picsong/presentation/design_system/components/button/app_button.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/components/text/app_text.dart';
@@ -7,7 +7,7 @@ import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 import 'package:picsong/presentation/design_system/foundation/app_radius.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
-import 'package:picsong/presentation/screens/question/question_controller.dart' show HintItem;
+import 'package:picsong/presentation/screens/question/viewmodel/question_cubit.dart' show HintItem;
 
 /// 힌트 바텀시트 — 가수 초성 / 발매연도 / 장르를 1회 제공.
 class HintBottomSheet extends StatelessWidget {
@@ -72,7 +72,7 @@ class HintBottomSheet extends StatelessWidget {
             const Gap(height: AppSpacing.lg),
             ..._buildHintRows(),
             const Gap(height: AppSpacing.xl),
-            AppButton(text: '확인', margin: 0, onTapped: () => Get.back<void>()),
+            AppButton(text: '확인', margin: 0, onTapped: () => context.pop()),
           ],
         ),
       ),

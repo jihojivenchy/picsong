@@ -16,8 +16,8 @@ class QuestionInputBar extends HookWidget {
   /// 텍스트 필드 컨트롤러
   final TextEditingController textController;
 
-  /// ViewModel이 오답마다 증가시키는 신호. 같은 오답 반복도 감지하려고 int를 사용한다.
-  final int wrongAnswerSignal;
+  /// 오답이 날 때마다 알림이 오는 신호. 값이 아니라 알림 자체가 의미다.
+  final Listenable wrongAnswerSignal;
 
   /// 정답 제출 콜백
   final void Function(String guess) onSubmit;
@@ -38,10 +38,6 @@ class QuestionInputBar extends HookWidget {
     final ValueNotifier<bool> isWrongNoteVisible = useState<bool>(false);
     final ObjectRef<Timer?> wrongNoteTimer = useRef<Timer?>(null);
 
-    // 첫 렌더링 때 이전 오답 신호를 새 오답으로 오해하지 않도록 현재 값을 저장한다.
-    final ObjectRef<int> handledWrongAnswerSignal =
-        useRef<int>(wrongAnswerSignal);
-
     void cancelWrongNoteTimer() {
       wrongNoteTimer.value?.cancel();
       wrongNoteTimer.value = null;
@@ -60,11 +56,10 @@ class QuestionInputBar extends HookWidget {
 
     useEffect(() => cancelWrongNoteTimer, const <Object?>[]);
 
+    // 신호는 오답이 날 때만 오므로 첫 렌더링에서 잘못 뜰 일이 없다.
     useEffect(() {
-      if (wrongAnswerSignal == handledWrongAnswerSignal.value) return null;
-      handledWrongAnswerSignal.value = wrongAnswerSignal;
-      showWrongNoteTemporarily();
-      return null;
+      wrongAnswerSignal.addListener(showWrongNoteTemporarily);
+      return () => wrongAnswerSignal.removeListener(showWrongNoteTemporarily);
     }, <Object?>[wrongAnswerSignal]);
 
     void submitAnswer() {
