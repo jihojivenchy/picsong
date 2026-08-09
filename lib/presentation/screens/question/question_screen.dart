@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-// GetX 화면 전환(Transition)과 이름이 겹쳐, 여기서 쓰지 않는 Bloc 쪽을 숨긴다.
-import 'package:flutter_bloc/flutter_bloc.dart' hide Transition;
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/question/question.dart';
 import 'package:picsong/domain/entities/song/scene_count.dart';
@@ -12,19 +11,16 @@ import 'package:picsong/presentation/design_system/components/bar/default_app_ba
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/components/text/app_text.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
-import 'package:picsong/presentation/design_system/foundation/app_motion.dart';
 import 'package:picsong/presentation/design_system/foundation/app_radius.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
-import 'package:picsong/presentation/screens/image_detail/image_detail_screen.dart';
+import 'package:picsong/presentation/router/router.dart';
 import 'package:picsong/presentation/screens/question/question_cubit.dart';
-import 'package:picsong/presentation/screens/question/result/question_result_screen.dart';
 import 'package:picsong/presentation/screens/question/widgets/hint_bottom_sheet.dart';
 import 'package:picsong/presentation/screens/question/widgets/question_actions.dart';
 import 'package:picsong/presentation/screens/question/widgets/question_input_bar.dart';
 import 'package:picsong/presentation/screens/question/widgets/question_progress.dart';
 import 'package:picsong/presentation/screens/question/widgets/scene/question_scene_view.dart';
-import 'package:picsong/presentation/screens/round_result/round_result_screen.dart';
 
 /// 퀴즈(문제 풀이) 화면
 class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
@@ -225,22 +221,11 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
   // MARK: - Helpers
 
   ///
-  /// 클루 그림 크게 보기 — 뒤 화면이 비치는 반투명 라우트로 띄운다
+  /// 클루 그림 크게 보기 — 뒤 화면이 비치는 반투명 라우트로 띄운다(전환은 ImageDetailRoute)
   ///
   void _openSceneDetail(BuildContext context, int index) {
-    final SceneDetail detail = viewModel(context).sceneDetailOf(index);
-    Get.to<void>(
-      () => ImageDetailScreen(
-        imagePathList: detail.imagePathList,
-        initialIndex: detail.initialIndex,
-      ),
-      opaque: false,
-      // 뒤 화면이 비치는 라우트라 뒤 화면이 밀려나면 안 된다.
-      // fullscreenDialog는 canTransitionTo를 막아 뒤 화면의 퇴장 애니메이션을 끈다.
-      fullscreenDialog: true,
-      transition: Transition.fadeIn,
-      duration: AppMotion.durationBase,
-    );
+    final ImageDetailArgs detail = viewModel(context).sceneDetailOf(index);
+    context.push(const ImageDetailRoute().location, extra: detail);
   }
 
   ///
@@ -248,8 +233,9 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
   ///
   void _goToQuestionResult(BuildContext context, {required bool isCorrect}) {
     final QuestionCubit questionCubit = viewModel(context);
-    Get.to<void>(
-      () => QuestionResultScreen(
+    context.push(
+      const QuestionResultRoute().location,
+      extra: (
         era: era,
         question: questionCubit.currentQuestion,
         imagePathList: questionCubit.state.clueImagePathList,
@@ -268,11 +254,12 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
     final QuestionCubit questionCubit = viewModel(context);
     if (!questionCubit.isLastQuestion) {
       questionCubit.goToNextQuestion();
-      Get.back<void>();
+      context.pop();
       return;
     }
-    Get.off<void>(
-      () => RoundResultScreen(era: era, resultList: questionCubit.resultList),
+    context.pushReplacement(
+      const RoundResultRoute().location,
+      extra: (era: era, resultList: questionCubit.resultList),
     );
   }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/presentation/common/base/base_cubit_screen.dart';
 import 'package:picsong/presentation/common/extensions/era_extension.dart';
@@ -9,7 +9,7 @@ import 'package:picsong/presentation/design_system/components/text/app_text.dart
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
-import 'package:picsong/presentation/screens/question/question_screen.dart';
+import 'package:picsong/presentation/router/router.dart';
 import 'package:picsong/presentation/screens/round_preparation/round_preparation_cubit.dart';
 import 'package:picsong/presentation/screens/round_preparation/widgets/preparation_progress_bar.dart';
 import 'package:picsong/presentation/screens/round_preparation/widgets/generation_canvas.dart';
@@ -81,11 +81,12 @@ class RoundPreparationScreen extends BaseCubitScreen<RoundPreparationCubit> {
     final PreparedRound? prepared = await viewModel(context).prepareRound();
     if (!context.mounted) return;
     if (prepared == null) {
-      Get.until((Route<dynamic> route) => route.isFirst);
+      const HomeRoute().go(context);
       return;
     }
-    Get.off(
-      () => QuestionScreen(
+    context.pushReplacement(
+      const QuestionRoute().location,
+      extra: (
         era: era,
         questionList: prepared.questionList,
         firstImagePath: prepared.firstImagePath,

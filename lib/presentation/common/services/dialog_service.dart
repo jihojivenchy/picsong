@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:picsong/presentation/router/router.dart';
 
 class DialogService {
   DialogService._();
 
   static void close() {
-    final context = Get.context;
+    final context = rootNavigatorKey.currentContext;
     if (context != null &&
         Navigator.of(context, rootNavigator: true).canPop()) {
       Navigator.of(context, rootNavigator: true).pop();
@@ -16,7 +16,7 @@ class DialogService {
     required Dialog dialog,
     bool? dismissible,
   }) {
-    final context = Get.context;
+    final context = rootNavigatorKey.currentContext;
 
     if (context != null) {
       showDialog(
@@ -31,7 +31,7 @@ class DialogService {
     required Dialog dialog,
     bool? dismissible,
   }) {
-    final context = Get.context;
+    final context = rootNavigatorKey.currentContext;
 
     if (context != null) {
       return Future.value(

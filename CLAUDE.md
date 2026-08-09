@@ -11,7 +11,7 @@ and refactorings that comply with the basic principles and nomenclature.
 - **프로젝트명:** 픽송(picsong) (Flutter 모바일 앱)
 - **SDK:** Dart ^3.6.2 / Flutter 3.35.x (stable)
 - **상태관리:** Bloc (flutter_bloc: ^9.1.1) — **Cubit 기본**, 상태는 Equatable 불변 State
-- **라우팅:** go_router (2단계 도입 예정)
+- **라우팅:** go_router (^17.2.3) + go_router_builder codegen
 - **UI 로컬 상태:** flutter_hooks (^0.21.2)
 - **DI:** DI 컨테이너 없음 — Service는 사용처에서 직접 생성한다.
 - **로컬DB:** Hive (hive_flutter)

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:picsong/presentation/design_system/components/text/app_text.dart';
 import 'package:picsong/presentation/design_system/foundation/image_paths.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
@@ -58,7 +57,10 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: AppText(text: title, fontSize: fontSize, color: titleColor),
       leadingWidth: leadingWidth,
       leading: isShowBackButton
-          ? _buildBackButton(backButtonColor ?? appBarTheme.titleTextStyle?.color)
+          ? _buildBackButton(
+              context,
+              backButtonColor ?? appBarTheme.titleTextStyle?.color,
+            )
           : leadingWidget ?? const Gap(width: 10),
       actions: actions,
     );
@@ -67,7 +69,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   ///
   /// 뒤로가기 버튼 구성
   ///
-  Widget _buildBackButton(Color? color) {
+  Widget _buildBackButton(BuildContext context, Color? color) {
     switch (backButtonType) {
       case BackButtonType.xmark:
         return IconButton(
@@ -77,7 +79,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
             height: 16,
             color: color,
           ),
-          onPressed: onBackTapped ?? () => Get.back(),
+          onPressed: onBackTapped ?? () => Navigator.of(context).pop(),
         );
       case BackButtonType.arrowLeft:
         return IconButton(
@@ -87,7 +89,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
             height: 24,
             color: color,
           ),
-          onPressed: onBackTapped ?? () => Get.back(),
+          onPressed: onBackTapped ?? () => Navigator.of(context).pop(),
         );
     }
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/question/question_result.dart';
 import 'package:picsong/presentation/common/base/base_screen.dart';
@@ -7,6 +6,7 @@ import 'package:picsong/presentation/design_system/components/bar/default_app_ba
 import 'package:picsong/presentation/design_system/components/button/app_button.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
+import 'package:picsong/presentation/router/router.dart';
 import 'package:picsong/presentation/screens/round_result/widgets/round_result_view.dart';
 import 'package:picsong/presentation/screens/round_result/widgets/round_result_row.dart';
 
@@ -28,9 +28,9 @@ class RoundResultScreen extends BaseScreen {
   @override
   bool get canPop => false;
 
-  /// 안드로이드 뒤로가기도 홈 복귀로 처리
+  /// 안드로이드 뒤로가기도 홈 복귀로 처리 — 라운드 스택을 걷어낸다
   @override
-  void onWillPop(BuildContext context) => _goHome();
+  void onWillPop(BuildContext context) => const HomeRoute().go(context);
 
   /// 뒤로가기 없는 가운데 정렬 앱바
   @override
@@ -55,7 +55,11 @@ class RoundResultScreen extends BaseScreen {
             horizontal: AppSpacing.screenHorizontal,
             vertical: AppSpacing.lg,
           ),
-          child: AppButton(text: '홈으로', margin: 0, onTapped: _goHome),
+          child: AppButton(
+            text: '홈으로',
+            margin: 0,
+            onTapped: () => const HomeRoute().go(context),
+          ),
         ),
       ],
     );
@@ -97,7 +101,4 @@ class RoundResultScreen extends BaseScreen {
   /// 맞힌 문제 수
   int get _correctCount =>
       resultList.where((QuestionResult result) => result.isCorrect).length;
-
-  /// 라운드 스택을 모두 걷어내고 홈으로
-  void _goHome() => Get.until((Route<dynamic> route) => route.isFirst);
 }

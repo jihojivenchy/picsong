@@ -180,6 +180,17 @@ abstract class PromptLabBatches {
     ],
   );
 
+  /// 실험실 배치 전체 — 라우트가 tag로 배치를 되찾는 데 쓴다
+  static final List<PromptLabBatch> values = <PromptLabBatch>[first, second];
+
+  ///
+  /// tag에 해당하는 배치 (미상이면 첫 배치)
+  ///
+  static PromptLabBatch fromTag(String tag) => values.firstWhere(
+        (PromptLabBatch batch) => batch.tag == tag,
+        orElse: () => first,
+      );
+
   ///
   /// 게임과 같은 프리픽스를 붙여 실험 한 건을 만든다
   ///

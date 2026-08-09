@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/model_install/model_install_state.dart';
 import 'package:picsong/presentation/common/base/base_cubit_screen.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
+import 'package:picsong/presentation/router/router.dart';
 import 'package:picsong/presentation/screens/model_download/model_download_cubit.dart';
 import 'package:picsong/presentation/screens/model_download/widgets/model_download_body.dart';
-import 'package:picsong/presentation/screens/round_preparation/round_preparation_screen.dart';
 
 /// 모델 다운로드 화면 — 완료 즉시 선택한 시대의 게임으로 들어간다
 class ModelDownloadScreen extends BaseCubitScreen<ModelDownloadCubit> {
@@ -38,7 +37,7 @@ class ModelDownloadScreen extends BaseCubitScreen<ModelDownloadCubit> {
           previous.installProgress.state != ModelInstallState.ready &&
           current.installProgress.state == ModelInstallState.ready,
       listener: (BuildContext context, ModelDownloadState state) =>
-          Get.off(() => RoundPreparationScreen(era: era)),
+          RoundPreparationRoute(era: era.queryValue).pushReplacement(context),
       builder: (BuildContext context, ModelDownloadState state) {
         return ModelDownloadBody(
           progress: state.installProgress,

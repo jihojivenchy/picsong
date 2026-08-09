@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:picsong/presentation/design_system/components/button/app_button.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/components/text/app_text.dart';
@@ -72,7 +72,7 @@ class HintBottomSheet extends StatelessWidget {
             const Gap(height: AppSpacing.lg),
             ..._buildHintRows(),
             const Gap(height: AppSpacing.xl),
-            AppButton(text: '확인', margin: 0, onTapped: () => Get.back<void>()),
+            AppButton(text: '확인', margin: 0, onTapped: () => context.pop()),
           ],
         ),
       ),

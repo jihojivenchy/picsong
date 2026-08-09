@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/model_install/model_install_state.dart';
 import 'package:picsong/presentation/common/base/base_cubit_screen.dart';
@@ -7,14 +6,11 @@ import 'package:picsong/presentation/common/services/dialog_service.dart';
 import 'package:picsong/presentation/design_system/components/dialog/app_dialog.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
-import 'package:picsong/presentation/screens/home/app_info/app_info_screen.dart';
+import 'package:picsong/presentation/router/router.dart';
 import 'package:picsong/presentation/screens/home/home_cubit.dart';
 import 'package:picsong/presentation/screens/home/widgets/era_item.dart';
 import 'package:picsong/presentation/screens/home/widgets/home_header.dart';
-import 'package:picsong/presentation/screens/model_download/model_download_screen.dart';
 import 'package:picsong/presentation/screens/prompt_lab/prompt_lab_batch.dart';
-import 'package:picsong/presentation/screens/prompt_lab/prompt_lab_screen.dart';
-import 'package:picsong/presentation/screens/round_preparation/round_preparation_screen.dart';
 
 /// 홈 화면
 class HomeScreen extends BaseCubitScreen<HomeCubit> {
@@ -63,7 +59,7 @@ class HomeScreen extends BaseCubitScreen<HomeCubit> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           HomeHeader(
-            onInfoTapped: () => Get.to(() => const AppInfoScreen()),
+            onInfoTapped: () => const AppInfoRoute().push(context),
           ),
           Expanded(
             child: ListView.separated(
@@ -93,10 +89,13 @@ class HomeScreen extends BaseCubitScreen<HomeCubit> {
     required PromptLabBatch batch,
     required IconData icon,
   }) {
-    return FloatingActionButton.small(
-      heroTag: batch.tag,
-      onPressed: () => Get.to(() => PromptLabScreen(batch: batch)),
-      child: Icon(icon),
+    // FAB는 context 없는 게터에서 만들어져, 이동에 쓸 context를 여기서 얻는다.
+    return Builder(
+      builder: (BuildContext context) => FloatingActionButton.small(
+        heroTag: batch.tag,
+        onPressed: () => PromptLabRoute(tag: batch.tag).push(context),
+        child: Icon(icon),
+      ),
     );
   }
 
@@ -105,7 +104,7 @@ class HomeScreen extends BaseCubitScreen<HomeCubit> {
   ///
   /// 모델 다운로드 유도 다이얼로그 — 취소하면 홈에 머문다
   ///
-  void _showModelRequiredDialog(Era era) {
+  void _showModelRequiredDialog(BuildContext context, Era era) {
     DialogService.show(
       dialog: AppDialog.doubleButton(
         title: '다운로드 필요',
@@ -116,7 +115,7 @@ class HomeScreen extends BaseCubitScreen<HomeCubit> {
         onLeftButtonTapped: DialogService.close,
         onRightButtonTapped: () {
           DialogService.close();
-          Get.to(() => ModelDownloadScreen(era: era));
+          ModelDownloadRoute(era: era.queryValue).push(context);
         },
       ),
     );
@@ -134,17 +133,17 @@ class HomeScreen extends BaseCubitScreen<HomeCubit> {
     switch (installState) {
       // 모델 설치 완료
       case ModelInstallState.ready:
-        Get.to(() => RoundPreparationScreen(era: era));
+        RoundPreparationRoute(era: era.queryValue).push(context);
 
       // 모델 다운로드 중 또는 설치 중
       case ModelInstallState.downloading:
       case ModelInstallState.installing:
-        Get.to(() => ModelDownloadScreen(era: era));
+        ModelDownloadRoute(era: era.queryValue).push(context);
 
       // 모델 설치 실패 또는 미설치
       case ModelInstallState.notInstalled:
       case ModelInstallState.failed:
-        _showModelRequiredDialog(era);
+        _showModelRequiredDialog(context, era);
     }
   }
 }

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:picsong/presentation/common/base/base_cubit_screen.dart';
 import 'package:picsong/presentation/common/services/dialog_service.dart';
 import 'package:picsong/presentation/design_system/components/dialog/app_dialog.dart';
-import 'package:picsong/presentation/screens/home/home_screen.dart';
+import 'package:picsong/presentation/router/router.dart';
 import 'package:picsong/presentation/screens/onboarding/onboarding_cubit.dart';
 import 'package:picsong/presentation/screens/onboarding/widgets/onboarding_top_bar.dart';
 import 'package:picsong/presentation/screens/onboarding/widgets/steps/download/onboarding_download_gate_step.dart';
@@ -26,7 +25,7 @@ class OnboardingScreen extends BaseCubitScreen<OnboardingCubit> {
       listenWhen: (OnboardingState previous, OnboardingState current) =>
           !previous.isCompleted && current.isCompleted,
       listener: (BuildContext context, OnboardingState state) =>
-          Get.offAll(() => const HomeScreen()),
+          const HomeRoute().go(context),
       child: Column(
         children: <Widget>[
           _buildTopBar(),
