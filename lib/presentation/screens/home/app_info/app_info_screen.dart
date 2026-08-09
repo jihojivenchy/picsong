@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:picsong/presentation/common/base/base_cubit_screen.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/components/text/app_text.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
-import 'package:picsong/presentation/screens/home/app_info/app_info_controller.dart';
+import 'package:picsong/presentation/screens/home/app_info/app_info_cubit.dart';
 import 'package:picsong/presentation/screens/home/app_info/widgets/app_info_section.dart';
 
 /// 앱 정보 화면 — Stability AI 라이선스 표시 의무를 이행하는 자리
-class AppInfoScreen extends LegacyBaseScreen<AppInfoController> {
+class AppInfoScreen extends BaseCubitScreen<AppInfoCubit> {
   /// 🚨 라이선스 §4a(iii)가 요구하는 지정 문구 — **번역·변형 금지**
   static const String _poweredBy = 'Powered by Stability AI';
 
@@ -22,19 +22,10 @@ class AppInfoScreen extends LegacyBaseScreen<AppInfoController> {
 
   const AppInfoScreen({super.key});
 
-  /// 뷰모델 초기화
+  /// 뷰모델 생성 — 진입과 동시에 앱 버전을 조회한다
   @override
-  void onInit(BuildContext context) {
-    super.onInit(context);
-    Get.put(AppInfoController());
-  }
-
-  /// 뷰모델 해제
-  @override
-  void onDispose(BuildContext context) {
-    Get.delete<AppInfoController>();
-    super.onDispose(context);
-  }
+  AppInfoCubit createViewModel(BuildContext context) =>
+      AppInfoCubit()..fetchVersion();
 
   /// 앱바
   @override
@@ -61,7 +52,7 @@ class AppInfoScreen extends LegacyBaseScreen<AppInfoController> {
         children: <Widget>[
           _buildAppSection(),
           const Gap(height: AppSpacing.xl),
-          _buildModelSection(),
+          _buildModelSection(context),
           const Gap(height: AppSpacing.xl),
           _buildOpenSourceSection(),
         ],
@@ -80,21 +71,24 @@ class AppInfoScreen extends LegacyBaseScreen<AppInfoController> {
           color: AppColors.textStrong,
         ),
         const Gap(height: AppSpacing.xs),
-        Obx(
-          () => AppText(
-            text: viewModel.version.value.isEmpty
-                ? '버전 확인 중'
-                : '버전 ${viewModel.version.value}',
-            style: AppTypography.body,
-            color: AppColors.textMuted,
-          ),
-        ),
+        _buildVersionText(),
       ],
     );
   }
 
+  /// 버전 표시 — 조회가 끝나면 이 텍스트만 다시 그린다
+  Widget _buildVersionText() {
+    return BlocBuilder<AppInfoCubit, AppInfoState>(
+      builder: (BuildContext context, AppInfoState state) => AppText(
+        text: state.version.isEmpty ? '버전 확인 중' : '버전 ${state.version}',
+        style: AppTypography.body,
+        color: AppColors.textMuted,
+      ),
+    );
+  }
+
   /// AI 모델 출처와 라이선스 고지 — 라이선스 의무 구간
-  Widget _buildModelSection() {
+  Widget _buildModelSection(BuildContext context) {
     return AppInfoSection(
       title: 'AI 모델',
       children: <Widget>[
@@ -119,16 +113,16 @@ class AppInfoScreen extends LegacyBaseScreen<AppInfoController> {
           overflow: TextOverflow.visible,
         ),
         const Gap(height: AppSpacing.lg),
-        _buildRepositoryLink(),
+        _buildRepositoryLink(context),
       ],
     );
   }
 
   /// 라이선스 전문·변경 내역이 있는 저장소로 이동
-  Widget _buildRepositoryLink() {
+  Widget _buildRepositoryLink(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: viewModel.onRepositoryTapped,
+      onTap: () => viewModel(context).openRepository(),
       child: const Row(
         children: <Widget>[
           AppText(

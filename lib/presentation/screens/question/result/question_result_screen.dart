@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/question/question.dart';
-import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
+import 'package:picsong/presentation/common/base/base_screen.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
 import 'package:picsong/presentation/design_system/components/button/app_button.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
@@ -12,7 +12,7 @@ import 'package:picsong/presentation/screens/question/result/widgets/question_re
 import 'package:picsong/presentation/screens/question/widgets/scene/question_scene_view.dart';
 
 /// 문제 결과 화면 — 정오 헤더 + 출제된 클루 그림 + 정답 곡·가사.
-class QuestionResultScreen extends LegacyBaseScreen {
+class QuestionResultScreen extends BaseScreen {
   /// 진행 중인 시대
   final Era era;
 

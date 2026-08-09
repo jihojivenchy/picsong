@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
+import 'package:picsong/presentation/common/base/base_screen.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 import 'package:picsong/presentation/screens/image_detail/widgets/image_detail_viewer.dart';
 
 /// 그림을 전체 화면으로 크게 보는 상세 화면.
 ///
 /// 뒤 화면이 비쳐야 하므로 `opaque: false` 라우트로 띄운다.
-class ImageDetailScreen extends LegacyBaseScreen {
+class ImageDetailScreen extends BaseScreen {
   /// 크게 볼 이미지 경로 목록 — 로컬 파일 경로 또는 원격 URL
   final List<String> imagePathList;
 
