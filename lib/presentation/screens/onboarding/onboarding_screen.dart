@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:picsong/presentation/common/base/legacy_base_screen.dart';
+import 'package:picsong/presentation/common/base/base_cubit_screen.dart';
 import 'package:picsong/presentation/common/services/dialog_service.dart';
 import 'package:picsong/presentation/design_system/components/dialog/app_dialog.dart';
-import 'package:picsong/presentation/screens/onboarding/onboarding_controller.dart';
+import 'package:picsong/presentation/screens/home/home_screen.dart';
+import 'package:picsong/presentation/screens/onboarding/onboarding_cubit.dart';
 import 'package:picsong/presentation/screens/onboarding/widgets/onboarding_top_bar.dart';
 import 'package:picsong/presentation/screens/onboarding/widgets/steps/download/onboarding_download_gate_step.dart';
 import 'package:picsong/presentation/screens/onboarding/widgets/steps/download/onboarding_downloading_step.dart';
@@ -11,61 +13,80 @@ import 'package:picsong/presentation/screens/onboarding/widgets/steps/intro/onbo
 import 'package:picsong/presentation/screens/onboarding/widgets/steps/second/onboarding_on_device_step.dart';
 
 /// 온보딩(최초 1회) 화면 — 4스텝을 한 화면 안에서 전환한다
-class OnboardingScreen extends LegacyBaseScreen<OnboardingController> {
+class OnboardingScreen extends BaseCubitScreen<OnboardingCubit> {
   const OnboardingScreen({super.key});
 
-  /// 뷰모델 초기화
   @override
-  void onInit(BuildContext context) {
-    super.onInit(context);
-    Get.put(OnboardingController());
-  }
+  OnboardingCubit createViewModel(BuildContext context) => OnboardingCubit();
 
-  /// 뷰모델 해제
-  @override
-  void onDispose(BuildContext context) {
-    Get.delete<OnboardingController>();
-    super.onDispose(context);
-  }
-
-  /// 화면 본문
+  /// 화면 본문 — 온보딩이 끝나면(건너뛰기·설치 완료) 홈으로 스택을 교체한다
   @override
   Widget buildBody(BuildContext context) {
-    return Column(
+    return BlocListener<OnboardingCubit, OnboardingState>(
+      listenWhen: (OnboardingState previous, OnboardingState current) =>
+          !previous.isCompleted && current.isCompleted,
+      listener: (BuildContext context, OnboardingState state) =>
+          Get.offAll(() => const HomeScreen()),
+      child: Column(
+        children: <Widget>[
+          _buildTopBar(),
+          Expanded(child: _buildStepPageView(context)),
+        ],
+      ),
+    );
+  }
+
+  /// 상단 진행바 + 건너뛰기 — 다운로드가 시작되면 건너뛸 수 없다
+  Widget _buildTopBar() {
+    return BlocBuilder<OnboardingCubit, OnboardingState>(
+      buildWhen: (OnboardingState previous, OnboardingState current) =>
+          previous.step != current.step,
+      builder: (BuildContext context, OnboardingState state) {
+        return OnboardingTopBar(
+          progress: state.step.progress,
+          onSkip:
+              state.step.canSkip ? viewModel(context).completeOnboarding : null,
+        );
+      },
+    );
+  }
+
+  /// 스텝 본문 — 스와이프를 막고 스텝 이동으로만 넘긴다
+  Widget _buildStepPageView(BuildContext context) {
+    return PageView(
+      controller: viewModel(context).pageController,
+      physics: const NeverScrollableScrollPhysics(),
       children: <Widget>[
-        Obx(
-          () => OnboardingTopBar(
-            progress: viewModel.step.value.progress,
-            onSkip: viewModel.step.value.canSkip
-                ? viewModel.onSkipPressed
-                : null,
-          ),
+        OnboardingIntroStep(onNext: viewModel(context).onNextPressed),
+        OnboardingOnDeviceStep(onNext: viewModel(context).onNextPressed),
+        OnboardingDownloadGateStep(
+          onDownload: () => _showDownloadConfirmDialog(context),
         ),
-        Expanded(
-          child: PageView(
-            controller: viewModel.pageController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              OnboardingIntroStep(onNext: viewModel.onNextPressed),
-              OnboardingOnDeviceStep(onNext: viewModel.onNextPressed),
-              OnboardingDownloadGateStep(onDownload: _showDownloadConfirmDialog),
-              Obx(
-                () => OnboardingDownloadingStep(
-                  progress: viewModel.installProgress.value,
-                  onRetry: viewModel.onRetryPressed,
-                ),
-              ),
-            ],
-          ),
-        ),
+        _buildDownloadingStep(),
       ],
     );
   }
 
+  /// Step 4 — 모델 다운로드 진행 상태
+  Widget _buildDownloadingStep() {
+    return BlocBuilder<OnboardingCubit, OnboardingState>(
+      buildWhen: (OnboardingState previous, OnboardingState current) =>
+          previous.installProgress != current.installProgress,
+      builder: (BuildContext context, OnboardingState state) {
+        return OnboardingDownloadingStep(
+          progress: state.installProgress,
+          onRetry: viewModel(context).startInstall,
+        );
+      },
+    );
+  }
+
+  // MARK: - Bottom Sheets & Dialogs
+
   ///
   /// 다운로드 시작 전 확인 다이얼로그 — 동의하면 뷰모델 다운로드를 시작한다
   ///
-  void _showDownloadConfirmDialog() {
+  void _showDownloadConfirmDialog(BuildContext context) {
     DialogService.show(
       dialog: AppDialog.doubleButton(
         title: '다운로드 확인',
@@ -75,7 +96,7 @@ class OnboardingScreen extends LegacyBaseScreen<OnboardingController> {
         onLeftButtonTapped: DialogService.close,
         onRightButtonTapped: () {
           DialogService.close();
-          viewModel.onDownloadPressed();
+          viewModel(context).onDownloadPressed();
         },
       ),
     );
