@@ -39,7 +39,7 @@ class PromptTrial {
 
 /// 실험실 하나가 실행할 배치 — 실험실은 배치 하나당 하나씩 뜬다
 class PromptLabBatch {
-  /// GetX 인스턴스 구분 태그 — 실험실마다 컨트롤러와 결과가 따로 산다
+  /// 뷰모델 캐시 키 — 실험실마다 뷰모델과 결과가 따로 산다
   final String tag;
 
   /// 앱바에 표시할 실험실 이름
