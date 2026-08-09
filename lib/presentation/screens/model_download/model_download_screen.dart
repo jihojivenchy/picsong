@@ -6,7 +6,7 @@ import 'package:picsong/presentation/common/base/base_cubit_screen.dart';
 import 'package:picsong/presentation/design_system/components/bar/default_app_bar.dart';
 import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 import 'package:picsong/presentation/router/router.dart';
-import 'package:picsong/presentation/screens/model_download/model_download_cubit.dart';
+import 'package:picsong/presentation/screens/model_download/viewmodel/model_download_cubit.dart';
 import 'package:picsong/presentation/screens/model_download/widgets/model_download_body.dart';
 
 /// 모델 다운로드 화면 — 완료 즉시 선택한 시대의 게임으로 들어간다

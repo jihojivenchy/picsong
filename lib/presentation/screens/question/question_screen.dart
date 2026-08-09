@@ -15,7 +15,7 @@ import 'package:picsong/presentation/design_system/foundation/app_radius.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
 import 'package:picsong/presentation/router/router.dart';
-import 'package:picsong/presentation/screens/question/question_cubit.dart';
+import 'package:picsong/presentation/screens/question/viewmodel/question_cubit.dart';
 import 'package:picsong/presentation/screens/question/widgets/hint_bottom_sheet.dart';
 import 'package:picsong/presentation/screens/question/widgets/question_actions.dart';
 import 'package:picsong/presentation/screens/question/widgets/question_input_bar.dart';

@@ -10,7 +10,7 @@ import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
 import 'package:picsong/presentation/router/router.dart';
-import 'package:picsong/presentation/screens/round_preparation/round_preparation_cubit.dart';
+import 'package:picsong/presentation/screens/round_preparation/viewmodel/round_preparation_cubit.dart';
 import 'package:picsong/presentation/screens/round_preparation/widgets/preparation_progress_bar.dart';
 import 'package:picsong/presentation/screens/round_preparation/widgets/generation_canvas.dart';
 import 'package:picsong/presentation/screens/round_preparation/widgets/preparation_caption.dart';

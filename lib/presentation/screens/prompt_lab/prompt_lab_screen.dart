@@ -6,7 +6,7 @@ import 'package:picsong/presentation/design_system/components/button/app_button.
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/screens/prompt_lab/prompt_lab_batch.dart';
-import 'package:picsong/presentation/screens/prompt_lab/prompt_lab_cubit.dart';
+import 'package:picsong/presentation/screens/prompt_lab/viewmodel/prompt_lab_cubit.dart';
 import 'package:picsong/presentation/screens/prompt_lab/widgets/prompt_trial_item.dart';
 
 ///

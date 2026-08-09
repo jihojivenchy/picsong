@@ -7,7 +7,7 @@ import 'package:picsong/presentation/design_system/components/dialog/app_dialog.
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/router/router.dart';
-import 'package:picsong/presentation/screens/home/home_cubit.dart';
+import 'package:picsong/presentation/screens/home/viewmodel/home_cubit.dart';
 import 'package:picsong/presentation/screens/home/widgets/era_item.dart';
 import 'package:picsong/presentation/screens/home/widgets/home_header.dart';
 import 'package:picsong/presentation/screens/prompt_lab/prompt_lab_batch.dart';

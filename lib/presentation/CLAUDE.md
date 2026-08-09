@@ -1,7 +1,7 @@
 # lib/presentation/ — Presentation Layer Guardrails
 
 화면, 뷰모델(Cubit), 라우팅, 디자인 시스템을 포함하는 MVVM + Bloc 계층입니다.
-**편집 중인 파일의 역할에 맞는 섹션을 적용합니다:** `*_screen.dart` → §2, `*_cubit.dart`·`*_state.dart`·`viewmodels/` → §3, `widgets/` 및 기타 위젯 파일 → §4, `router/` → §6.
+**편집 중인 파일의 역할에 맞는 섹션을 적용합니다:** `*_screen.dart` → §2, `viewmodel/`의 `*_cubit.dart`·`*_state.dart` → §3, `widgets/` 및 기타 위젯 파일 → §4, `router/` → §6.
 
 ---
 
@@ -11,7 +11,7 @@
 
 | 경로 | 책임 |
 |---|---|
-| `screens/` | 피처별 화면. `screen.dart` + `cubit.dart` + `state.dart` + `widgets/` 구성. |
+| `screens/` | 피처별 화면. `screen.dart` + `viewmodel/`(cubit·state) + `widgets/` 구성. |
 | `router/` | 앱 라우터(go_router + go_router_builder codegen). 라우트 선언·전달·전환 규칙은 **§6**. |
 | `design_system/` | 디자인 토큰(`foundation/`) + 재사용 컴포넌트(`components/`). **작성/수정 규칙은 `design_system/CLAUDE.md`를 따른다.** |
 | `common/` | `base/`(BaseScreen·BaseCubitScreen·BaseView·BaseCubitView), `extensions/`, `services/`(AppSize·Dialog·Toast 등 UI 부수 서비스) |
@@ -22,14 +22,14 @@
 
 ```
 screens/<feature>/
-├── <feature>_screen.dart    # BaseCubitScreen 상속, DI + UI
-├── <feature>_cubit.dart     # Cubit — part '<feature>_state.dart' 선언
-├── <feature>_state.dart     # part of — 화면 상태 (불변 + copyWith)
-├── viewmodels/              # 다수의 Cubit/상태 클래스가 있을 때
-└── widgets/                 # 해당 화면 전용 위젯
+├── <feature>_screen.dart        # BaseCubitScreen 상속, DI + UI
+├── viewmodel/
+│   ├── <feature>_cubit.dart     # Cubit — part '<feature>_state.dart' 선언
+│   └── <feature>_state.dart     # part of — 화면 상태 (불변 + copyWith)
+└── widgets/                     # 해당 화면 전용 위젯
 ```
 
-* Cubit이 1개면 루트, 여러 개면 `viewmodels/`로 분리. State 파일은 항상 자신의 Cubit 파일에 `part`로 종속시킨다.
+* Cubit과 State는 **항상 화면 폴더의 `viewmodel/` 하위에 함께** 둔다. State 파일은 항상 자신의 Cubit 파일에 `part`로 종속시킨다.
 
 ## 2. Screen 규칙
 * `BaseCubitScreen<T>`(`lib/presentation/common/base/base_cubit_screen.dart`)을 상속한다. `T`는 Cubit 타입.

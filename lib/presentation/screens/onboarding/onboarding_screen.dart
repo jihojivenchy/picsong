@@ -4,7 +4,7 @@ import 'package:picsong/presentation/common/base/base_cubit_screen.dart';
 import 'package:picsong/presentation/common/services/dialog_service.dart';
 import 'package:picsong/presentation/design_system/components/dialog/app_dialog.dart';
 import 'package:picsong/presentation/router/router.dart';
-import 'package:picsong/presentation/screens/onboarding/onboarding_cubit.dart';
+import 'package:picsong/presentation/screens/onboarding/viewmodel/onboarding_cubit.dart';
 import 'package:picsong/presentation/screens/onboarding/widgets/onboarding_top_bar.dart';
 import 'package:picsong/presentation/screens/onboarding/widgets/steps/download/onboarding_download_gate_step.dart';
 import 'package:picsong/presentation/screens/onboarding/widgets/steps/download/onboarding_downloading_step.dart';
