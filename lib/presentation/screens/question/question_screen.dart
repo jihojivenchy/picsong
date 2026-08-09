@@ -15,6 +15,7 @@ import 'package:picsong/presentation/design_system/foundation/app_radius.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
 import 'package:picsong/presentation/router/router.dart';
+import 'package:picsong/presentation/screens/question/scene_detail.dart';
 import 'package:picsong/presentation/screens/question/viewmodel/question_cubit.dart';
 import 'package:picsong/presentation/screens/question/widgets/hint_bottom_sheet.dart';
 import 'package:picsong/presentation/screens/question/widgets/question_actions.dart';
@@ -196,9 +197,9 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
         context,
         hints: viewModel(context).currentHints,
       ),
-      onRevealTapped: () {
+      onRevealTapped: () async {
         if (!viewModel(context).revealAnswer()) return;
-        _goToQuestionResult(context, isCorrect: false);
+        await _goToQuestionResult(context, isCorrect: false);
       },
     );
   }
@@ -211,9 +212,9 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
     return QuestionInputBar(
       textController: viewModel(context).textController,
       wrongAnswerSignal: wrongAnswerSignal,
-      onSubmit: (String guess) {
+      onSubmit: (String guess) async {
         if (!viewModel(context).submit(guess)) return;
-        _goToQuestionResult(context, isCorrect: true);
+        await _goToQuestionResult(context, isCorrect: true);
       },
     );
   }
@@ -224,37 +225,47 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
   /// 클루 그림 크게 보기 — 뒤 화면이 비치는 반투명 라우트로 띄운다(전환은 ImageDetailRoute)
   ///
   void _openSceneDetail(BuildContext context, int index) {
-    final ImageDetailArgs detail = viewModel(context).sceneDetailOf(index);
+    final ImageDetailArgs detail = sceneDetailOf(
+      imagePathList: viewModel(context).state.clueImagePathList,
+      index: index,
+    );
     context.push(const ImageDetailRoute().location, extra: detail);
   }
 
   ///
-  /// 문제 결과 화면으로 이동
+  /// 문제 결과 화면으로 이동 — 결과 화면이 스스로 닫히며 진행 의사를 돌려준다
   ///
-  void _goToQuestionResult(BuildContext context, {required bool isCorrect}) {
+  /// 뒤로가기/스와이프백으로 닫히면 결과가 없으므로 아무 일도 하지 않는다.
+  ///
+  Future<void> _goToQuestionResult(
+    BuildContext context, {
+    required bool isCorrect,
+  }) async {
     final QuestionCubit questionCubit = viewModel(context);
-    context.push(
-      const QuestionResultRoute().location,
-      extra: (
-        era: era,
-        question: questionCubit.currentQuestion,
-        imagePathList: questionCubit.state.clueImagePathList,
-        onSceneTapped: (int index) => _openSceneDetail(context, index),
-        isCorrect: isCorrect,
-        isLast: questionCubit.isLastQuestion,
-        onNext: () => _goToNext(context),
-      ),
-    );
+    final bool wantsNext = await context.push<bool>(
+          const QuestionResultRoute().location,
+          extra: (
+            era: era,
+            question: questionCubit.currentQuestion,
+            imagePathList: questionCubit.state.clueImagePathList,
+            isCorrect: isCorrect,
+            isLast: questionCubit.isLastQuestion,
+          ),
+        ) ??
+        false;
+    if (!context.mounted || !wantsNext) return;
+    _goToNext(context);
   }
 
   ///
   /// 다음 단계 진행 — 마지막이면 라운드 결과, 아니면 다음 문제
   ///
+  /// 결과 화면은 이미 닫힌 뒤라, 마지막 문제의 교체 대상은 이 퀴즈 화면이다.
+  ///
   void _goToNext(BuildContext context) {
     final QuestionCubit questionCubit = viewModel(context);
     if (!questionCubit.isLastQuestion) {
       questionCubit.goToNextQuestion();
-      context.pop();
       return;
     }
     context.pushReplacement(

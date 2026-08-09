@@ -210,19 +210,17 @@ class QuestionRoute extends GoRouteData with $QuestionRoute {
   }
 }
 
-/// 문제 결과 화면 구성값 — 진행 콜백까지 함께 넘긴다 (extra)
+/// 문제 결과 화면 구성값 (extra)
 typedef QuestionResultArgs = ({
   Era era,
   Question question,
   List<String> imagePathList,
-  void Function(int index) onSceneTapped,
   bool isCorrect,
   bool isLast,
-  VoidCallback onNext,
 });
 
 ///
-/// 문제 결과 — 정오 공개와 다음 단계 진행
+/// 문제 결과 — 정오 공개, 진행 의사는 pop 결과(bool)로 돌려준다
 ///
 class QuestionResultRoute extends GoRouteData with $QuestionResultRoute {
   const QuestionResultRoute();
@@ -237,10 +235,8 @@ class QuestionResultRoute extends GoRouteData with $QuestionResultRoute {
       era: args.era,
       question: args.question,
       imagePathList: args.imagePathList,
-      onSceneTapped: args.onSceneTapped,
       isCorrect: args.isCorrect,
       isLast: args.isLast,
-      onNext: args.onNext,
     );
   }
 }

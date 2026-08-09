@@ -15,9 +15,6 @@ part 'question_state.dart';
 /// 힌트 시트에 표시할 항목(라벨-값 쌍).
 typedef HintItem = ({String label, String value});
 
-/// 크게 보기로 넘길 그림 목록과 시작 위치.
-typedef SceneDetail = ({List<String> imagePathList, int initialIndex});
-
 /// 퀴즈(문제 풀이) 화면 뷰모델
 class QuestionCubit extends Cubit<QuestionState> {
   /// 이번 라운드의 문제 목록
@@ -94,21 +91,6 @@ class QuestionCubit extends Cubit<QuestionState> {
       );
     }
     emit(state.copyWith(isGeneratingScenes: false));
-  }
-
-  ///
-  /// 크게 볼 그림 목록과 시작 위치 — 아직 채워지지 않은 자리는 빼고 센다
-  ///
-  SceneDetail sceneDetailOf(int index) {
-    final List<String> scenePathList = state.clueImagePathList;
-    return (
-      imagePathList:
-          scenePathList.where((String path) => path.isNotEmpty).toList(),
-      initialIndex: scenePathList
-          .take(index)
-          .where((String path) => path.isNotEmpty)
-          .length,
-    );
   }
 
   ///
