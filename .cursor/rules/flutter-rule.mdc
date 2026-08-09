@@ -7,7 +7,8 @@ alwaysApply: true
 You are a senior Dart programmer with experience in the Flutter framework and a preference for clean programming and design patterns.
 Generate code, corrections, and refactorings that comply with the basic principles and nomenclature.
 
-# Flutter & Dart Coding Guidelines
+**Project:** picsong (Flutter mobile app) — Dart ^3.6.2 / Flutter 3.35.x, `flutter_bloc` (Cubit) + `go_router` + `flutter_hooks`, Hive for local DB, `talker` for logging.
+**Source of truth:** this file is a condensed summary. The full layer-specific rules live in each directory's own `CLAUDE.md` (root, `lib/data/`, `lib/domain/`, `lib/presentation/`, `design_system/`, `router/`, `lib/utils/`) — read the one next to the file you are editing before any non-trivial change.
 
 ## 1. MCP & Context Utilization Rules
 
@@ -29,13 +30,14 @@ Generate code, corrections, and refactorings that comply with the basic principl
 ### Basic Principles
 * **Explicit Typing:** Always declare types for all variables and functions (parameters and return values). Avoid using `any` or `dynamic`.
 * **Clean Code:** Do not leave unnecessary blank lines within function bodies.
+* **Logging:** Never call `print()` directly. Use `AppLogger` (`lib/utils/services/app_logger.dart`).
 
 ### Naming Conventions
-* **Classes:** PascalCase (e.g., `AuthService`, `SignInResponseDTO`).
-* **Widgets:** PascalCase with descriptive suffix (e.g., `AppButton`, `SetScheduleTitleScreen`).
-* **Controllers (ViewModels):** PascalCase with `Controller` suffix (e.g., `SetScheduleTitleController`).
-* **DTOs (Data Transfer Objects):** PascalCase with `DTO` suffix (e.g., `TokenResponseDTO`).
-* **Services:** PascalCase with `Service` suffix (e.g., `ScheduleService`).
+* **Classes:** PascalCase (e.g., `SongService`, `QuestionResult`).
+* **Widgets:** PascalCase with descriptive suffix (e.g., `AppButton`, `ModelDownloadScreen`).
+* **ViewModels:** PascalCase with `Cubit` suffix (e.g., `ModelDownloadCubit`); its state class is `<Feature>State` (e.g., `ModelDownloadState`).
+* **Entities:** PascalCase noun (e.g., `Song`); request entities use a `Request` suffix. No `DTO` suffix — that naming belongs to a data layer this project does not have.
+* **Services:** PascalCase with `Service` suffix (e.g., `SongService`).
 * **Functions/Methods:** camelCase starting with a **verb** (e.g., `signInWithGoogle()`, `updateTitle()`).
 * **Variables:** camelCase (e.g., `accessToken`, `hasError`).
 * **Private Members:** Prefix with underscore (e.g., `_dioService`, `_storage`).
@@ -43,17 +45,21 @@ Generate code, corrections, and refactorings that comply with the basic principl
 * **Booleans:** Use prefixes like `is`, `has`, or `can` (e.g., `isLoading`, `hasError`).
 * **No Abbreviations:** Use complete words (Exception: API, URL, i, j, err, ctx, req, res).
 * **Constants:** Define magic numbers used in 3+ places as constants with intuitive names.
+* **Entity Fields:** `Id`/`Url` inside a compound word are written `ID`/`URL` (`userID`, `imageURL`); plurals become `<name>List` typed `List<T>` (`songList`).
 
 ### File Organization
 lib/
-├── common/              # Shared utilities (extensions, common services, hooks)
-├── components/          # Reusable UI components (AppBar, buttons, etc.)
-├── constants/           # App-wide constants (app_colors.dart, string_constants.dart)
-├── data/
-│   ├── dto/             # Data Transfer Objects
-│   ├── services/        # API and business logic services
-│   └── models/          # Domain models (Entities)
-└── screens/             # Feature-based screens and their controllers
+├── data/                # dio/ (setup, interceptors, exceptions), services/<domain>/, database/ (Hive)
+├── domain/              # entities/ (immutable) + services/ (pure logic) — no I/O, no frameworks
+├── presentation/        # common/ (base/, extensions/, services/), design_system/, router/, screens/
+└── utils/               # domain-agnostic extensions/ and services/ (AppLogger, Debouncer)
+
+screens/<feature>/
+├── <feature>_screen.dart        # extends BaseCubitScreen — DI + UI
+├── viewmodel/
+│   ├── <feature>_cubit.dart     # Cubit — declares part '<feature>_state.dart'
+│   └── <feature>_state.dart     # part of — immutable screen state
+└── widgets/                     # widgets used only by this screen
 
 ### Function & Method Guidelines
 * **Single Responsibility Principle (SRP):** Each function must have a single purpose and be under 30 lines.
@@ -87,48 +93,61 @@ lib/
 ## 3. Flutter Specific Guidelines
 
 ### Architecture (Hybrid Clean Architecture)
-* **data (lib/data):** * `dio`: Network service objects.
-    * `dtos`: Parse API responses and provide `toEntity()` methods.
-    * `services`: Domain-specific operations (Networking, Local DB).
-* **domain (lib/models):** Pure Entity definitions. No external dependencies (Flutter, Dio).
-* **presentation (lib/screens):** MVVM Pattern.
-    * `Screen`: State display and Dependency Injection.
-    * `Controller`: Logic processing and service calls.
-    * `Widget (View)`: Display logic only. No direct Controller reference. Must be reusable.
+Dependency direction: `presentation → domain ← data`.
+* **data:** `<Domain>Service` classes wrapping network/SDK/local DB. **No DTO classes** — responses are parsed by the entity's own `factory <Entity>.fromJson(...)`. Never imports `lib/presentation/`.
+* **domain:** **zero external imports** — no `package:flutter/*`, `flutter_bloc`, `equatable`, `go_router`, `dio`, `hive`, and no `data/`/`presentation/` code. If it needs one of those, it is not domain.
+* **presentation:** MVVM + Bloc.
+    * `Screen`: DI, state subscription, navigation, dialogs/bottom sheets. No business logic.
+    * `Cubit` (`viewmodel/`): business logic — a side-effect shell (service calls, `emit`, logging, toast) over a pure private core (calculation, mapping, validation, sorting).
+    * `Widget` (`widgets/`): display only, no Cubit reference. Data via parameters, events via callbacks.
+    * `design_system/`: tokens + context-free components. Never imports `flutter_bloc`, `go_router`, `lib/data/`, or any screen.
 
-### State Management (GetX)
-* **Framework:** Use GetX for state, DI, and routing.
-* **Controller:** ViewModels must inherit from `GetxController`.
-* **Unidirectional Flow:** UI calls Controller methods -> Controller updates State -> UI observes and renders.
-* **Rx Pattern:** Group related states into an immutable object managed as `Rx<StateClass>`.
-* **Immutable Updates:** Assign new objects via `copyWith` rather than mutating fields directly.
-* **Obx Optimization:** Wrap only the minimum required widget range with `Obx`.
-* **Logic Separation:** Keep Screens free of business logic. Screens only display state or trigger methods.
-* **Lifecycle:** Handle initialization in `onInit()` and cleanup in `onClose()`.
+### State Management (Bloc — Cubit by default)
+* **Framework:** `flutter_bloc` (^9.1.1). Use `Cubit<State>` by default; reach for `Bloc<Event, State>` **only** when an `EventTransformer` is genuinely needed (search debounce, droppable paging).
+* **State class:** `final class <Feature>State extends Equatable` — every field `final`, `const` constructor with defaults, hand-written `copyWith`, all fields in `props`. The state file is a `part of` its cubit file.
+* **Immutable Updates:** change state only via `emit(state.copyWith(...))`. Never mutate a state field.
+* **Async data:** model async slots as `Async<T>` (`lib/domain/entities/async_state/async_state.dart`) — `Loading()` / `Fetched(data)` / `Failed(error)` — as a State field, rendered with sealed `switch` pattern matching.
+* **Rebuild Scope:** subscribe with `BlocBuilder` + `buildWhen` or `context.select`, wrapping **only the widget that changes**; never the whole screen. `BlocListener` for one-shot events.
+* **DI:** no DI container. A screen extends `BaseCubitScreen<T>` (`lib/presentation/common/base/base_cubit_screen.dart`, or `BaseScreen` when static) and builds its Cubit in `createViewModel(context)`, triggering the initial load with a cascade (`ModelDownloadCubit()..startInstall()`). Services are instantiated directly where used. Never write manual register/dispose code.
+* **Lifecycle:** override `close()` for cleanup; the Cubit closes automatically when the screen leaves the tree.
+* **Flow:** UI calls `viewModel(context).method()` -> Cubit emits new State -> UI rebuilds.
+* **UI-local state is not State:** expand/collapse, carousel index, animation controllers live in `flutter_hooks` (`useState`) inside the widget.
+
+### Routing (go_router)
+* **Framework:** `go_router` (^17.2.3) + `go_router_builder` codegen. Declare every screen as a `TypedGoRoute` class in `lib/presentation/router/router.dart`, then regenerate with `dart run build_runner build`. Never hand-edit `router.g.dart`.
+* **Calls:** `SomeRoute(param).push(context)` to stack a detail, `const HomeRoute().go(context)` to replace the stack on a flow change, `context.pop()` to go back.
+* **Ownership:** the Screen navigates, inline from callbacks. **Never navigate from a Cubit** — the Cubit returns a result and the Screen branches on it. Guard with `if (!context.mounted) return;` after an `await`.
+* **Objects:** route fields hold path/query parameters only (no codegen `$extra` field). Pass objects with `context.push(SomeRoute().location, extra: object)`, casting `state.extra` inside the route's `build` — the only place strings become types.
 
 ### Widget & UI Optimization
 * Maintain a flat widget tree. Break down large widgets into small, focused components.
 * Use `const` constructors wherever possible.
 * Use **Extensions** to manage reusable logic.
+* Build repeating item lists with `ListView`/`ListView.separated` (or `SliverList`), not `Column` + `map(...).toList()`.
+
+### Design System Usage
+* Colors come from `design_system/foundation/` tokens only — inline `Color(0xff...)` is forbidden. A new Figma color becomes a new constant, never a mapping onto a similar existing token. Use `AppSpacing`/`AppRadius` instead of magic numbers.
+* Reuse existing components (`AppText`, `AppButton`, `AppTextField`, `DefaultAppBar`, `AppDialog`, `Gap`, `CachedImage`, `AsyncAnimatedSwitcher`) — add a variant rather than building a lookalike.
 
 ---
 
 ## 4. Code Readability & Documentation
 
 ### UI Structuring
-* **No Spaghetti Code:** Do not put massive UI blocks in the `build` method. Separate into logical sections using methods (e.g., `_buildHeader()`) or `StatelessWidgets`.
+* **No Spaghetti Code:** Do not put massive UI blocks in `buildBody`. Split into `_buildXxx()` methods; anything over ~70 lines moves to its own file in the screen's `widgets/` (one widget class per file).
 * **Nesting Limit:** Keep nesting under 5 levels.
 * **UI Intent:** Add a one-line comment at the start of each UI section.
 
 ### Logic Documentation
-* **Concise Summary:** Provide a one-line summary comment for all logic code, methods, and properties.
-* **Focus on 'What/Why':** Explain intent, not implementation. 
-    * *Example:* `// Fetches the schedule list for the selected date`
+* **Comment Format:** properties get a single line (`/// description`); methods get a three-line block (`///` -> `/// description` -> `///`).
+* **Focus on 'What/Why':** Explain intent, not implementation.
+    * *Example:* `/// Fetches the song list for the selected era`
 * **Naming Over Comments:** Aim for names so clear that comments are optional.
 
 ### Organization
-* **Member Ordering:** `Constants -> Properties -> Constructor -> Lifecycle -> Public Methods -> Private Methods (including UI)`.
-* **Proximity:** Place UI methods near their related logic.
+* **Member Ordering:** `Injected Properties -> Constructor -> Constants -> Properties -> Lifecycle -> Public Methods -> Private Methods (including UI)`. Keep the constructor directly under the injected properties it assigns.
+* **Sections:** separate method regions with `// MARK: - <Region>` comments (none for regions that do not exist).
+* **Proximity:** In a Screen, `_buildXxx` methods follow the UI top-to-bottom; in a Cubit, public methods follow the workflow (`fetch` -> `update` -> `submit`) with pure private helpers last.
 
 ---
 
@@ -137,7 +156,8 @@ lib/
 ### Reusability Criteria
 * **Rule of Three:** Commonize only when logic/UI is duplicated 3+ times. For 2 instances, prioritize duplication (WET) to avoid premature abstraction.
 * **Context-Free Components:** Reusable widgets must not depend on specific business logic or screen states. Inject all data via parameters.
-* **Loose Coupling:** Common widgets must not reference global state (Controllers) 직접 참조 금지. Use callbacks for events.
+* **Loose Coupling:** Common widgets must never reference a Cubit or global state — no `BlocProvider`/`BlocBuilder`/`context.read<XCubit>()` inside them. Use callbacks for events. (Closing yourself with `Navigator.of(context).pop()` in a dialog/bottom sheet is the one accepted exception.)
+* **Promotion:** a screen-only widget lives in `screens/<feature>/widgets/`; promote it to `design_system/components/` only once it meets the Rule of Three.
 
 ### Exception & Error Handling
 * **Custom Exceptions:** Use exceptions defined in `lib/data/dio/error/error_exception_type.dart`.
@@ -151,4 +171,4 @@ lib/
 1. Ensure the implementation strictly reflects user requirements.
 2. Run `flutter analyze` and ensure zero errors/warnings.
 3. Verify naming conventions match the project patterns.
-4. Ensure all new logic has a one-line summary comment.
+4. Ensure new properties and methods carry the documented comment format (§4).
