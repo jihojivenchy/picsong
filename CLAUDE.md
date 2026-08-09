@@ -35,6 +35,7 @@ Hybrid Clean Architecture. **편집할 파일의 계층에 맞는 CLAUDE.md를 �
 | 엔티티·순수 도메인 로직 | `lib/domain/` | `lib/domain/CLAUDE.md` |
 | 화면·뷰모델(Cubit)·위젯 (MVVM+Bloc) | `lib/presentation/` | `lib/presentation/CLAUDE.md` |
 | 디자인 토큰·재사용 컴포넌트 | `lib/presentation/design_system/` | `lib/presentation/design_system/CLAUDE.md` |
+| 라우트 선언·객체 전달·전환 | `lib/presentation/router/` | `lib/presentation/router/CLAUDE.md` |
 | 도메인 무관 범용 유틸 | `lib/utils/` | `lib/utils/CLAUDE.md` |
 
 * 의존 방향: `presentation → domain ← data`. domain은 외부 프레임워크 의존 0.

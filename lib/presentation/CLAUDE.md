@@ -1,7 +1,7 @@
 # lib/presentation/ — Presentation Layer Guardrails
 
 화면, 뷰모델(Cubit), 라우팅, 디자인 시스템을 포함하는 MVVM + Bloc 계층입니다.
-**편집 중인 파일의 역할에 맞는 섹션을 적용합니다:** `*_screen.dart` → §2, `viewmodel/`의 `*_cubit.dart`·`*_state.dart` → §3, `widgets/` 및 기타 위젯 파일 → §4, `router/` → §6.
+**편집 중인 파일의 역할에 맞는 섹션을 적용합니다:** `*_screen.dart` → §2, `viewmodel/`의 `*_cubit.dart`·`*_state.dart` → §3, `widgets/` 및 기타 위젯 파일 → §4. `router/` 편집 시에는 `router/CLAUDE.md`를 따릅니다.
 
 ---
 
@@ -12,7 +12,7 @@
 | 경로 | 책임 |
 |---|---|
 | `screens/` | 피처별 화면. `screen.dart` + `viewmodel/`(cubit·state) + `widgets/` 구성. |
-| `router/` | 앱 라우터(go_router + go_router_builder codegen). 라우트 선언·전달·전환 규칙은 **§6**. |
+| `router/` | 앱 라우터(go_router + go_router_builder codegen). **라우트 선언·전달·전환 규칙은 `router/CLAUDE.md`를 따른다.** |
 | `design_system/` | 디자인 토큰(`foundation/`) + 재사용 컴포넌트(`components/`). **작성/수정 규칙은 `design_system/CLAUDE.md`를 따른다.** |
 | `common/` | `base/`(BaseScreen·BaseCubitScreen·BaseView·BaseCubitView), `extensions/`, `services/`(AppSize·Dialog·Toast 등 UI 부수 서비스) |
 | `global/` | 앱 전역 싱글톤 매니저. 화면 수명과 무관한 앱 전역 상태 — `ChangeNotifier` 싱글톤으로 둔다. |
@@ -43,7 +43,7 @@ screens/<feature>/
 
 ### 2-1. 라우팅 · Dialog · BottomSheet 소유권
 
-* **화면 이동은 Screen이 담당한다.** 콜백 안에서 인라인 호출한다. (형식은 §6 — `SomeRoute(param).push(context)`, `context.pop()`, `const HomeRoute().go(context)`.)
+* **화면 이동은 Screen이 담당한다.** 콜백 안에서 인라인 호출한다. (형식은 `router/CLAUDE.md` — `SomeRoute(param).push(context)`, `context.pop()`, `const HomeRoute().go(context)`.)
   * `push` = 스택에 쌓기(상세 진입), `go` = 스택 교체(온보딩 완료 → 메인 등 플로우 전환).
 * **Dialog/BottomSheet의 `show` 호출도 Screen이 담당한다.** ViewModel은 데이터와 콜백만 제공한다.
 * `void goToXxx() => SomeRoute().push(...)` 같은 **순수 라우팅/표시 래퍼 메서드 금지** — Screen에도 ViewModel에도 만들지 않는다. (여러 곳에서 재사용되는 시트 표시 등 실질 로직이 있는 경우만 메서드로 둔다.)
@@ -158,32 +158,3 @@ switch (state.songList) {
 | 간격 | `Gap` (`design_system/components/layout/`) |
 | 간격/라디우스 값 | `AppSpacing` / `AppRadius` (`design_system/foundation/`) — 매직넘버 대신 사용 |
 | 네트워크 이미지 | `CachedImage` (`design_system/components/image/`) |
-
-## 6. 라우팅 규칙 (router/)
-
-* 모든 화면은 `presentation/router/router.dart`에 **TypedGoRoute 클래스**로 선언한다. 수정 후 `dart run build_runner build`로 `router.g.dart`를 재생성한다.
-* **라우트 클래스 형식:** `static const path/name` 상수 + 타입 있는 생성자 파라미터 + `with $<Route>` mixin(go_router_builder 4.x — 언더스코어 없는 `$` 접두).
-  ```dart
-  class ModelDownloadRoute extends GoRouteData with $ModelDownloadRoute {
-    const ModelDownloadRoute({required this.era});
-
-    static const String path = 'model-download';
-    static const String name = 'model-download';
-
-    /// 다운로드 후 진입할 시대 — `Era.queryValue` (query parameter)
-    final String era;
-
-    @override
-    Widget build(BuildContext context, GoRouterState state) =>
-        ModelDownloadScreen(era: Era.fromQueryValue(era));
-  }
-  ```
-* `path`/`name`은 **kebab-case**로 통일한다.
-* **객체 전달 규약:**
-  * 라우트 클래스의 선언 필드는 **path/query 파라미터만** 둔다. codegen `$extra` 필드 금지(부모/자식 라우트 덮어쓰기 이슈 — flutter/flutter#106121).
-  * 객체는 `context.push(SomeRoute().location, extra: object)`로 싣고, 라우트 `build`에서 `state.extra`를 수동 캐스트해 화면 생성자로 넘긴다.
-  * **딥링크 대상 라우트는 extra 없이 path/query만으로도 동작해야 한다** (extra 유무 이중 경로).
-* **라우트 `build`가 "문자열 → 타입" 변환의 유일한 장소다.** 화면은 타입 있는 생성자만 노출하고 `GoRouterState`를 모른다.
-* **전환:** 스택이 교체되는 라우트(스플래시·온보딩·메인)는 `FadeTransitionPage`(`router/pages/`)로 `buildPage`를 구성한다. 일반 push는 기본 전환.
-* **redirect 게이트는 두지 않는다.** 부트스트랩 → 온보딩/홈 판정은 스플래시 화면의 `BlocListener`가 하고, 라우터는 `redirect`/`refreshListenable` 없이 화면 주도 이동만 받는다. 전역 게이트가 필요해지면 그때 `appRouter`의 `redirect` 한 곳에서만 관리한다.
-* 다단계 플로우에서 화면 간 Cubit을 공유해야 하면 `ShellRoute` + `BlocProvider`로 플로우 전체를 감싼다(단건 전달은 extra·생성자 주입이 우선).
