@@ -15,7 +15,6 @@ import 'package:picsong/presentation/design_system/foundation/app_radius.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
 import 'package:picsong/presentation/router/router.dart';
-import 'package:picsong/presentation/screens/question/scene_detail.dart';
 import 'package:picsong/presentation/screens/question/viewmodel/question_cubit.dart';
 import 'package:picsong/presentation/screens/question/widgets/hint_bottom_sheet.dart';
 import 'package:picsong/presentation/screens/question/widgets/question_actions.dart';
@@ -74,35 +73,32 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
           wrongAnswerSignal.value++,
       child: Column(
         children: <Widget>[
-          Expanded(child: _buildQuestionArea(context)),
-          _buildInputBar(context, wrongAnswerSignal: wrongAnswerSignal),
-        ],
-      ),
-    );
-  }
-
-  /// 진행도부터 보조 액션까지, 스크롤되는 문제 영역
-  Widget _buildQuestionArea(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.screenHorizontal,
-      ),
-      child: Column(
-        children: <Widget>[
-          _buildProgress(),
-          _buildSceneView(),
-          const Gap(height: AppSpacing.lg),
-          _buildCaption(),
-          const Gap(height: AppSpacing.lg),
-          AppText(
-            text: '이 그림이 떠올리게 하는 노래는?',
-            style: AppTypography.title3,
-            color: AppColors.textStrong,
-            textAlign: TextAlign.center,
-            maxLines: 2,
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.screenHorizontal,
+              ),
+              child: Column(
+                children: <Widget>[
+                  _buildProgress(),
+                  _buildSceneView(),
+                  const Gap(height: AppSpacing.lg),
+                  _buildCaption(),
+                  const Gap(height: AppSpacing.lg),
+                  AppText(
+                    text: '이 그림이 떠올리게 하는 노래는?',
+                    style: AppTypography.title3,
+                    color: AppColors.textStrong,
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                  ),
+                  const Gap(height: AppSpacing.lg),
+                  _buildActions(context),
+                ],
+              ),
+            ),
           ),
-          const Gap(height: AppSpacing.lg),
-          _buildActions(context),
+          _buildInputBar(context, wrongAnswerSignal: wrongAnswerSignal),
         ],
       ),
     );
@@ -222,34 +218,44 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
   // MARK: - Helpers
 
   ///
-  /// 클루 그림 크게 보기 — 뒤 화면이 비치는 반투명 라우트로 띄운다(전환은 ImageDetailRoute)
+  /// 클루 그림 크게 보기
   ///
   void _openSceneDetail(BuildContext context, int index) {
-    final ImageDetailArgs detail = sceneDetailOf(
-      imagePathList: viewModel(context).state.clueImagePathList,
-      index: index,
-    );
-    context.push(const ImageDetailRoute().location, extra: detail);
+    // 원본 그림 목록 조회 — 아직 안 그려진 자리는 빈 문자열이다
+    List<String> scenePathList = viewModel(context).state.clueImagePathList;
+
+    // 크게 볼 그림 목록 조회
+    List<String> imagePathList =
+        scenePathList.where((String path) => path.isNotEmpty).toList();
+
+    // 시작 인덱스 조회 — 원본 앞칸 중 실제로 그려진 개수
+    int initialIndex = scenePathList
+        .take(index)
+        .where((String path) => path.isNotEmpty)
+        .length;
+
+    context.push(const ImageDetailRoute().location, extra: (
+      imagePathList: imagePathList,
+      initialIndex: initialIndex,
+    ));
   }
 
   ///
-  /// 문제 결과 화면으로 이동 — 결과 화면이 스스로 닫히며 진행 의사를 돌려준다
-  ///
-  /// 뒤로가기/스와이프백으로 닫히면 결과가 없으므로 아무 일도 하지 않는다.
+  /// 문제 결과 화면으로 이동
   ///
   Future<void> _goToQuestionResult(
     BuildContext context, {
     required bool isCorrect,
   }) async {
-    final QuestionCubit questionCubit = viewModel(context);
+    // 문제 결과 화면으로 이동
     final bool wantsNext = await context.push<bool>(
           const QuestionResultRoute().location,
           extra: (
             era: era,
-            question: questionCubit.currentQuestion,
-            imagePathList: questionCubit.state.clueImagePathList,
+            question: viewModel(context).currentQuestion,
+            imagePathList: viewModel(context).state.clueImagePathList,
             isCorrect: isCorrect,
-            isLast: questionCubit.isLastQuestion,
+            isLast: viewModel(context).isLastQuestion,
           ),
         ) ??
         false;
@@ -263,14 +269,16 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
   /// 결과 화면은 이미 닫힌 뒤라, 마지막 문제의 교체 대상은 이 퀴즈 화면이다.
   ///
   void _goToNext(BuildContext context) {
-    final QuestionCubit questionCubit = viewModel(context);
-    if (!questionCubit.isLastQuestion) {
-      questionCubit.goToNextQuestion();
+    // 다음 문제로 이동
+    if (!viewModel(context).isLastQuestion) {
+      viewModel(context).goToNextQuestion();
       return;
     }
+
+    // 라운드 결과 화면으로 이동
     context.pushReplacement(
       const RoundResultRoute().location,
-      extra: (era: era, resultList: questionCubit.resultList),
+      extra: (era: era, resultList: viewModel(context).resultList),
     );
   }
 

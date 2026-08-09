@@ -11,7 +11,6 @@ import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/router/router.dart';
 import 'package:picsong/presentation/screens/question/result/widgets/question_result_header.dart';
 import 'package:picsong/presentation/screens/question/result/widgets/question_result_song_card.dart';
-import 'package:picsong/presentation/screens/question/scene_detail.dart';
 import 'package:picsong/presentation/screens/question/widgets/scene/question_scene_view.dart';
 
 ///
@@ -73,13 +72,8 @@ class QuestionResultScreen extends BaseScreen {
                   QuestionSceneView(
                     sceneCount: question.lyricLine.sceneCount,
                     imagePathList: imagePathList,
-                    onSceneTapped: (int index) => context.push(
-                      const ImageDetailRoute().location,
-                      extra: sceneDetailOf(
-                        imagePathList: imagePathList,
-                        index: index,
-                      ),
-                    ),
+                    onSceneTapped: (int index) =>
+                        _showSceneDetailScreen(context, index),
                   ),
                   const Gap(height: AppSpacing.lg),
                   QuestionResultSongCard(era: era, question: question),
@@ -98,6 +92,28 @@ class QuestionResultScreen extends BaseScreen {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  ///
+  /// 클루 그림 크게 보기
+  ///
+  void _showSceneDetailScreen(BuildContext context, int index) {
+    // 크게 볼 그림 목록 조회
+    List<String> scenePathList =
+        imagePathList.where((String path) => path.isNotEmpty).toList();
+
+    // 시작 인덱스 조회 — 원본 앞칸 중 실제로 그려진 개수
+    int initialIndex = imagePathList
+        .take(index)
+        .where((String path) => path.isNotEmpty)
+        .length;
+    context.push(
+      const ImageDetailRoute().location,
+      extra: (
+        imagePathList: scenePathList,
+        initialIndex: initialIndex,
       ),
     );
   }
