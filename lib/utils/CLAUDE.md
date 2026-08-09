@@ -8,7 +8,7 @@
 
 | 경로 | 책임 |
 |---|---|
-| `extensions/` | 표준 타입/외부 타입에 메서드 추가(`DateTime`, `String`, `GetInterface` 등). 부작용 없음. |
+| `extensions/` | 표준 타입에 메서드 추가(`DateTime`, `String`, `int`, `Map` 등). 부작용 없음. |
 | `services/` | 진짜 범용 인프라(`Debouncer`, `AppLogger`). 도메인 종속 서비스는 여기 두지 않는다. |
 
 ## 2. 무엇이 utils가 아닌가
