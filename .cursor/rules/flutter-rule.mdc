@@ -4,13 +4,24 @@ alwaysApply: true
 
 # Flutter & Dart Coding Guidelines
 
-You are a senior Dart programmer with experience in the Flutter framework and a preference for clean programming and design patterns.
-Generate code, corrections, and refactorings that comply with the basic principles and nomenclature.
+This project's rules live in its `CLAUDE.md` files, not here. Read them before writing or
+modifying any code: the root file always applies, plus the file for the layer you are editing.
+If the `@` references below do not resolve, open the same paths and read them anyway.
 
-**Project:** picsong (Flutter mobile app) — Dart ^3.6.2 / Flutter 3.35.x, `flutter_bloc` (Cubit) + `go_router` + `flutter_hooks`, Hive for local DB, `talker` for logging.
-**Source of truth:** this file is a condensed summary. The full layer-specific rules live in each directory's own `CLAUDE.md` (root, `lib/data/`, `lib/domain/`, `lib/presentation/`, `design_system/`, `router/`, `lib/utils/`) — read the one next to the file you are editing before any non-trivial change.
+- @CLAUDE.md — project overview, layer map, standards common to every layer
+- @lib/data/CLAUDE.md — API, storage, SDK integration (Service / DTO)
+- @lib/domain/CLAUDE.md — entities and pure domain logic, no framework deps
+- @lib/presentation/CLAUDE.md — screens, viewmodels (Cubit), widgets (MVVM + Bloc)
+- @lib/presentation/design_system/CLAUDE.md — design tokens, context-free components
+- @lib/presentation/router/CLAUDE.md — route declarations, object passing, transitions
+- @lib/utils/CLAUDE.md — domain-agnostic general utilities
 
-## 1. MCP & Context Utilization Rules
+A `CLAUDE.md` always wins over this file. To change a rule, edit that `CLAUDE.md` only —
+never copy it back here.
+
+---
+
+## MCP & Context Utilization Rules
 
 ### context7 (Official Documentation Search)
 * **Maintain Up-to-dateness:** If the latest library syntax or official documentation is required, you MUST use the `context7` MCP to verify information before responding.
@@ -22,153 +33,3 @@ Generate code, corrections, and refactorings that comply with the basic principl
 ### dart-mcp-server (Local Project Analysis)
 * **Static Analysis Compliance:** Use `dart-mcp-server` before and after code modifications to check for Analyzer errors or Lint warnings (as defined in `analysis_options.yaml`).
 * **Duplication Prevention:** Search for existing classes, functions, and extension methods within the local project to avoid code duplication and maintain consistency.
-
----
-
-## 2. Dart General Guidelines
-
-### Basic Principles
-* **Explicit Typing:** Always declare types for all variables and functions (parameters and return values). Avoid using `any` or `dynamic`.
-* **Clean Code:** Do not leave unnecessary blank lines within function bodies.
-* **Logging:** Never call `print()` directly. Use `AppLogger` (`lib/utils/services/app_logger.dart`).
-
-### Naming Conventions
-* **Classes:** PascalCase (e.g., `SongService`, `QuestionResult`).
-* **Widgets:** PascalCase with descriptive suffix (e.g., `AppButton`, `ModelDownloadScreen`).
-* **ViewModels:** PascalCase with `Cubit` suffix (e.g., `ModelDownloadCubit`); its state class is `<Feature>State` (e.g., `ModelDownloadState`).
-* **Entities:** PascalCase noun (e.g., `Song`); request entities use a `Request` suffix. No `DTO` suffix — that naming belongs to a data layer this project does not have.
-* **Services:** PascalCase with `Service` suffix (e.g., `SongService`).
-* **Functions/Methods:** camelCase starting with a **verb** (e.g., `signInWithGoogle()`, `updateTitle()`).
-* **Variables:** camelCase (e.g., `accessToken`, `hasError`).
-* **Private Members:** Prefix with underscore (e.g., `_dioService`, `_storage`).
-* **Files/Directories:** snake_case / underscores_case (e.g., `auth_service.dart`).
-* **Booleans:** Use prefixes like `is`, `has`, or `can` (e.g., `isLoading`, `hasError`).
-* **No Abbreviations:** Use complete words (Exception: API, URL, i, j, err, ctx, req, res).
-* **Constants:** Define magic numbers used in 3+ places as constants with intuitive names.
-* **Entity Fields:** `Id`/`Url` inside a compound word are written `ID`/`URL` (`userID`, `imageURL`); plurals become `<name>List` typed `List<T>` (`songList`).
-
-### File Organization
-lib/
-├── data/                # dio/ (setup, interceptors, exceptions), services/<domain>/, database/ (Hive)
-├── domain/              # entities/ (immutable) + services/ (pure logic) — no I/O, no frameworks
-├── presentation/        # common/ (base/, extensions/, services/), design_system/, router/, screens/
-└── utils/               # domain-agnostic extensions/ and services/ (AppLogger, Debouncer)
-
-screens/<feature>/
-├── <feature>_screen.dart        # extends BaseCubitScreen — DI + UI
-├── viewmodel/
-│   ├── <feature>_cubit.dart     # Cubit — declares part '<feature>_state.dart'
-│   └── <feature>_state.dart     # part of — immutable screen state
-└── widgets/                     # widgets used only by this screen
-
-### Function & Method Guidelines
-* **Single Responsibility Principle (SRP):** Each function must have a single purpose and be under 30 lines.
-* **Pure Function Focus:** Favor pure functions where output is determined only by input. Minimize side effects and reliance on external state.
-* **Immutability:** Do not mutate input parameters. Return new objects or copies using `copyWith` for data changes.
-* **Avoid Nesting:** Use **Early Returns** to avoid `if-else` nesting. Extract complex conditions into named functions.
-* **Declarative Programming:** Use higher-order functions (`map`, `filter`, `reduce`, etc.) instead of imperative loops (`for`, `while`).
-* **Expression Style:** Use arrow functions (`=>`) for logic under 2 lines. Use block-style for complex logic.
-* **RO-RO (Receive Object, Return Object) Pattern:** Use Named Parameters for input and objects for return values when there are 2+ parameters or complex results.
-* **Single Level of Abstraction:** Maintain consistent abstraction levels within a single function.
-
-### Data & Classes
-#### Modeling & Validation
-* **Avoid Primitive Obsession:** Encapsulate data in composite classes instead of raw primitives.
-* **Self-Contained Validation:** Perform validation within the class (constructor/factory) to guarantee valid object state.
-* **Immutability First:** All data should be immutable. Use `final` by default and `const` for compile-time constants.
-
-#### Functional Orientation
-* **Pure Logic:** Minimize side effects by returning results based strictly on inputs.
-* **No Getter Abuse:** Avoid excessive calculated properties (`get`). Use explicit methods for complex calculations.
-
-#### Class Structure
-* **State Objectification:** When a class has 3+ state properties, group them into a logically related sub-object (State Object).
-    * *Example:* Use `UserInfo` object instead of separate `age`, `name`, `email`.
-* **Intuitive Naming:** Name state objects specifically to convey their context.
-* **Size Limit:** Keep class length under 200 lines.
-* **Composition Over Inheritance:** Follow SOLID principles; prefer composition to extend functionality.
-
----
-
-## 3. Flutter Specific Guidelines
-
-### Architecture (Hybrid Clean Architecture)
-Dependency direction: `presentation → domain ← data`.
-* **data:** `<Domain>Service` classes wrapping network/SDK/local DB. **No DTO classes** — responses are parsed by the entity's own `factory <Entity>.fromJson(...)`. Never imports `lib/presentation/`.
-* **domain:** **zero external imports** — no `package:flutter/*`, `flutter_bloc`, `equatable`, `go_router`, `dio`, `hive`, and no `data/`/`presentation/` code. If it needs one of those, it is not domain.
-* **presentation:** MVVM + Bloc.
-    * `Screen`: DI, state subscription, navigation, dialogs/bottom sheets. No business logic.
-    * `Cubit` (`viewmodel/`): business logic — a side-effect shell (service calls, `emit`, logging, toast) over a pure private core (calculation, mapping, validation, sorting).
-    * `Widget` (`widgets/`): display only, no Cubit reference. Data via parameters, events via callbacks.
-    * `design_system/`: tokens + context-free components. Never imports `flutter_bloc`, `go_router`, `lib/data/`, or any screen.
-
-### State Management (Bloc — Cubit by default)
-* **Framework:** `flutter_bloc` (^9.1.1). Use `Cubit<State>` by default; reach for `Bloc<Event, State>` **only** when an `EventTransformer` is genuinely needed (search debounce, droppable paging).
-* **State class:** `final class <Feature>State extends Equatable` — every field `final`, `const` constructor with defaults, hand-written `copyWith`, all fields in `props`. The state file is a `part of` its cubit file.
-* **Immutable Updates:** change state only via `emit(state.copyWith(...))`. Never mutate a state field.
-* **Async data:** model async slots as `Async<T>` (`lib/domain/entities/async_state/async_state.dart`) — `Loading()` / `Fetched(data)` / `Failed(error)` — as a State field, rendered with sealed `switch` pattern matching.
-* **Rebuild Scope:** subscribe with `BlocBuilder` + `buildWhen` or `context.select`, wrapping **only the widget that changes**; never the whole screen. `BlocListener` for one-shot events.
-* **DI:** no DI container. A screen extends `BaseCubitScreen<T>` (`lib/presentation/common/base/base_cubit_screen.dart`, or `BaseScreen` when static) and builds its Cubit in `createViewModel(context)`, triggering the initial load with a cascade (`ModelDownloadCubit()..startInstall()`). Services are instantiated directly where used. Never write manual register/dispose code.
-* **Lifecycle:** override `close()` for cleanup; the Cubit closes automatically when the screen leaves the tree.
-* **Flow:** UI calls `viewModel(context).method()` -> Cubit emits new State -> UI rebuilds.
-* **UI-local state is not State:** expand/collapse, carousel index, animation controllers live in `flutter_hooks` (`useState`) inside the widget.
-
-### Routing (go_router)
-* **Framework:** `go_router` (^17.2.3) + `go_router_builder` codegen. Declare every screen as a `TypedGoRoute` class in `lib/presentation/router/router.dart`, then regenerate with `dart run build_runner build`. Never hand-edit `router.g.dart`.
-* **Calls:** `SomeRoute(param).push(context)` to stack a detail, `const HomeRoute().go(context)` to replace the stack on a flow change, `context.pop()` to go back.
-* **Ownership:** the Screen navigates, inline from callbacks. **Never navigate from a Cubit** — the Cubit returns a result and the Screen branches on it. Guard with `if (!context.mounted) return;` after an `await`.
-* **Objects:** route fields hold path/query parameters only (no codegen `$extra` field). Pass objects with `context.push(SomeRoute().location, extra: object)`, casting `state.extra` inside the route's `build` — the only place strings become types.
-
-### Widget & UI Optimization
-* Maintain a flat widget tree. Break down large widgets into small, focused components.
-* Use `const` constructors wherever possible.
-* Use **Extensions** to manage reusable logic.
-* Build repeating item lists with `ListView`/`ListView.separated` (or `SliverList`), not `Column` + `map(...).toList()`.
-
-### Design System Usage
-* Colors come from `design_system/foundation/` tokens only — inline `Color(0xff...)` is forbidden. A new Figma color becomes a new constant, never a mapping onto a similar existing token. Use `AppSpacing`/`AppRadius` instead of magic numbers.
-* Reuse existing components (`AppText`, `AppButton`, `AppTextField`, `DefaultAppBar`, `AppDialog`, `Gap`, `CachedImage`, `AsyncAnimatedSwitcher`) — add a variant rather than building a lookalike.
-
----
-
-## 4. Code Readability & Documentation
-
-### UI Structuring
-* **No Spaghetti Code:** Do not put massive UI blocks in `buildBody`. Split into `_buildXxx()` methods; anything over ~70 lines moves to its own file in the screen's `widgets/` (one widget class per file).
-* **Nesting Limit:** Keep nesting under 5 levels.
-* **UI Intent:** Add a one-line comment at the start of each UI section.
-
-### Logic Documentation
-* **Comment Format:** properties get a single line (`/// description`); methods get a three-line block (`///` -> `/// description` -> `///`).
-* **Focus on 'What/Why':** Explain intent, not implementation.
-    * *Example:* `/// Fetches the song list for the selected era`
-* **Naming Over Comments:** Aim for names so clear that comments are optional.
-
-### Organization
-* **Member Ordering:** `Injected Properties -> Constructor -> Constants -> Properties -> Lifecycle -> Public Methods -> Private Methods (including UI)`. Keep the constructor directly under the injected properties it assigns.
-* **Sections:** separate method regions with `// MARK: - <Region>` comments (none for regions that do not exist).
-* **Proximity:** In a Screen, `_buildXxx` methods follow the UI top-to-bottom; in a Cubit, public methods follow the workflow (`fetch` -> `update` -> `submit`) with pure private helpers last.
-
----
-
-## 5. Reusability & Dependency Management
-
-### Reusability Criteria
-* **Rule of Three:** Commonize only when logic/UI is duplicated 3+ times. For 2 instances, prioritize duplication (WET) to avoid premature abstraction.
-* **Context-Free Components:** Reusable widgets must not depend on specific business logic or screen states. Inject all data via parameters.
-* **Loose Coupling:** Common widgets must never reference a Cubit or global state — no `BlocProvider`/`BlocBuilder`/`context.read<XCubit>()` inside them. Use callbacks for events. (Closing yourself with `Navigator.of(context).pop()` in a dialog/bottom sheet is the one accepted exception.)
-* **Promotion:** a screen-only widget lives in `screens/<feature>/widgets/`; promote it to `design_system/components/` only once it meets the Rule of Three.
-
-### Exception & Error Handling
-* **Custom Exceptions:** Use exceptions defined in `lib/data/dio/error/error_exception_type.dart`.
-    * *Example:* `throw ServerException('Login failed', statusCode: 401);`
-* **No Empty Catch:** Never use empty catch blocks. Always handle or rethrow.
-* **Usage:** Use exceptions only for unexpected errors. Use `catch` only to fix the problem or add context.
-
----
-
-## 6. Pre-Submission Checklist
-1. Ensure the implementation strictly reflects user requirements.
-2. Run `flutter analyze` and ensure zero errors/warnings.
-3. Verify naming conventions match the project patterns.
-4. Ensure new properties and methods carry the documented comment format (§4).
