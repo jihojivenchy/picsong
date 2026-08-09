@@ -41,29 +41,7 @@ final GoRouter appRouter = GoRouter(
   routes: $appRoutes,
 );
 
-/// 퀴즈 진입에 필요한 라운드 재료 (extra)
-typedef QuestionArgs = ({
-  Era era,
-  List<Question> questionList,
-  String firstImagePath,
-});
-
-/// 문제 결과 화면 구성값 — 진행 콜백까지 함께 넘긴다 (extra)
-typedef QuestionResultArgs = ({
-  Era era,
-  Question question,
-  List<String> imagePathList,
-  void Function(int index) onSceneTapped,
-  bool isCorrect,
-  bool isLast,
-  VoidCallback onNext,
-});
-
-/// 라운드 결과 요약 (extra)
-typedef RoundResultArgs = ({Era era, List<QuestionResult> resultList});
-
-/// 크게 볼 그림 목록과 시작 위치 (extra)
-typedef ImageDetailArgs = ({List<String> imagePathList, int initialIndex});
+// MARK: - 부트스트랩
 
 ///
 /// 스플래시 — 앱 진입점
@@ -100,6 +78,8 @@ class OnboardingRoute extends GoRouteData with $OnboardingRoute {
         child: const OnboardingScreen(),
       );
 }
+
+// MARK: - 홈
 
 ///
 /// 홈 — 게임 플로우의 뿌리
@@ -167,6 +147,8 @@ class AppInfoRoute extends GoRouteData with $AppInfoRoute {
       const AppInfoScreen();
 }
 
+// MARK: - 게임 플로우
+
 ///
 /// 모델 다운로드 — 받고 나면 이 시대의 라운드로 들어간다
 ///
@@ -201,6 +183,13 @@ class RoundPreparationRoute extends GoRouteData with $RoundPreparationRoute {
       RoundPreparationScreen(era: Era.fromQueryValue(era));
 }
 
+/// 퀴즈 진입에 필요한 라운드 재료 (extra)
+typedef QuestionArgs = ({
+  Era era,
+  List<Question> questionList,
+  String firstImagePath,
+});
+
 ///
 /// 퀴즈 — 준비된 문제 목록을 extra로 받는다
 ///
@@ -220,6 +209,17 @@ class QuestionRoute extends GoRouteData with $QuestionRoute {
     );
   }
 }
+
+/// 문제 결과 화면 구성값 — 진행 콜백까지 함께 넘긴다 (extra)
+typedef QuestionResultArgs = ({
+  Era era,
+  Question question,
+  List<String> imagePathList,
+  void Function(int index) onSceneTapped,
+  bool isCorrect,
+  bool isLast,
+  VoidCallback onNext,
+});
 
 ///
 /// 문제 결과 — 정오 공개와 다음 단계 진행
@@ -245,6 +245,9 @@ class QuestionResultRoute extends GoRouteData with $QuestionResultRoute {
   }
 }
 
+/// 라운드 결과 요약 (extra)
+typedef RoundResultArgs = ({Era era, List<QuestionResult> resultList});
+
 ///
 /// 라운드 결과 — 점수 요약
 ///
@@ -260,6 +263,11 @@ class RoundResultRoute extends GoRouteData with $RoundResultRoute {
     return RoundResultScreen(era: args.era, resultList: args.resultList);
   }
 }
+
+// MARK: - 공용 오버레이
+
+/// 크게 볼 그림 목록과 시작 위치 (extra)
+typedef ImageDetailArgs = ({List<String> imagePathList, int initialIndex});
 
 ///
 /// 그림 크게 보기 — 뒤 화면이 비치는 반투명 오버레이
@@ -297,6 +305,8 @@ class ImageDetailRoute extends GoRouteData with $ImageDetailRoute {
     );
   }
 }
+
+// MARK: - 진단(임시)
 
 ///
 /// 프롬프트 실험실 — 진단 전용, 원인 규명이 끝나면 제거한다
