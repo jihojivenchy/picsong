@@ -11,9 +11,6 @@
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3331BC533013660D0053B3BA /* StableDiffusion in Frameworks */ = {isa = PBXBuildFile; productRef = 3331BC523013660D0053B3BA /* StableDiffusion */; };
 		33B831CA3016274100A6AABD /* ClueGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33B831C93016273900A6AABD /* ClueGenerator.swift */; };
-		A1C0DE0001B7045DB0000002 /* AppChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0DE0001B7045DB0000001 /* AppChannel.swift */; };
-		A1C0DE0001B7045DB0000004 /* ClueChannelBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0DE0001B7045DB0000003 /* ClueChannelBridge.swift */; };
-		A1C0DE0001B7045DB0000006 /* ModelProgressPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0DE0001B7045DB0000005 /* ModelProgressPayload.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		64263F78003811DA6CC19E1C /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D58429CB9A4C3986AFD75803 /* Pods_Runner.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -23,6 +20,9 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
+		A1C0DE0001B7045DB0000002 /* AppChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0DE0001B7045DB0000001 /* AppChannel.swift */; };
+		A1C0DE0001B7045DB0000004 /* ClueChannelBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0DE0001B7045DB0000003 /* ClueChannelBridge.swift */; };
+		A1C0DE0001B7045DB0000006 /* ModelProgressPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0DE0001B7045DB0000005 /* ModelProgressPayload.swift */; };
 		B3CDD23941C6A11C15AA06B8 /* ModelInstallerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5C342790E0D11E8E94F8A3 /* ModelInstallerError.swift */; };
 		B9790F7905D88FB8D092B7AC /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D81B5B9FCA1E092B8D9BD307 /* Pods_RunnerTests.framework */; };
 		D6E1F0A2B3C4D5E6F7081902 /* ModelInstallNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E1F0A2B3C4D5E6F7081901 /* ModelInstallNotifier.swift */; };
@@ -61,9 +61,6 @@
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33B831C93016273900A6AABD /* ClueGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClueGenerator.swift; sourceTree = "<group>"; };
-		A1C0DE0001B7045DB0000001 /* AppChannel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppChannel.swift; sourceTree = "<group>"; };
-		A1C0DE0001B7045DB0000003 /* ClueChannelBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClueChannelBridge.swift; sourceTree = "<group>"; };
-		A1C0DE0001B7045DB0000005 /* ModelProgressPayload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelProgressPayload.swift; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -75,11 +72,14 @@
 		97C146FD1CF9000F007C117D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A1C0DE0001B7045DB0000001 /* AppChannel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AppChannel.swift; sourceTree = "<group>"; };
+		A1C0DE0001B7045DB0000003 /* ClueChannelBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ClueChannelBridge.swift; sourceTree = "<group>"; };
+		A1C0DE0001B7045DB0000005 /* ModelProgressPayload.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelProgressPayload.swift; sourceTree = "<group>"; };
 		A53CB96B0864C933BFA54CAC /* ModelManifest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelManifest.swift; sourceTree = "<group>"; };
 		B85F86BD87F99B454A67826E /* ModelInstaller.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelInstaller.swift; sourceTree = "<group>"; };
-		D6E1F0A2B3C4D5E6F7081901 /* ModelInstallNotifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelInstallNotifier.swift; sourceTree = "<group>"; };
 		CC55D1BB4B20FABB9A4ED944 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		D58429CB9A4C3986AFD75803 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6E1F0A2B3C4D5E6F7081901 /* ModelInstallNotifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelInstallNotifier.swift; sourceTree = "<group>"; };
 		D81B5B9FCA1E092B8D9BD307 /* Pods_RunnerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RunnerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3FAA394B7AD9A1298ED5ADB /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		E7D0F9F358183E37517BA3ED /* ModelInstallChannelBridge.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ModelInstallChannelBridge.swift; sourceTree = "<group>"; };
@@ -144,7 +144,6 @@
 				E7D0F9F358183E37517BA3ED /* ModelInstallChannelBridge.swift */,
 				A1C0DE0001B7045DB0000005 /* ModelProgressPayload.swift */,
 			);
-			name = ModelInstall;
 			path = ModelInstall;
 			sourceTree = "<group>";
 		};
@@ -551,6 +550,8 @@
 				DEVELOPMENT_TEAM = MNAZDR4A9U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PicSong;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -739,6 +740,8 @@
 				DEVELOPMENT_TEAM = MNAZDR4A9U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PicSong;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -767,6 +770,8 @@
 				DEVELOPMENT_TEAM = MNAZDR4A9U;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = PicSong;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
