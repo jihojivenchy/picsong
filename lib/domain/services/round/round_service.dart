@@ -19,6 +19,9 @@ class RoundService {
   ///
   /// **실험실이 이 상수를 직접 참조한다**(`PromptLabBatches._fixedSeed`).
   /// 두 곳이 같은 숫자를 따로 들고 있으면 언젠가 갈라진다.
+  ///
+  /// 이 시드로 뽑은 구도가 마음에 안 드는 곡은 songs.json에 `imageSeed`를
+  /// 적어 곡 단위로 덮어쓴다 — `Song.imageSeed`.
   static const int imageSeed = 8888;
 
   ///
@@ -54,17 +57,26 @@ class RoundService {
     return Question(
       song: song,
       lyricLine: lyricLine,
-      sceneList: _toSceneList(lyricLine),
+      sceneList: _toSceneList(song: song, lyricLine: lyricLine),
     );
   }
 
   /// 가사 줄의 프롬프트들을 시드가 붙은 장면 목록으로 변환 (순수)
-  List<QuestionScene> _toSceneList(LyricLine lyricLine) {
-    return lyricLine.imagePromptList
-        .map((String imagePrompt) => QuestionScene(
-              imagePrompt: imagePrompt,
-              imageSeed: imageSeed,
+  List<QuestionScene> _toSceneList({
+    required Song song,
+    required LyricLine lyricLine,
+  }) {
+    return lyricLine.imagePromptList.indexed
+        .map(((int, String) entry) => QuestionScene(
+              imagePrompt: entry.$2,
+              imageSeed: _seedOf(song: song, sceneIndex: entry.$1),
             ))
         .toList();
+  }
+
+  /// 이 장면에 쓸 시드 — 곡 전용 시드가 있으면 장면 순번을 더해 쓴다 (순수)
+  int _seedOf({required Song song, required int sceneIndex}) {
+    final int? base = song.imageSeed;
+    return base == null ? imageSeed : base + sceneIndex;
   }
 }

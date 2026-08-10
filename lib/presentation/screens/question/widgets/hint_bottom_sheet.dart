@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:picsong/domain/entities/song/hint.dart';
 import 'package:picsong/presentation/design_system/components/button/app_button.dart';
 import 'package:picsong/presentation/design_system/components/layout/gap.dart';
 import 'package:picsong/presentation/design_system/components/text/app_text.dart';
@@ -7,9 +8,8 @@ import 'package:picsong/presentation/design_system/foundation/app_colors.dart';
 import 'package:picsong/presentation/design_system/foundation/app_radius.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/design_system/foundation/app_typography.dart';
-import 'package:picsong/presentation/screens/question/viewmodel/question_cubit.dart' show HintItem;
 
-/// 힌트 바텀시트 — 가수 초성 / 발매연도 / 장르를 1회 제공.
+/// 힌트 바텀시트 — 곡별 힌트 / 발매연도 / 장르를 1회 제공.
 class HintBottomSheet extends StatelessWidget {
   /// 그랩 핸들 너비
   static const double _grabWidth = 40;
@@ -21,7 +21,7 @@ class HintBottomSheet extends StatelessWidget {
   static const double _sparkSize = 36;
 
   /// 표시할 힌트 항목
-  final List<HintItem> hints;
+  final List<Hint> hints;
 
   const HintBottomSheet._({required this.hints});
 
@@ -30,7 +30,7 @@ class HintBottomSheet extends StatelessWidget {
   ///
   static Future<void> show(
     BuildContext context, {
-    required List<HintItem> hints,
+    required List<Hint> hints,
   }) {
     return showModalBottomSheet<void>(
       context: context,
@@ -133,7 +133,7 @@ class HintBottomSheet extends StatelessWidget {
   }
 
   /// 힌트 행 1개 (라벨 ↔ 값)
-  Widget _buildHintRow(HintItem hint) {
+  Widget _buildHintRow(Hint hint) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.md),
       child: Row(

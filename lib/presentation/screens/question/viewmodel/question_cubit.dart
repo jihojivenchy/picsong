@@ -5,15 +5,13 @@ import 'package:picsong/data/services/clue/clue_service.dart';
 import 'package:picsong/domain/entities/question/question.dart';
 import 'package:picsong/domain/entities/question/question_result.dart';
 import 'package:picsong/domain/entities/question/question_scene.dart';
+import 'package:picsong/domain/entities/song/hint.dart';
 import 'package:picsong/domain/entities/song/song.dart';
 import 'package:picsong/domain/services/scoring/scoring_service.dart';
 import 'package:picsong/presentation/common/services/app_toast_service.dart';
 import 'package:picsong/utils/services/app_logger.dart';
 
 part 'question_state.dart';
-
-/// 힌트 시트에 표시할 항목
-typedef HintItem = ({String label, String value});
 
 /// 퀴즈(문제 풀이) 화면 뷰모델
 class QuestionCubit extends Cubit<QuestionState> {
@@ -43,7 +41,7 @@ class QuestionCubit extends Cubit<QuestionState> {
   Question get currentQuestion => questionList[state.qIndex];
 
   /// 현재 곡의 힌트 항목
-  List<HintItem> get currentHints => _buildHints(currentQuestion.song);
+  List<Hint> get currentHints => _buildHints(currentQuestion.song);
 
   /// 마지막 문제 여부
   bool get isLastQuestion => state.qIndex >= questionList.length - 1;
@@ -188,12 +186,16 @@ class QuestionCubit extends Cubit<QuestionState> {
   }) =>
       List<String>.of(imagePathList)..[index] = imagePath;
 
-  /// 곡 메타를 힌트 항목 목록으로 변환
-  List<HintItem> _buildHints(Song song) => <HintItem>[
-        (label: '가수 초성', value: _toChoseong(song.artist)),
-        (label: '발매연도', value: '${song.year}년'),
-        (label: '장르', value: song.genre),
+  /// 곡별 힌트에 발매연도·장르를 붙여 힌트 항목 목록으로 변환 (순수)
+  List<Hint> _buildHints(Song song) => <Hint>[
+        ...song.hintList.isEmpty ? <Hint>[_artistHint(song)] : song.hintList,
+        Hint(label: '발매연도', value: '${song.year}년'),
+        Hint(label: '장르', value: song.genre),
       ];
+
+  /// 곡별 힌트가 없을 때 대신 쓰는 기본 힌트 — 가수 이름의 초성 (순수)
+  Hint _artistHint(Song song) =>
+      Hint(label: '가수 초성', value: _toChoseong(song.artist));
 
   /// 문자열의 한글 음절을 초성으로 변환, 그 외 문자는 그대로
   String _toChoseong(String text) => text.runes.map(_choseongOf).join();
