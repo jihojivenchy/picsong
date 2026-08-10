@@ -44,6 +44,11 @@ class HomeScreen extends BaseCubitScreen<HomeCubit> {
           batch: PromptLabBatches.second,
           icon: Icons.looks_two_outlined,
         ),
+        const Gap(height: AppSpacing.sm),
+        _buildLabButton(
+          batch: PromptLabBatches.third,
+          icon: Icons.looks_3_outlined,
+        ),
       ],
     );
   }

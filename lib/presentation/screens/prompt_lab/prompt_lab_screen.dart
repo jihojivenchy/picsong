@@ -29,12 +29,24 @@ class PromptLabScreen extends BaseScreen {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PromptLabCubit>.value(
-      value: _cubitCache.putIfAbsent(
-        batch.tag,
-        () => PromptLabCubit(batch: batch),
-      ),
+      value: _cubitOf(batch),
       child: Builder(builder: (BuildContext context) => super.build(context)),
     );
+  }
+
+  ///
+  /// 이 배치의 뷰모델 — **배치 내용이 바뀌었으면 새로 만든다**
+  ///
+  /// 뷰모델은 생성 시점의 배치를 상태로 굳히므로, 캐시를 태그로만 찾으면
+  /// 배치를 갈아끼워도 옛 목록이 계속 보인다. 지문으로 그 경우를 걸러낸다.
+  ///
+  PromptLabCubit _cubitOf(PromptLabBatch batch) {
+    final PromptLabCubit? cached = _cubitCache[batch.tag];
+    if (cached != null && cached.batch.signature == batch.signature) {
+      return cached;
+    }
+    cached?.close();
+    return _cubitCache[batch.tag] = PromptLabCubit(batch: batch);
   }
 
   /// 앱바 구성

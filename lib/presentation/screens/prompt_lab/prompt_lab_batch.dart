@@ -56,6 +56,12 @@ class PromptLabBatch {
     required this.title,
     required this.trialList,
   });
+
+  /// 배치 내용 지문 — 캐시된 뷰모델을 갈아끼울지 판단하는 데 쓴다
+  String get signature => trialList
+      .map((PromptTrial trial) =>
+          '${trial.prompt}|${trial.seed}|${trial.steps}')
+      .join('\n');
 }
 
 ///
@@ -79,113 +85,179 @@ abstract class PromptLabBatches {
   static const String _prefix = ClueService.stylePrefix;
 
   ///
-  /// 58차 배치 — 「칵테일 사랑」(song_006) 첫째 줄 3장 구성
+  /// 74차 배치 — "비가 내리고 음악이 흐르면" 2장 구성
   ///
-  /// "마음 울적한 날엔 거리를 걸어 보고 향기로운 칵테일에 취해도 보고"
+  /// - 1장: 비 · 2장: 음악
   ///
-  /// - 1장: 쓸쓸히 거리를 걷는 여자
-  /// - 2장: 칵테일
-  /// - 3장: 취한 여자
+  /// **비는 이미 결론이 나 있어 슬롯을 셋만 쓴다.** 49~51차에서 26장을 태워
+  /// 「공중의 빗줄기는 384px에서 표현 불가」를 확인했고, 살아남은 건 **물에 닿는 쪽**
+  /// 하나였다(`rain on water` — `song_015` 채택본). 같은 실험을 반복하지 않는다.
+  /// 여기서 볼 건 하나다 — **`song_015`와 겹치지 않는 비를 찾을 수 있는가.**
+  /// 1번이 그 채택본이라 나란히 놓고 비교한다. 2번 창유리는 51차에 없던 각도이고,
+  /// 3번은 채택본의 수면을 넓혀 구도만 바꾼 형태다.
   ///
-  /// **`향기로운`은 버렸다.** 후각은 그릴 수 없다(§7). 칵테일 잔이 그 자리를 대신한다.
+  /// **우산은 일부러 뺐다.** 비의 도상으로는 강하지만 `song_015`의 제목이
+  /// 「우산」이라, 우산이 나오면 플레이어를 그 곡으로 끌고 간다 — 단서가 아니라
+  /// 노이즈다(§5-3).
   ///
-  /// 조각마다 1번이 요청 그대로의 리터럴이고, 2·3번이 그 변형이다.
+  /// **음악(4~9번)이 이 배치의 본론이고, 여기엔 검증된 표현이 있다.**
+  /// `black music notes`는 39차 채택본(`a large bronze bell with black music
+  /// notes floating around it`)과 40차에서 이미 통과했다. 5번은 그 문장 골격을
+  /// **`with ... floating around it` 형태 그대로** 라디오에 이식한 것이다 —
+  /// "음악이 흐른다"를 `from`으로 쓰면 §4-7(A에서 나오는 B)에 걸리므로
+  /// 검증된 `around` 구조를 쓴다.
   ///
-  /// ① **울적함(1~3번)** — 감정 단독은 §6의 제외 대상이라 **물리적 증거**로 옮긴다.
-  ///    §4-3이 「울적하다 → 숙인 고개」를 직접 처방해 뒀다. 3번은 §4-11대로
-  ///    뒷모습으로 잡아 얼굴 붕괴 여지를 없애고, 빈 거리로 쓸쓸함을 만든다.
-  ///
-  /// ② **칵테일(4~6번)은 가장 쉽다.** 잔은 실루엣이 특징적인 단독 피사체다.
-  ///    다만 **색은 넣지 않는다** — 칵테일은 표준색이 없어서 §4-5의 색 흘림에
-  ///    정면으로 걸린다. 레몬만 예외로 쓴다(노랑이 내장색).
-  ///
-  /// ③ **취함(7~9번)이 승부처다.** §4-3이 「취하다 → 붉게 상기된 볼, 감은 눈」을
-  ///    처방했지만 그 뒤 §4-18에서 `eyes closed`가 24차에 6장 중 5장 실패했다.
-  ///    그래서 눈은 건드리지 않고 `flushed`만 쓴다 — 색 단어가 아니라 상태어라
-  ///    §4-5의 색 흘림에서도 비교적 안전하다. 8번은 §4-18의 성공 패턴대로
-  ///    **상태를 지시하는 대신 그 상태가 당연한 상황**(테이블에 엎드림)을 준다.
+  /// 6~9번은 음악의 사물 도상이다. 곡이 1986년이라 LP·라디오가 시대에도 맞고,
+  /// 넷 다 단독 피사체로 학습량이 충분하다(§4-12).
   ///
   /// 시드는 8888 고정.
   ///
-  static final PromptLabBatch first = PromptLabBatch(
+  static PromptLabBatch get first => PromptLabBatch(
     tag: 'prompt-lab-1',
     title: '프롬프트 실험실 1',
     trialList: <PromptTrial>[
-      // 거리를 걷는 여자 — 울적함은 숙인 고개로 옮긴다(§4-3)
-      _trial(1, '거리 — 리터럴', 'a woman walking alone down a city street'),
-      _trial(2, '거리 — 숙인 고개',
-          'a woman walking alone down a street, head lowered'),
-      _trial(3, '거리 — 뒷모습',
-          'a woman seen from behind walking down an empty street'),
+      // 비 — 결론은 나 있다. song_015와 겹치지 않는 형태만 찾는다
+      _trial(1, '비 — song_015 채택본(기준선)', 'rain on water'),
+      _trial(2, '비 — 창유리', 'raindrops running down a window pane'),
+      _trial(3, '비 — 넓은 수면', 'rain falling on a wide river'),
 
-      // 칵테일 — 색은 넣지 않는다(§4-5). 잔의 형태만 바꾼다
-      _trial(4, '칵테일 — 리터럴', 'a cocktail glass on a table'),
-      _trial(5, '칵테일 — 마티니 잔',
-          'a martini glass with a slice of lemon on the rim'),
-      _trial(6, '칵테일 — 롱드링크',
-          'a tall cocktail glass with ice and a straw'),
+      // 음악 — `black music notes`는 39·40차에서 검증된 표현이다
+      _trial(4, '음표 — 단독', 'black music notes floating in the air'),
+      _trial(5, '음표 — 라디오(검증 골격 이식)',
+          'an old radio with black music notes floating around it'),
 
-      // 취한 여자 — 눈은 건드리지 않는다(§4-18). 표정·상황·소품으로 나눈다
-      _trial(7, '취함 — 리터럴', 'a drunk woman with flushed cheeks'),
-      _trial(8, '취함 — 상황',
-          'a woman resting her head on a table, a glass beside her'),
-      _trial(9, '취함 — 소품',
-          'a woman holding a cocktail glass, flushed face'),
+      // 음악의 사물 도상 — 1986년 곡이라 LP·라디오가 시대에도 맞다
+      _trial(6, 'LP', 'a vinyl record spinning on a turntable'),
+      _trial(7, '라디오', 'an old radio with a round dial'),
+      _trial(8, '피아노', 'a grand piano seen from the side'),
+      _trial(9, '기타', 'an acoustic guitar leaning against a wall'),
     ],
   );
 
   ///
-  /// 59차 배치 — 「네모의 꿈」(song_010) 첫째 줄 2장 구성. **색 통일이 승부처다**
+  /// 74차 배치 — 73차 3번(**나무 탁자 위 작은 술잔**)만 파고든다
   ///
-  /// "네모난 침대에서 일어나 눈을 떠보면 네모난 창문으로 보이는 똑같은 풍경"
+  /// "한잔해, 한잔해, 한잔해" — 한 장으로 낸다.
+  /// ```
+  /// 73차 3번  a small shot glass on a wooden table
+  /// ```
+  /// 소주는 버렸고(§4-16), 건배·따르기 같은 동작도 밀렸다. 남은 건 **잔 하나가
+  /// 탁자에 놓인 그림**이므로 골격을 그대로 두고 그 안에서만 움직인다.
   ///
-  /// - 1장: 네모난 침대에서 일어나는 사람
-  /// - 2장: 네모난 창문을 보는 사람
+  /// ① **가장 큰 변수는 잔이 비었느냐다(2·3·5번).** 빈 잔은 그냥 유리잔이고,
+  ///    **액체가 보여야 「한잔」이 된다.** 73차 3번은 담긴 것을 말하지 않았다 —
+  ///    빠져 있던 조합이 이것이다.
+  ///    `clear liquor`는 색 단어가 아니라 투명도 서술이라 §4-5의 색 흘림을
+  ///    부르지 않는다(71차와 같은 판단).
   ///
-  /// **`square`만으로는 아무것도 달라지지 않는다.** 침대도 창문도 원래 사각형이라
-  /// 그 단어가 화면에 만드는 변화가 없다. 두 장을 「네모의 꿈」으로 읽히게 하는
-  /// 건 결국 **두 장이 같은 색을 공유하는 것**뿐이다. 색을 변수로 돌리는 이유다.
+  /// ② **병을 곁들이면 술자리임이 분명해진다(4·5번).** 대신 잔이 주인공
+  ///    자리를 뺏길 수 있다(§4-19). 4번은 잔이 주어, 5번은 병이 주어라
+  ///    어느 쪽이 살아남는지 갈린다.
   ///
-  /// **그런데 그게 §4-5 정면이다.** 침대와 창문은 표준색이 없는 대상이라
-  /// 색을 붙이면 옆으로 샌다(「좋은 날」에서 빨강이 눈 대신 눈물 자국에 붙었다).
-  /// 다만 하트는 `A red heart shape, flat solid color`로 성공했다 — 9번이
-  /// 그 표현을 그대로 이식해, 색이 안 붙는 게 대상 탓인지 표현 탓인지 가른다.
+  /// ③ **배경과 시점(6~9번)** — 바 카운터·거친 나무결·낮은 상, 그리고 부감.
+  ///    `seen from above`는 §4-18의 성공 사례에 들어 있는 표현이다.
+  ///    9번의 낮은 상은 한국 술상에 가까우면서도 보편 형태라 §4-16을 통과한다.
   ///
-  /// **어순 트레이드오프가 하나 더 있다.** 요청대로 사람을 주어로 두면
-  /// (`a person sitting up in a square bed`) 침대가 12번째로 밀려 §1에 걸린다.
-  /// 그래서 1·5번만 리터럴로 두고, 2~8번은 **네모난 사물을 주어로 올렸다**(§4-1).
-  ///
-  /// 색은 침대·창문에 같은 순서로 걸었다 — **2·6(파랑) / 3·7(빨강) / 4·8(노랑)**
-  /// 짝으로 보면 한 색이 두 장 모두에서 버티는지 바로 읽힌다.
+  /// 1번은 73차 3번 원본이다. 비교 기준선이다.
   ///
   /// 시드는 8888 고정.
   ///
-  static final PromptLabBatch second = PromptLabBatch(
-    tag: 'prompt-lab-2',
-    title: '프롬프트 실험실 2',
+  static PromptLabBatch get second => PromptLabBatch(
+        tag: 'prompt-lab-2',
+        title: '프롬프트 실험실 2',
+        trialList: <PromptTrial>[
+          // 기준선 — 73차 3번 원본
+          _trial(1, '기준선 — 73차 3번',
+              'a small shot glass on a wooden table'),
+
+          // 채워진 잔 — 액체가 보여야 「한잔」이 된다
+          _trial(2, '채워짐',
+              'a small shot glass filled with clear liquor on a wooden table'),
+          _trial(3, '채워짐 — 짧게',
+              'a filled shot glass on a wooden table'),
+
+          // 병 곁들임 — 술자리임은 분명해지지만 잔이 밀릴 수 있다(§4-19)
+          _trial(4, '병 곁들임 — 잔이 주어',
+              'a small shot glass and a bottle on a wooden table'),
+          _trial(5, '병 곁들임 — 병이 주어',
+              'a bottle and a filled shot glass on a wooden table'),
+
+          // 배경 · 시점 — 잔은 그대로 두고 놓인 자리만 바꾼다
+          _trial(6, '바 카운터', 'a small shot glass on a bar counter'),
+          _trial(7, '위에서 봄',
+              'a small shot glass on a wooden table, seen from above'),
+          _trial(8, '거친 나무결',
+              'a small shot glass on a rough wooden table'),
+          _trial(9, '낮은 상', 'a small shot glass on a low wooden table'),
+        ],
+      );
+
+  ///
+  /// 72차 배치 — 「사랑의 배터리」 "사랑의 밧데리가 다 됐나봐요" 2장 구성
+  ///
+  /// - 1장: 하트 · 2장: 배터리
+  ///
+  /// 제목의 두 낱말이 그대로 조각이 되므로 정답으로 곧장 이어진다(§5-3).
+  ///
+  /// **`다 됐나봐요`(방전)는 거의 버린 상태로 시작한다.** 실물 건전지는 방전돼도
+  /// 겉모습이 똑같다 — §4-3이 말하는 "흔적을 남기지 않는 서술"이다. 방전을
+  /// 보이게 하려면 **빈 게이지 아이콘**밖에 없는데 그건 §4-14(텍스트·UI 요소)
+  /// 근처라 위험하다. 6·7번이 그 확인이고, 무너지면 「사랑 + 배터리」 두 장으로 낸다.
+  ///
+  /// ① **하트(1~2번)는 이미 답이 있다.** 1번은 `song_033`·`song_030`이 쓰고 있는
+  ///    검증본이고 시드도 같으므로 **완전히 같은 그림**이 나온다.
+  ///    2번은 금 간 하트 — 방전을 배터리가 아니라 하트로 옮겨보는 시도다.
+  ///
+  /// ② **배터리(3~9번)의 승부처는 「실물이냐 도형이냐」다.**
+  ///    하트가 성공한 문장은 `flat solid color, clean rounded outline`이라는
+  ///    **도형 지시**였다(§10 — 하트는 추상 도형이라 실패한 게 아니다).
+  ///    그 골격을 배터리에 그대로 이식한 게 5~7번이고, 실물 건전지로 간 게 4·9번이다.
+  ///
+  /// ③ **8번은 한 장으로 끝낼 수 있는지 본다.** 하트 모양 배터리는 제목 자체다.
+  ///    되면 2장이 아니라 1장 구성이 된다.
+  ///
+  /// `battery`는 §4-17 위험이 낮다 — 야구·포병 뜻이 있지만 이미지 쪽은 건전지가
+  /// 압도적이다. 다만 4번의 `AA`는 글자라 무늬로 처리될 수 있다(§4-14).
+  ///
+  /// 시드는 8888 고정.
+  ///
+  static PromptLabBatch get third => PromptLabBatch(
+    tag: 'prompt-lab-3',
+    title: '프롬프트 실험실 3',
     trialList: <PromptTrial>[
-      // 침대 — 1번만 요청 그대로의 리터럴, 나머지는 침대를 주어로 올린다
-      _trial(1, '침대 — 리터럴(무색)', 'a person sitting up in a square bed'),
-      _trial(2, '침대 — 파랑', 'a blue square bed with a person sitting up'),
-      _trial(3, '침대 — 빨강', 'a red square bed with a person sitting up'),
-      _trial(4, '침대 — 노랑', 'a yellow square bed with a person sitting up'),
+      // 하트 — 1번은 songs.json이 이미 쓰는 검증본이라 기준선이다
+      _trial(1, '하트 — 검증본',
+          'A red heart shape, flat solid color, clean rounded outline'),
+      _trial(2, '하트 — 금 간 하트',
+          'a red heart shape with a crack down the middle'),
 
-      // 창문 — 침대와 같은 색 순서로 건다. 짝지어 비교하기 위해서다
-      _trial(5, '창문 — 리터럴(무색)', 'a person looking out a square window'),
-      _trial(6, '창문 — 파랑',
-          'a blue square window with a person looking out'),
-      _trial(7, '창문 — 빨강',
-          'a red square window with a person looking out'),
-      _trial(8, '창문 — 노랑',
-          'a yellow square window with a person looking out'),
+      // 배터리 — 실물 쪽
+      _trial(3, '배터리 — 최단', 'a battery'),
+      _trial(4, '배터리 — 건전지 실물', 'an AA battery standing upright'),
 
-      // 색만 진단 — 하트가 성공한 표현을 이식해 색이 사물에 붙는지 본다(§4-5)
-      _trial(9, '색 진단 — 평면색', 'a blue square window, flat solid color'),
+      // 배터리 — 도형 쪽. 하트가 성공한 문장 골격을 그대로 이식한다
+      _trial(5, '배터리 — 도형 이식',
+          'a battery icon, flat solid color, clean rounded outline'),
+      _trial(6, '배터리 — 빈 게이지',
+          'an empty battery icon, flat solid color'),
+      _trial(7, '배터리 — 한 칸 남음',
+          'a battery icon with one bar left, flat solid color'),
+
+      // 한 장으로 끝내기 — 하트 모양 배터리는 제목 그 자체다
+      _trial(8, '하트 배터리', 'a heart shaped battery, flat solid color'),
+
+      // 방전 리터럴 — `dead`가 상태 지시라 무시될 공산이 크다(§4-18)
+      _trial(9, '배터리 — 방전 리터럴',
+          'a dead battery lying on the ground'),
     ],
   );
 
   /// 실험실 배치 전체 — 라우트가 tag로 배치를 되찾는 데 쓴다
-  static final List<PromptLabBatch> values = <PromptLabBatch>[first, second];
+  static List<PromptLabBatch> get values => <PromptLabBatch>[
+        first,
+        second,
+        third,
+      ];
 
   ///
   /// tag에 해당하는 배치 (미상이면 첫 배치)
