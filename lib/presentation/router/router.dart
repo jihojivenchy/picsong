@@ -10,8 +10,6 @@ import 'package:picsong/presentation/screens/home/home_screen.dart';
 import 'package:picsong/presentation/screens/image_detail/image_detail_screen.dart';
 import 'package:picsong/presentation/screens/model_download/model_download_screen.dart';
 import 'package:picsong/presentation/screens/onboarding/onboarding_screen.dart';
-import 'package:picsong/presentation/screens/prompt_lab/prompt_lab_batch.dart';
-import 'package:picsong/presentation/screens/prompt_lab/prompt_lab_screen.dart';
 import 'package:picsong/presentation/screens/question/question_screen.dart';
 import 'package:picsong/presentation/screens/question/result/question_result_screen.dart';
 import 'package:picsong/presentation/screens/round_preparation/round_preparation_screen.dart';
@@ -115,10 +113,6 @@ class OnboardingRoute extends GoRouteData with $OnboardingRoute {
     TypedGoRoute<ImageDetailRoute>(
       path: ImageDetailRoute.path,
       name: ImageDetailRoute.name,
-    ),
-    TypedGoRoute<PromptLabRoute>(
-      path: PromptLabRoute.path,
-      name: PromptLabRoute.name,
     ),
   ],
 )
@@ -300,23 +294,4 @@ class ImageDetailRoute extends GoRouteData with $ImageDetailRoute {
       ),
     );
   }
-}
-
-// MARK: - 진단(임시)
-
-///
-/// 프롬프트 실험실 — 진단 전용, 원인 규명이 끝나면 제거한다
-///
-class PromptLabRoute extends GoRouteData with $PromptLabRoute {
-  const PromptLabRoute({required this.tag});
-
-  static const String path = 'prompt-lab';
-  static const String name = 'prompt-lab';
-
-  /// 실행할 배치 식별자 — `PromptLabBatch.tag` (query parameter)
-  final String tag;
-
-  @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      PromptLabScreen(batch: PromptLabBatches.fromTag(tag));
 }

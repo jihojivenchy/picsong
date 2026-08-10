@@ -109,11 +109,6 @@ RouteBase get $homeRoute => GoRouteData.$route(
           name: 'image-detail',
           factory: $ImageDetailRoute._fromState,
         ),
-        GoRouteData.$route(
-          path: 'prompt-lab',
-          name: 'prompt-lab',
-          factory: $PromptLabRoute._fromState,
-        ),
       ],
     );
 
@@ -296,35 +291,6 @@ mixin $ImageDetailRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
         '/image-detail',
-      );
-
-  @override
-  void go(BuildContext context) => context.go(location);
-
-  @override
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  @override
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  @override
-  void replace(BuildContext context) => context.replace(location);
-}
-
-mixin $PromptLabRoute on GoRouteData {
-  static PromptLabRoute _fromState(GoRouterState state) => PromptLabRoute(
-        tag: state.uri.queryParameters['tag']!,
-      );
-
-  PromptLabRoute get _self => this as PromptLabRoute;
-
-  @override
-  String get location => GoRouteData.$location(
-        '/prompt-lab',
-        queryParams: {
-          'tag': _self.tag,
-        },
       );
 
   @override

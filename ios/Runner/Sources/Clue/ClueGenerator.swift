@@ -27,13 +27,12 @@ struct ClueGenerator {
 
     ///
     /// [prompt]로 클루 이미지 한 장을 생성해 PNG로 저장하고 파일 경로를 돌려준다.
-    /// [steps]를 주면 기본 스텝 수를 대신 쓴다 — 프롬프트 실험용.
     ///
-    static func generate(prompt: String, seed: UInt32, steps: Int? = nil) throws -> URL {
+    static func generate(prompt: String, seed: UInt32) throws -> URL {
         let startedAt: CFAbsoluteTime = CFAbsoluteTimeGetCurrent()
         let pipeline: StableDiffusionPipeline = try sharedPipeline()
         let images: [CGImage?] = try pipeline.generateImages(
-            configuration: makeRequest(prompt: prompt, seed: seed, steps: steps)
+            configuration: makeRequest(prompt: prompt, seed: seed)
         )
         guard let image: CGImage = images.first ?? nil else {
             throw GeneratorError.imageNotProduced
@@ -78,9 +77,9 @@ struct ClueGenerator {
     ///
     /// 확정된 생성 파라미터로 요청 설정을 만든다.
     ///
-    private static func makeRequest(prompt: String, seed: UInt32, steps: Int?) -> StableDiffusionPipeline.Configuration {
+    private static func makeRequest(prompt: String, seed: UInt32) -> StableDiffusionPipeline.Configuration {
         var request = StableDiffusionPipeline.Configuration(prompt: prompt)
-        request.stepCount = steps ?? defaultStepCount
+        request.stepCount = defaultStepCount
         request.guidanceScale = 0.0
         request.seed = seed
         request.imageCount = 1

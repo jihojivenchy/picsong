@@ -10,7 +10,6 @@ import 'package:picsong/presentation/router/router.dart';
 import 'package:picsong/presentation/screens/home/viewmodel/home_cubit.dart';
 import 'package:picsong/presentation/screens/home/widgets/era_item.dart';
 import 'package:picsong/presentation/screens/home/widgets/home_header.dart';
-import 'package:picsong/presentation/screens/prompt_lab/prompt_lab_batch.dart';
 
 /// 홈 화면
 class HomeScreen extends BaseCubitScreen<HomeCubit> {
@@ -28,30 +27,6 @@ class HomeScreen extends BaseCubitScreen<HomeCubit> {
   @override
   void onWillPop(BuildContext context) =>
       viewModel(context).handleBackPressed();
-
-  /// 프롬프트 실험실 진입 — 진단 전용, 원인 규명이 끝나면 제거한다
-  @override
-  Widget? get buildFloatingActionButton {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        _buildLabButton(
-          batch: PromptLabBatches.first,
-          icon: Icons.looks_one_outlined,
-        ),
-        const Gap(height: AppSpacing.sm),
-        _buildLabButton(
-          batch: PromptLabBatches.second,
-          icon: Icons.looks_two_outlined,
-        ),
-        const Gap(height: AppSpacing.sm),
-        _buildLabButton(
-          batch: PromptLabBatches.third,
-          icon: Icons.looks_3_outlined,
-        ),
-      ],
-    );
-  }
 
   /// 화면 본문
   @override
@@ -85,21 +60,6 @@ class HomeScreen extends BaseCubitScreen<HomeCubit> {
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  /// 실험실 하나로 이동하는 버튼 — heroTag가 겹치면 Flutter가 죽는다
-  Widget _buildLabButton({
-    required PromptLabBatch batch,
-    required IconData icon,
-  }) {
-    // FAB는 context 없는 게터에서 만들어져, 이동에 쓸 context를 여기서 얻는다.
-    return Builder(
-      builder: (BuildContext context) => FloatingActionButton.small(
-        heroTag: batch.tag,
-        onPressed: () => PromptLabRoute(tag: batch.tag).push(context),
-        child: Icon(icon),
       ),
     );
   }

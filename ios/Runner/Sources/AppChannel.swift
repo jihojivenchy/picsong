@@ -23,8 +23,6 @@ enum AppChannel {
         enum Argument {
             static let prompt: String = "prompt"
             static let seed: String = "seed"
-            /// 디노이징 스텝 수 — 선택값, 없으면 기본값을 쓴다
-            static let steps: String = "steps"
         }
     }
 

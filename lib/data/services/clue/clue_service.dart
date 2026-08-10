@@ -24,10 +24,6 @@ class ClueService {
   ///
   /// 실기기 실측(2026-08-03): 프리픽스가 21토큰이던 시절 핵심 명사가 34번째로
   /// 밀려 전부 누락됐다. 앞 7토큰 안에 들어와야 그려진다.
-  ///
-  /// **실험실이 이 상수를 직접 참조한다**(`PromptLabBatches._prefix`).
-  /// 실험실은 프리픽스를 직접 붙여 보내므로, 두 곳이 갈라지면 실험실에서
-  /// 채택한 그림이 게임에서 재현되지 않는다.
   static const String stylePrefix = 'gouache painting, ';
 
   ///
@@ -44,33 +40,6 @@ class ClueService {
           _Channel.promptArgument: '$stylePrefix$scene',
           _Channel.seedArgument: seed,
         },
-      );
-      if (path == null || path.isEmpty) {
-        throw ClueGenerationException('클루 이미지 경로를 받지 못했습니다');
-      }
-      return path;
-    } on PlatformException catch (error) {
-      throw ClueGenerationException(error.message ?? '클루 이미지 생성에 실패했습니다');
-    } on MissingPluginException {
-      throw ClueGenerationException('이 플랫폼은 온디바이스 생성을 지원하지 않습니다');
-    }
-  }
-
-  ///
-  /// 프롬프트 실험용 — [prompt]를 화풍 프리픽스 없이 그대로 보내고 [steps]를 지정한다
-  ///
-  /// 프리픽스·스텝의 영향을 실기기에서 가리기 위한 진단 경로다.
-  /// 원인 규명이 끝나면 프롬프트 실험실 화면과 함께 제거한다.
-  ///
-  Future<String> generateRawImage({
-    required String prompt,
-    required int seed,
-    required int steps,
-  }) async {
-    try {
-      final String? path = await _channel.invokeMethod<String>(
-        'generate',
-        <String, dynamic>{'prompt': prompt, 'seed': seed, 'steps': steps},
       );
       if (path == null || path.isEmpty) {
         throw ClueGenerationException('클루 이미지 경로를 받지 못했습니다');
