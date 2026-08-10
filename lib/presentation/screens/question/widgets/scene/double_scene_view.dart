@@ -7,8 +7,9 @@ import 'package:picsong/presentation/screens/question/widgets/scene/scene_tile.d
 ///
 /// 한 가사 줄을 그림 두 장으로 표현하는 뷰
 ///
-/// 세 장 구성의 윗줄로도 쓰인다. 그때는 아랫줄과 높이를 맞춰야 하므로
-/// [rowHeight]를 받아 스스로 계산하지 않는다.
+/// 세 장 구성의 윗줄, 네 장 구성의 두 줄로도 쓰인다. 그때는 다른 줄과 높이를
+/// 맞춰야 하므로 [rowHeight]를 받아 스스로 계산하지 않고, 맡은 장면 위치도
+/// [startIndex]로 받는다.
 ///
 class DoubleSceneView extends StatelessWidget {
   /// 화면 폭 대비 행 높이 비율
@@ -26,6 +27,9 @@ class DoubleSceneView extends StatelessWidget {
   /// 그림 한 칸을 눌렀을 때 — 크게 보기 요청
   final void Function(int index) onSceneTapped;
 
+  /// 이 줄이 맡은 첫 장면 위치 — 네 장 구성의 아랫줄이면 2가 된다
+  final int startIndex;
+
   /// 행 높이 — 지정하지 않으면 폭에 맞춰 스스로 정한다
   final double? rowHeight;
 
@@ -33,6 +37,7 @@ class DoubleSceneView extends StatelessWidget {
     super.key,
     required this.imagePathList,
     required this.onSceneTapped,
+    this.startIndex = 0,
     this.rowHeight,
   });
 
@@ -47,9 +52,9 @@ class DoubleSceneView extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  Expanded(child: _buildTile(0)),
+                  Expanded(child: _buildTile(startIndex)),
                   const Gap(width: AppSpacing.sm),
-                  Expanded(child: _buildTile(1)),
+                  Expanded(child: _buildTile(startIndex + 1)),
                 ],
               ),
               const ScenePlusBadge(),

@@ -5,11 +5,12 @@ import 'package:picsong/presentation/design_system/foundation/app_radius.dart';
 import 'package:picsong/presentation/design_system/foundation/app_shadows.dart';
 import 'package:picsong/presentation/design_system/foundation/app_spacing.dart';
 import 'package:picsong/presentation/screens/question/widgets/scene/double_scene_view.dart';
+import 'package:picsong/presentation/screens/question/widgets/scene/quad_scene_view.dart';
 import 'package:picsong/presentation/screens/question/widgets/scene/single_scene_view.dart';
 import 'package:picsong/presentation/screens/question/widgets/scene/triple_scene_view.dart';
 
 ///
-/// 한 가사 줄을 그림 1~3장으로 표현하는 뷰
+/// 한 가사 줄을 그림 1~4장으로 표현하는 뷰
 ///
 /// 장수마다 배치가 달라 뷰를 따로 두고, 여기서는 고르기만 한다.
 /// 여러 장일 때만 그림들을 하나로 묶는 액자를 씌운다.
@@ -46,6 +47,12 @@ class QuestionSceneView extends StatelessWidget {
         ),
       SceneCount.three => _buildFrame(
           TripleSceneView(
+            imagePathList: imagePathList,
+            onSceneTapped: onSceneTapped,
+          ),
+        ),
+      SceneCount.four => _buildFrame(
+          QuadSceneView(
             imagePathList: imagePathList,
             onSceneTapped: onSceneTapped,
           ),

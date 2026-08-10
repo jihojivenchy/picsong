@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/question/question.dart';
+import 'package:picsong/domain/entities/song/lyric_line.dart';
 import 'package:picsong/domain/entities/song/scene_count.dart';
 import 'package:picsong/presentation/common/base/base_cubit_screen.dart';
 import 'package:picsong/presentation/common/extensions/era_extension.dart';
@@ -141,23 +142,21 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
     );
   }
 
-  /// 장수 안내 칩
+  /// 장수·줄수 안내 칩
   Widget _buildCaption() {
     return BlocBuilder<QuestionCubit, QuestionState>(
       buildWhen: (QuestionState previous, QuestionState current) =>
           previous.qIndex != current.qIndex,
       builder: (BuildContext context, QuestionState state) {
-        return _buildCaptionChip(
-          questionList[state.qIndex].lyricLine.sceneCount,
-        );
+        return _buildCaptionChip(questionList[state.qIndex].lyricLine);
       },
     );
   }
 
   ///
-  /// 그림들이 가사 한 줄이라는 규칙을 알리는 안내 칩
+  /// 그림 몇 장이 가사 몇 줄인지 알리는 안내 칩
   ///
-  Widget _buildCaptionChip(SceneCount sceneCount) {
+  Widget _buildCaptionChip(LyricLine lyricLine) {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.md,
@@ -177,7 +176,7 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
           ),
           const Gap(width: AppSpacing.xs),
           AppText(
-            text: _captionTextOf(sceneCount),
+            text: _captionTextOf(lyricLine),
             style: AppTypography.caption,
             color: AppColors.textMuted,
           ),
@@ -282,10 +281,23 @@ class QuestionScreen extends BaseCubitScreen<QuestionCubit> {
     );
   }
 
-  /// 장수에 맞는 안내 문구
-  String _captionTextOf(SceneCount sceneCount) => switch (sceneCount) {
-        SceneCount.one => '이 그림이 가사 한 줄을 나타냅니다',
-        SceneCount.two => '두 그림이 가사 한 줄을 나타냅니다',
-        SceneCount.three => '세 그림이 가사 한 줄을 나타냅니다',
+  /// 장수와 줄수를 조합한 안내 문구
+  String _captionTextOf(LyricLine lyricLine) =>
+      '${_sceneWordOf(lyricLine.sceneCount)}이 '
+      '가사 ${_lineWordOf(lyricLine.textList.length)}을 나타냅니다';
+
+  /// 그림 장수 표기
+  String _sceneWordOf(SceneCount sceneCount) => switch (sceneCount) {
+        SceneCount.one => '이 그림',
+        SceneCount.two => '두 그림',
+        SceneCount.three => '세 그림',
+        SceneCount.four => '네 그림',
+      };
+
+  /// 가사 줄수 표기
+  String _lineWordOf(int lineCount) => switch (lineCount) {
+        1 => '한 줄',
+        2 => '두 줄',
+        _ => '$lineCount줄',
       };
 }

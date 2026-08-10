@@ -27,7 +27,7 @@ class QuestionResultSongCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String lyricText = question.lyricLine.text;
+    final String lyricText = question.lyricLine.textList.join('\n');
     
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
@@ -95,7 +95,7 @@ class QuestionResultSongCard extends StatelessWidget {
     );
   }
 
-  /// 이 문제로 출제된 가사 — 구분선 + 음표 아이콘
+  /// 이 문제로 출제된 가사 — 구분선 + 음표 아이콘, 줄바꿈은 원문 그대로
   Widget _buildLyric(String lyricText) {
     return Container(
       margin: const EdgeInsets.only(top: AppSpacing.lg),
@@ -117,7 +117,7 @@ class QuestionResultSongCard extends StatelessWidget {
               style: AppTypography.body,
               color: AppColors.textMuted,
               fontStyle: FontStyle.italic,
-              maxLines: 2,
+              maxLines: 4,
             ),
           ),
         ],
