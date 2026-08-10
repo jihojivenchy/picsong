@@ -1,5 +1,5 @@
 name: picsong
-description: "A new Flutter project."
+description: "온디바이스 diffusion 모델이 가사 한 줄을 그림으로 그리면, 그 그림을 보고 노래를 맞히는 퀴즈 앱."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
