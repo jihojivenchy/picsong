@@ -164,11 +164,9 @@ class AppColors {
   static const Color secondarySoft = Color(0xffEFECE4);
   static const Color onSecondary = white;
 
-  // ---- 시대 색 (1980s~2020s, 한 가족) ----
-  static const Color era80s = Color(0xffC25B86);
-  static const Color era80sSoft = Color(0xffF7E6EE);
-  static const Color era90s = Color(0xffC2882F);
-  static const Color era90sSoft = Color(0xffF6ECDA);
+  // ---- 시대 색 (80~90s~2020s, 한 가족) ----
+  static const Color era8090s = Color(0xffC25B86);
+  static const Color era8090sSoft = Color(0xffF7E6EE);
   static const Color era00s = Color(0xff2F9685);
   static const Color era00sSoft = Color(0xffDCF0EC);
   static const Color era10s = Color(0xff4F73C4);

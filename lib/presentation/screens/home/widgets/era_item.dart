@@ -60,13 +60,15 @@ class EraItem extends StatelessWidget {
     );
   }
 
-  /// 우측 반투명 연도 워터마크
+  /// 우측 반투명 연도 워터마크 — 자릿수가 늘면 폰트를 줄여 라벨과 겹치지 않게 한다
   Widget _buildWatermark() {
+    final double fontSize = era.watermark.length > 2 ? 64 : 108;
+
     return AppText(
       text: era.watermark,
-      fontSize: 108,
+      fontSize: fontSize,
       fontWeight: FontWeight.w800,
-      letterSpacing: 108 * -0.05,
+      letterSpacing: fontSize * -0.05,
       height: 1,
       color: era.color.withValues(alpha: 0.2),
     );
