@@ -1,82 +1,17 @@
 [
   {
-    "id": "song_001",
-    "title": "단발머리",
-    "artist": "조용필",
-    "releaseDate": "1980.03.20",
-    "era": "1980s",
-    "genre": "발라드",
-    "lyricLines": [
-      {
-        "text": "비에 젖은 풀잎처럼 단발머리 곱게 빗은 그소녀",
-        "imagePrompts": [
-          "A girl with a neatly combed bob stands among rain-soaked blades of grass, her wet hair glistening exactly like the dewy grass around her"
-        ]
-      },
-      {
-        "text": "반짝이는 눈망울이 내 마음에 되살아 나네",
-        "imagePrompts": [
-          "A man presses a hand to his chest as the girl's bright sparkling eyes glow back to life from within his heart like a returning memory"
-        ]
-      },
-      {
-        "text": "그 언젠가 나를 위해 꽃다발을 전해주던 그 소녀",
-        "imagePrompts": [
-          "A girl warmly holds out a bouquet of flowers to a man, the moment she once gave it to him, tender remembered scene"
-        ]
-      },
-      {
-        "text": "못잊을 그리움 남기고 그소녀 데려간 세월이 미워라",
-        "imagePrompts": [
-          "A man reaches out in vain as the girl dissolves into scattering petals and drifts away on the current of passing time, deep longing on his face"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "song_003",
-    "title": "매일 그대와",
-    "artist": "들국화",
-    "releaseDate": "1985.09.01",
-    "era": "1980s",
-    "genre": "록/메탈",
-    "lyricLines": [
-      {
-        "text": "매일 그대와 아침 햇살 받으며",
-        "imagePrompts": [
-          "A couple sits close together by a window, both bathed in warm streaming morning sunlight, sharing a calm everyday morning"
-        ]
-      },
-      {
-        "text": "매일 그대와 눈을 뜨고파",
-        "imagePrompts": [
-          "A couple lies side by side waking together at dawn, eyes slowly opening to meet each other's, soft morning light"
-        ]
-      },
-      {
-        "text": "새벽비 내리는 거리도 저녁 노을 불 타는 하늘도",
-        "imagePrompts": [
-          "A couple walks hand in hand down a street split between rainy dawn on one side and a sky burning with sunset on the other"
-        ]
-      },
-      {
-        "text": "매일 그대와 밤의 품에 안겨",
-        "imagePrompts": [
-          "A couple holds each other close beneath a deep starlit night sky, wrapped together in the embrace of night"
-        ]
-      }
-    ]
-  },
-  {
     "id": "song_005",
     "title": "깊은 밤을 날아서",
     "artist": "이문세",
-    "releaseDate": "1987.06.01",
-    "era": "1980s",
+    "releaseDate": "1987.03.10",
+    "era": "8090s",
     "genre": "발라드",
     "lyricLines": [
       {
-        "text": "고운 그대 손을 잡고 밤하늘을 날아서 궁전으로 갈 수도 있어",
+        "textList": [
+          "고운 그대 손을 잡고 밤하늘을 날아서",
+          "궁전으로 갈 수도 있어"
+        ],
         "imagePrompts": [
           "a couple holding hands",
           "a person flying in the night sky",
@@ -84,7 +19,10 @@
         ]
       },
       {
-        "text": "그대 잠든 모습 바라보다가 입맞추고 날아 가고파",
+        "textList": [
+          "그대 잠든 모습 바라보다가",
+          "입맞추고 날아 가고파"
+        ],
         "imagePrompts": [
           "a sleeping woman's face on a pillow",
           "a man kissing a sleeping woman's forehead",
@@ -94,103 +32,26 @@
     ]
   },
   {
-    "id": "song_004",
-    "title": "사랑하기 때문에",
-    "artist": "유재하",
-    "releaseDate": "1987.08.20",
-    "era": "1980s",
-    "genre": "발라드",
+    "id": "song_043",
+    "title": "남자는 배 여자는 항구",
+    "artist": "심수봉",
+    "releaseDate": "1984",
+    "era": "8090s",
+    "genre": "성인가요/트로트",
+    "acceptList": [
+      "남자는 배, 여자는 항구",
+      "남자는배여자는항구"
+    ],
     "lyricLines": [
       {
-        "text": "처음 느낀 그대 눈빛은 혼자만의 오해였던가요",
+        "textList": [
+          "남자는 배, 여자는 항구"
+        ],
         "imagePrompts": [
-          "A man recalls a woman's warm first glance now blurring into uncertainty, a question mark over him, wondering if it was only his own illusion"
-        ]
-      },
-      {
-        "text": "해맑은 미소로 나를 바보로 만들었소",
-        "imagePrompts": [
-          "A woman flashes a bright, innocent smile that leaves a man dazed and foolish, helplessly stunned by its radiance"
-        ]
-      },
-      {
-        "text": "다시 돌아온 그대 위해 내 모든 것 드릴 테요",
-        "imagePrompts": [
-          "A woman returns into a man's arms as he offers up his glowing heart in both open hands, giving her his everything"
-        ]
-      },
-      {
-        "text": "우리 이대로 영원히 헤어지지 않으리",
-        "imagePrompts": [
-          "A couple clasps hands tightly, an endless ribbon of light looping around them like an infinity symbol, vowing never to part"
-        ]
-      },
-      {
-        "text": "나 오직 그대만을 사랑하기 때문에",
-        "imagePrompts": [
-          "In a crowd of faded gray figures, a man turns toward the one glowing woman, his heart shining only for her, everyone else dimmed away"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "song_002",
-    "title": "어쩌다 마주친 그대",
-    "artist": "송골매",
-    "releaseDate": "1989.01",
-    "era": "1980s",
-    "genre": "록/메탈",
-    "lyricLines": [
-      {
-        "text": "어쩌다 마주친 그대 모습에 내 마음을 빼앗겨 버렸네",
-        "imagePrompts": [
-          "On a busy street, a man freezes the instant he meets a woman among the passing crowd; a glowing heart lifts from his chest and floats toward her"
-        ]
-      },
-      {
-        "text": "어쩌다 마주친 그대 두눈이 내 마음을 사로잡아 버렸네",
-        "imagePrompts": [
-          "A woman's two eyes meet a man's across the crowd; ribbons of light from her gaze wrap around his glowing heart and hold it captive"
-        ]
-      },
-      {
-        "text": "그대에게 할말이 있는데 왜 이리 용기가 없을까",
-        "imagePrompts": [
-          "A man stands before a woman with a half-formed word trembling at his lips, swallowing it back, fists clenched, unable to find the courage"
-        ]
-      },
-      {
-        "text": "피어나는 꽃처럼 아름다운 그녀가 내 마음을 빼앗아 버렸네",
-        "imagePrompts": [
-          "A woman blossoms open like a flower in full bloom, petals unfurling around her, while a man's glowing heart drifts helplessly toward her"
-        ]
-      },
-      {
-        "text": "이슬처럼 영롱한 그대 고운 두 눈이 내 마음을 사로잡아 버렸네",
-        "imagePrompts": [
-          "A woman's dewy, crystal-clear eyes beam soft light that wraps a man's glowing heart and pulls it toward her, leaving him unable to look away"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "song_006",
-    "title": "칵테일 사랑",
-    "artist": "마로니에",
-    "releaseDate": "1994.03.01",
-    "era": "1990s",
-    "genre": "댄스",
-    "lyricLines": [
-      {
-        "text": "마음 울적한 날엔 거리를 걸어 보고 향기로운 칵테일에 취해도 보고",
-        "imagePrompts": [
-          "A melancholy young woman strolls down a city street, then sits sipping a fragrant cocktail, cheeks flushed and tipsy, soft evening mood"
-        ]
-      },
-      {
-        "text": "밤새도록 그리움에 편질 쓰고파",
-        "imagePrompts": [
-          "A woman sits writing letter after letter through the night by lamplight, pages of longing piling around her, yearning for someone"
+          "a man's face seen from the front",
+          "a large ship on the open sea, water all around",
+          "a woman's face seen from the front",
+          "a harbor seen from the water, docks along the shore"
         ]
       }
     ]
@@ -200,11 +61,20 @@
     "title": "마법의 성",
     "artist": "더 클래식",
     "releaseDate": "1994.07",
-    "era": "1990s",
+    "era": "8090s",
     "genre": "발라드",
+    "hints": [
+      {
+        "label": "가수 초성",
+        "value": "ㄷㅋㄹㅅ"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "마법의 성을 지나 늪을 건너 어둠의 동굴 속 멀리 그대가 보여",
+        "textList": [
+          "마법의 성을 지나 늪을 건너",
+          "어둠의 동굴 속 멀리 그대가 보여"
+        ],
         "imagePrompts": [
           "a fairytale castle with tall pointed towers on a hill",
           "a person standing in a green swamp",
@@ -218,11 +88,20 @@
     "title": "쿵따리 샤바라",
     "artist": "클론",
     "releaseDate": "1996",
-    "era": "1990s",
+    "era": "8090s",
     "genre": "댄스",
+    "hints": [
+      {
+        "label": "그림 설명",
+        "value": "마음이 답답, 산, 소리지름"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "마음이 울적하고 답답할 땐 산으로 올라가 소릴 한번 질러봐",
+        "textList": [
+          "마음이 울적하고 답답할 땐",
+          "산으로 올라가 소릴 한번 질러봐"
+        ],
         "imagePrompts": [
           "a fist bunching a shirt on a man's chest",
           "a green mountain peak under a clear sky",
@@ -235,42 +114,16 @@
     "id": "song_009",
     "title": "보라빛 향기",
     "artist": "강수지",
-    "releaseDate": "1996.08.01",
-    "era": "1990s",
+    "releaseDate": "1990.04",
+    "era": "8090s",
     "genre": "댄스",
     "lyricLines": [
       {
-        "text": "그대 모습은 보라빛처럼 살며시 다가왔지",
+        "textList": [
+          "그대 모습은 보라빛처럼 살며시 다가왔지"
+        ],
         "imagePrompts": [
           "a woman walking toward the viewer, purple smoke around her"
-        ]
-      }
-    ]
-  },
-  {
-    "id": "song_010",
-    "title": "네모의 꿈",
-    "artist": "화이트",
-    "releaseDate": "1996.12.12",
-    "era": "1990s",
-    "genre": "발라드",
-    "lyricLines": [
-      {
-        "text": "네모난 침대에서 일어나 눈을 떠보면 네모난 창문으로 보이는 똑같은 풍경",
-        "imagePrompts": [
-          "A person wakes up in a square bed and opens their eyes to the same old scenery framed by a square window, everything boxy and identical"
-        ]
-      },
-      {
-        "text": "네모난 테이블에 앉아 네모난 조간신문 본뒤",
-        "imagePrompts": [
-          "A person sits at a square table reading a square morning newspaper, surrounded by boxy square shapes"
-        ]
-      },
-      {
-        "text": "네모난 버스를 타고 네모난 건물지나",
-        "imagePrompts": [
-          "A person rides a boxy square bus past rows of identical square buildings, the whole city made of squares"
         ]
       }
     ]
@@ -280,19 +133,53 @@
     "title": "뻐꾸기 둥지위로 날아간 새",
     "artist": "김건모",
     "releaseDate": "1997.12.01",
-    "era": "1990s",
+    "era": "8090s",
     "genre": "댄스",
     "acceptList": [
       "뻐꾸기 둥지 위로 날아간 새",
       "뻐꾸기둥지위로날아간새"
     ],
+    "hints": [
+      {
+        "label": "그림 설명",
+        "value": "춤, 노래, 새"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "춤추고 노래해 한 마리 새처럼",
+        "textList": [
+          "춤추고 노래해 한 마리 새처럼"
+        ],
         "imagePrompts": [
           "a dancer in loose clothes, sleeves and hem swinging outward",
           "a singer holding a microphone, mouth open wide",
           "a bird flying above white clouds, wings spread"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "song_042",
+    "title": "아파트",
+    "artist": "윤수일",
+    "releaseDate": "1982.06.30",
+    "era": "8090s",
+    "genre": "성인가요/트로트",
+    "hints": [
+      {
+        "label": "그림 설명",
+        "value": "별과 다리, 바람이 부는 갈대"
+      }
+    ],
+    "lyricLines": [
+      {
+        "textList": [
+          "별빛이 흐르는 다리를 건너",
+          "바람 부는 갈대 숲을 지나"
+        ],
+        "imagePrompts": [
+          "a person walking across a bridge under a starry sky",
+          "a field of silver grass bending in the wind"
         ]
       }
     ]
@@ -306,7 +193,9 @@
     "genre": "록/메탈",
     "lyricLines": [
       {
-        "text": "거미로 그물 쳐서 물고기 잡으러",
+        "textList": [
+          "거미로 그물 쳐서 물고기 잡으러"
+        ],
         "imagePrompts": [
           "a black spider on a round silk web",
           "a fish underwater, shiny scales, spread fins, tail curved mid-swim"
@@ -323,9 +212,11 @@
     "genre": "록/메탈",
     "lyricLines": [
       {
-        "text": "설혹 너무 태양 가까이 날아 두 다리 모두 녹아 내린다고 해도",
+        "textList": [
+          "설혹 너무 태양 가까이 날아",
+          "두 다리 모두 녹아 내린다고 해도"
+        ],
         "imagePrompts": [
-          "a blazing sun high in an empty sky, bright yellow light spreading outward",
           "a person flying close to the sun",
           "melting legs on a human figure, drips running down"
         ]
@@ -339,18 +230,18 @@
     "releaseDate": "2006.08.10",
     "era": "2000s",
     "genre": "록/메탈",
+    "hints": [
+      {
+        "label": "그림 설명",
+        "value": "날개를 핌, 날고 있음"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "나는 아름다운 나비",
-        "imagePrompts": [
-          "a fairy with large butterfly wings, wings spread wide open"
+        "textList": [
+          "날개를 활짝펴고",
+          "세상을 자유롭게 날거야"
         ],
-        "imagePromptsBackup": [
-          "a butterfly with wings fully open, detailed symmetric patterns across both wings"
-        ]
-      },
-      {
-        "text": "날개를 활짝펴고 세상을 자유롭게 날거야",
         "imagePrompts": [
           "a pair of angel wings spread wide open",
           "a flying person seen from behind, arms forward, flying away into the open sky"
@@ -367,10 +258,11 @@
     "genre": "댄스",
     "lyricLines": [
       {
-        "text": "노란 풍선이 하늘을 날면",
+        "textList": [
+          "노란 풍선이 하늘을 날면"
+        ],
         "imagePrompts": [
-          "a yellow balloon floating in the air, round and glossy, a thin string dangling below it",
-          "a person soaring through the sky, body horizontal, arms stretched forward, clouds far below"
+          "a yellow balloon among white clouds"
         ]
       }
     ]
@@ -382,9 +274,17 @@
     "releaseDate": "2008.04.17",
     "era": "2000s",
     "genre": "랩/힙합",
+    "hints": [
+      {
+        "label": "그림 설명",
+        "value": "비가 오고, 발목까지 차오름"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "어느새 빗물이 내 발목에 고이고",
+        "textList": [
+          "어느새 빗물이 내 발목에 고이고"
+        ],
         "imagePrompts": [
           "rain on water",
           "ankle-deep rainwater covering a person's feet, only the ankles above the water surface"
@@ -394,6 +294,7 @@
   },
   {
     "id": "song_012",
+    "imageSeed": 12000,
     "title": "여행을 떠나요",
     "artist": "이승기",
     "releaseDate": "2008.08.07",
@@ -401,7 +302,9 @@
     "genre": "록/메탈",
     "lyricLines": [
       {
-        "text": "푸른 언덕에 베낭을 메고",
+        "textList": [
+          "푸른 언덕에 베낭을 메고"
+        ],
         "imagePrompts": [
           "A cheerful young man shoulders a backpack and strides across a bright green hill, off on a journey"
         ]
@@ -417,7 +320,10 @@
     "genre": "댄스",
     "lyricLines": [
       {
-        "text": "새까만 선글라스에 하늘색 물들인 머리",
+        "textList": [
+          "새까만 선글라스에",
+          "하늘색 물들인 머리"
+        ],
         "imagePrompts": [
           "black sunglasses on a woman's face",
           "pale blue bob haircut on a woman's head"
@@ -436,9 +342,17 @@
       "늑대와미녀",
       "늑대와 미녀"
     ],
+    "hints": [
+      {
+        "label": "가수 초성",
+        "value": "ㅇㅅ"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "난 늑대고 넌 미녀",
+        "textList": [
+          "난 늑대고 넌 미녀"
+        ],
         "imagePrompts": [
           "a gray wolf standing on a rocky ridge, thick shaggy fur, bushy tail, alert ears",
           "a young woman with long dark hair, calm face, looking straight ahead"
@@ -455,7 +369,10 @@
     "genre": "R&B/Soul",
     "lyricLines": [
       {
-        "text": "우리 집에는 매일 나 홀로 있었지 아버지는 택시드라이버",
+        "textList": [
+          "우리 집에는 매일 나 홀로 있었지",
+          "아버지는 택시드라이버"
+        ],
         "imagePrompts": [
           "a small boy sitting alone on a wooden floor, seen from behind, head lowered",
           "a yellow taxi parked at the curb of a quiet city street, headlights on"
@@ -470,18 +387,27 @@
     "releaseDate": "2016.11.01",
     "era": "2010s",
     "genre": "댄스",
+    "hints": [
+      {
+        "label": "가수 초성",
+        "value": "ㅂㄹㅍㅋ"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "우리 사랑은 불장난",
+        "textList": [
+          "우리 사랑은 불장난"
+        ],
         "imagePrompts": [
           "A red heart shape, flat solid color, clean rounded outline",
-          "A blazing campfire with tall orange flames, burning logs, glowing embers"
+          "a burning match with a small flame"
         ]
       }
     ]
   },
   {
     "id": "song_034",
+    "imageSeed": 34000,
     "title": "DINOSAUR",
     "artist": "AKMU (악뮤)",
     "releaseDate": "2017.07.20",
@@ -490,9 +416,17 @@
     "acceptList": [
       "다이노소어"
     ],
+    "hints": [
+      {
+        "label": "가수 초성",
+        "value": "ㅇㅁ"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "어릴 적 내 꿈에 나온 Dinosaur",
+        "textList": [
+          "어릴 적 내 꿈에 나온 Dinosaur"
+        ],
         "imagePrompts": [
           "a child asleep on a white pillow, seen from above, head resting sideways, eyes closed, blanket up to the chin",
           "a large dinosaur standing in a green field, long tail, scaly skin, small head raised"
@@ -510,12 +444,40 @@
     "acceptList": [
       "비밀 정원"
     ],
+    "hints": [
+      {
+        "label": "가수 초성",
+        "value": "ㅇㅁㅇㄱ"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "나의_비밀정원",
+        "textList": [
+          "나의 비밀정원"
+        ],
         "imagePrompts": [
           "a brass padlock hanging on an old wooden door, shackle through the latch",
           "a baroque garden with symmetric green parterres, tall trimmed hedges, statues along the path"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "song_044",
+    "title": "한잔해",
+    "artist": "박군",
+    "releaseDate": "2019.09.17",
+    "era": "2010s",
+    "genre": "성인가요/트로트",
+    "lyricLines": [
+      {
+        "textList": [
+          "한잔해 한잔해 한잔해"
+        ],
+        "imagePrompts": [
+          "a small shot glass filled with clear liquor on a wooden table",
+          "a small shot glass filled with clear liquor on a wooden table",
+          "a small shot glass filled with clear liquor on a wooden table"
         ]
       }
     ]
@@ -527,9 +489,18 @@
     "releaseDate": "2025.03.06",
     "era": "2020s",
     "genre": "록/메탈",
+    "hints": [
+      {
+        "label": "그림 설명",
+        "value": "햇살, 종소리"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "따사로운 햇살 속에서 종소리가 울려 퍼지네",
+        "textList": [
+          "따사로운 햇살 속에서",
+          "종소리가 울려 퍼지네"
+        ],
         "imagePrompts": [
           "a bright sun above white clouds, beams shining down",
           "a large bronze bell with black music notes floating around it"
@@ -544,9 +515,17 @@
     "releaseDate": "2021.07.26",
     "era": "2020s",
     "genre": "록/메탈",
+    "hints": [
+      {
+        "label": "가수 초성",
+        "value": "ㅇㅁ"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "눈 딱 감고 낙하",
+        "textList": [
+          "눈 딱 감고 낙하"
+        ],
         "imagePrompts": [
           "a sleeping face seen from the front",
           "a parachute open in the sky, a person hanging below it"
@@ -556,14 +535,23 @@
   },
   {
     "id": "song_022",
+    "imageSeed": 22000,
     "title": "리무진",
     "artist": "BE'O(비오)",
     "releaseDate": "2021.11.20",
     "era": "2020s",
     "genre": "랩/힙합",
+    "hints": [
+      {
+        "label": "가수 초성",
+        "value": "ㅂㅇ"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "까만 리무진 보며 꿈을 키웠지",
+        "textList": [
+          "까만 리무진 보며 꿈을 키웠지"
+        ],
         "imagePrompts": [
           "a long black limousine on a city street",
           "a young boy looking up at the sky"
@@ -578,9 +566,18 @@
     "releaseDate": "2021.12.03",
     "era": "2020s",
     "genre": "발라드",
+    "hints": [
+      {
+        "label": "그림 설명",
+        "value": "창문 너머, 눈이 옴"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "창문 너머 그저 바라봐 그때 마침 눈이 오잖아",
+        "textList": [
+          "창문 너머 그저 바라봐",
+          "그때 마침 눈이 오잖아"
+        ],
         "imagePrompts": [
           "a tall window pane in a dim room, curtains drawn to one side",
           "thick white snow blanketing bare tree branches, snowflakes settling on them"
@@ -599,11 +596,20 @@
       "러브다이브",
       "러브 다이브"
     ],
+    "hints": [
+      {
+        "label": "가수 초성",
+        "value": "ㅇㅇㅂ"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "숨 참고 love dive",
+        "textList": [
+          "숨 참고 love dive"
+        ],
         "imagePrompts": [
           "a person pinching their nose shut, cheeks puffed with held breath",
+          "A red heart shape, flat solid color, clean rounded outline",
           "a diver plunging headfirst into blue water, splash rising"
         ]
       }
@@ -621,7 +627,10 @@
     ],
     "lyricLines": [
       {
-        "text": "내가 만든 쿠키 너를 위해 구웠지",
+        "textList": [
+          "내가 만든 쿠키",
+          "너를 위해 구웠지"
+        ],
         "imagePrompts": [
           "a chef wearing a tall white hat and a white apron",
           "a round cookie with chocolate chips"
@@ -636,9 +645,17 @@
     "releaseDate": "2023.01.05",
     "era": "2020s",
     "genre": "댄스",
+    "hints": [
+      {
+        "label": "그림 설명",
+        "value": "건물, 장미"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "건물 사이에 피어난 장미",
+        "textList": [
+          "건물 사이에 피어난 장미"
+        ],
         "imagePrompts": [
           "tall city buildings rising on both sides of a narrow street",
           "a red rose in full bloom on a thorny green stem"
@@ -656,9 +673,17 @@
     "acceptList": [
       "테디베어"
     ],
+    "hints": [
+      {
+        "label": "가수 초성",
+        "value": "ㅅㅌㅇㅆ"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "바라만 봐 Just like Teddy Bear",
+        "textList": [
+          "바라만 봐 Just like Teddy Bear"
+        ],
         "imagePrompts": [
           "a girl staring quietly with wide eyes",
           "a brown teddy bear sitting upright"
@@ -673,9 +698,17 @@
     "releaseDate": "2023.07.14",
     "era": "2020s",
     "genre": "발라드",
+    "hints": [
+      {
+        "label": "가수 초성",
+        "value": "ㅇㄷ"
+      }
+    ],
     "lyricLines": [
       {
-        "text": "사막에서 꽃을 피우듯 널 만난 건 기적인 걸",
+        "textList": [
+          "사막에서 꽃을 피우듯"
+        ],
         "imagePrompts": [
           "a vast desert of rolling sand dunes stretching to the horizon",
           "a blooming flower with wide open petals on a green stem"
