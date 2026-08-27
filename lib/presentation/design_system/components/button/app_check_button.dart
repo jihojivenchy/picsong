@@ -29,11 +29,6 @@ class AppCheckButton extends StatelessWidget {
       onTap: () => onTapped(!isSelected),
       child: Row(
         children: [
-          // Image.asset(
-          //   isSelected ? ImagePaths.check : ImagePaths.checkOFF,
-          //   width: 18,
-          //   height: 18,
-          // ),
           if (text != null) ...[
             const Gap(width: AppSpacing.sm),
             AppText(
