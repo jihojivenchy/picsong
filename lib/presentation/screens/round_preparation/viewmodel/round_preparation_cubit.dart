@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:picsong/data/dio/error/error_exception_type.dart';
+import 'package:picsong/data/error/error_exception_type.dart';
 import 'package:picsong/data/services/clue/clue_service.dart';
 import 'package:picsong/data/services/song/song_service.dart';
 import 'package:picsong/domain/entities/era/era.dart';

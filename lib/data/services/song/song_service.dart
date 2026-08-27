@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart' show FlutterError;
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:picsong/data/dio/error/error_exception_type.dart';
+import 'package:picsong/data/error/error_exception_type.dart';
 import 'package:picsong/domain/entities/era/era.dart';
 import 'package:picsong/domain/entities/song/song.dart';
 

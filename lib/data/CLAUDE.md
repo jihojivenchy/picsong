@@ -9,7 +9,7 @@ API/스토리지/외부 SDK 등 외부 시스템과의 통신을 책임지는 �
 
 | 경로 | 책임 | 금지 |
 |---|---|---|
-| `dio/` | Dio 설정, 인터셉터, 공통 옵션, 커스텀 예외 정의 | 비즈니스 로직 |
+| `error/` | 커스텀 예외 정의 | 비즈니스 로직 |
 | `services/` | 도메인별 작업(네트워크/SDK/스토리지 호출의 집합) | UI 의존(Bloc/Widget) |
 | `database/` | Hive 등 로컬 DB 어댑터/박스 정의 | UI 의존 |
 
@@ -47,8 +47,8 @@ Future<SignInResponseDTO> signInWithGoogle() async { ... }
 
 ## 4. 예외 처리
 
-* **사용 예외:** `lib/data/dio/error/error_exception_type.dart`의 커스텀 예외(`ServerException` 등)만 사용.
-* **예시:** `throw ServerException('네이버 토큰 발급 실패');`
+* **사용 예외:** `lib/data/error/error_exception_type.dart`의 커스텀 예외(`ModelInstallException` 등)만 사용.
+* **예시:** `throw ModelInstallException('모델 다운로드 실패');`
 * **금지:** `throw Exception(...)` 같은 일반 예외, 빈 catch, 무의미한 try/catch 래핑.
 * **재던지기:** context를 추가하지 않는 catch는 두지 않는다.
 

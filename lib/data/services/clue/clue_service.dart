@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:picsong/data/dio/error/error_exception_type.dart';
+import 'package:picsong/data/error/error_exception_type.dart';
 
 /// 클루 생성 채널 계약 — iOS `AppChannel.Clue`(Runner/AppChannel.swift)와
 /// 문자열이 정확히 일치해야 한다

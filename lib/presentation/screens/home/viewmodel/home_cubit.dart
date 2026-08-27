@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:picsong/data/dio/error/error_exception_type.dart';
+import 'package:picsong/data/error/error_exception_type.dart';
 import 'package:picsong/data/services/model/model_install_service.dart';
 import 'package:picsong/domain/entities/model_install/model_install_state.dart';
 import 'package:picsong/presentation/common/services/app_toast_service.dart';

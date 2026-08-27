@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:picsong/data/dio/error/error_exception_type.dart';
+import 'package:picsong/data/error/error_exception_type.dart';
 import 'package:picsong/domain/entities/model_install/model_install_progress.dart';
 import 'package:picsong/domain/entities/model_install/model_install_state.dart';
 

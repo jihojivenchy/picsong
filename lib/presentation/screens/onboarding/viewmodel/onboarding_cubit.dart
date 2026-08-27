@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:picsong/data/database/hive_service.dart';
-import 'package:picsong/data/dio/error/error_exception_type.dart';
+import 'package:picsong/data/error/error_exception_type.dart';
 import 'package:picsong/data/services/model/model_install_service.dart';
 import 'package:picsong/domain/entities/model_install/model_install_progress.dart';
 import 'package:picsong/domain/entities/model_install/model_install_state.dart';
