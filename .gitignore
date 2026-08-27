@@ -44,3 +44,18 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+# Secrets — 절대 커밋 금지
+.env
+.env.*
+*.jks
+*.keystore
+**/key.properties
+*.p8
+*.p12
+*.pem
+*.mobileprovision
+**/google-services.json
+**/GoogleService-Info.plist
+service-account*.json
+.claude/settings.local.json
+
