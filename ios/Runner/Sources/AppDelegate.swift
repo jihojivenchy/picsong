@@ -3,7 +3,7 @@ import UIKit
 
 @main
 @objc class AppDelegate: FlutterAppDelegate {
-  /// 플랫폼 채널 브릿지
+  /// 플랫폼 채널 브릿지 
   private var clueBridge: ClueChannelBridge?
 
   /// 모델 설치 채널 브릿지

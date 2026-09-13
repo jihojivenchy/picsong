@@ -9,14 +9,13 @@
 import UIKit
 import UserNotifications
 
-/// 모델 설치 결과 알림 발송기 — 상태를 갖지 않는 발송 창구
+/// 모델 설치 결과 알림 발송기
 enum ModelInstallNotifier {
-    /// 알림 식별자 — 항상 같은 값을 써서 알림이 쌓이지 않고 최신 것으로 대체된다
+    /// 알림 식별자
     private static let identifier: String = "picsong.model.install.result"
 
     ///
-    /// 알림 권한을 요청한다 — 다운로드를 시작하는 순간 부른다.
-    /// 이미 응답한 사용자에게는 팝업이 다시 뜨지 않고, 거절해도 다운로드는 그대로 진행된다.
+    /// 알림 권한을 요청
     ///
     static func requestAuthorization() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { granted, _ in
@@ -25,7 +24,7 @@ enum ModelInstallNotifier {
     }
 
     ///
-    /// 설치 결과를 알린다 — 알릴 상태가 아니거나 앱이 화면에 떠 있으면 보내지 않는다.
+    /// 설치 결과를 알림으로 발송
     ///
     static func notify(state: ModelInstallState) {
         guard let content: UNNotificationContent = makeContent(for: state) else { return }
@@ -41,7 +40,7 @@ enum ModelInstallNotifier {
     }
 
     ///
-    /// 상태별 알림 내용 — 알릴 가치가 없는 중간 상태는 nil을 돌려 발송을 막는다.
+    /// 상태별 알림 내용
     ///
     private static func makeContent(for state: ModelInstallState) -> UNNotificationContent? {
         let content: UNMutableNotificationContent = UNMutableNotificationContent()

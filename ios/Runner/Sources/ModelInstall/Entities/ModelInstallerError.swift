@@ -11,8 +11,10 @@ import Foundation
 enum ModelInstallerError: Error {
     /// 지원하지 않는 manifest 구조 버전
     case unsupportedManifest(Int)
-    /// 받은 파일의 SHA-256이 manifest와 다르다
+
+    /// 받은 파일의 SHA-256이 manifest와 다름
     case checksumMismatch(path: String)
-    /// manifest에 없는 파일이 도착했다
+
+    /// manifest에 없는 파일이 도착
     case unknownFile(path: String)
 }

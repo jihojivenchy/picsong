@@ -66,7 +66,7 @@ struct ClueGenerator {
         let configuration = MLModelConfiguration()
         configuration.computeUnits = .cpuAndNeuralEngine
         return try StableDiffusionPipeline(
-            resourcesAt: ModelInstaller.shared.modelDirectory,
+            resourcesAt: ModelFileStore().modelDirectory,
             controlNet: [],
             configuration: configuration,
             disableSafety: true,

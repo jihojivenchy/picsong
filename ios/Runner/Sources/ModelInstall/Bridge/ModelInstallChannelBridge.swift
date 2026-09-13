@@ -10,29 +10,35 @@
 import Flutter
 
 final class ModelInstallChannelBridge: NSObject {
-    /// 제어 채널 — 등록 후 앱 생명주기 동안 보관한다
+    /// 제어 채널
     private var methodChannel: FlutterMethodChannel?
 
-    /// 진행률 채널 — 등록 후 앱 생명주기 동안 보관한다
+    /// 진행률 채널
     private var progressChannel: FlutterEventChannel?
 
     ///
     /// AppDelegate에서 호출 — Method/Event 두 채널을 등록한다.
     ///
     func register(messenger: FlutterBinaryMessenger) {
+        // 제어 채널 생성
         let methodChannel = FlutterMethodChannel(
             name: AppChannel.ModelInstall.method,
             binaryMessenger: messenger
         )
+
+        // 핸들러 설정 (dart로 부터 오는 이벤트 처리)
         methodChannel.setMethodCallHandler { [weak self] call, result in
             self?.handle(call: call, result: result)
         }
         self.methodChannel = methodChannel
 
+        // 진행률 채널 생성
         let progressChannel = FlutterEventChannel(
             name: AppChannel.ModelInstall.progressEvents,
             binaryMessenger: messenger
         )
+
+        // 진행률 채널 핸들러 설정
         progressChannel.setStreamHandler(self)
         self.progressChannel = progressChannel
     }
@@ -41,7 +47,7 @@ final class ModelInstallChannelBridge: NSObject {
     private func handle(call: FlutterMethodCall, result: FlutterResult) {
         switch call.method {
 
-        // 다운로드·설치 시작 — 진행 중이거나 설치돼 있으면 설치자가 무시한다
+        // 다운로드·설치 시작
         case AppChannel.ModelInstall.Method.start:
             ModelInstaller.shared.start()
             result(nil)
@@ -60,12 +66,13 @@ final class ModelInstallChannelBridge: NSObject {
 // MARK: - FlutterStreamHandler
 extension ModelInstallChannelBridge: FlutterStreamHandler {
     ///
-    /// Dart가 구독을 시작하면 sink를 설치자에 연결한다. 연결 즉시 현재 스냅샷이 한 번 온다.
+    /// 구독 시작 (연결 즉시 스냅샷이 한번 옴)
     ///
     func onListen(
         withArguments arguments: Any?,
         eventSink events: @escaping FlutterEventSink
     ) -> FlutterError? {
+        // 진행률 핸들러 설정
         ModelInstaller.shared.attachProgressHandler { payload in
             events(payload.toMap())
         }
@@ -73,7 +80,7 @@ extension ModelInstallChannelBridge: FlutterStreamHandler {
     }
 
     ///
-    /// 구독 해지 — 연결을 끊는다.
+    /// 구독 해지 (연결을 끊음)
     ///
     func onCancel(withArguments arguments: Any?) -> FlutterError? {
         ModelInstaller.shared.attachProgressHandler(nil)
