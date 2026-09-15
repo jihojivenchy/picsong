@@ -4,8 +4,8 @@
 
 **온디바이스 diffusion 모델이 폰 안에서 가사 한 줄을 그림으로 그리면,<br/>그 그림을 보고 어떤 노래인지 맞히는 퀴즈 앱.**
 
-![Flutter](https://img.shields.io/badge/Flutter-3.35-02569B?logo=flutter&logoColor=white)
-![Dart](https://img.shields.io/badge/Dart-3.6-0175C2?logo=dart&logoColor=white)
+![Flutter](https://img.shields.io/badge/Flutter-3.47-02569B?logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-3.13-0175C2?logo=dart&logoColor=white)
 ![CoreML](https://img.shields.io/badge/Core%20ML-ANE-000000?logo=apple&logoColor=white)
 ![sd-turbo](https://img.shields.io/badge/sd--turbo-6bit%20palettized-FF6F00)
 ![status](https://img.shields.io/badge/기술검증-완료-success)
@@ -23,7 +23,7 @@
 |  | |
 |---|---|
 | **목표** | 온디바이스 실시간 이미지 생성이 실제 폰에서 어디까지 되는지 직접 확인 |
-| **결과** | **iPhone 13 mini(A15/4GB)에서 장당 약 1.4초.** 크래시·발열 없음 |
+| **결과** | **iPhone 13 mini(A15/4GB)에서 장당 약 1.4초.** ANE 경로에서 크래시·발열 없음 |
 | **선례** | 착수 시점 *"iOS 실기기 CoreML sd-turbo 실시간 생성"* 사례를 찾지 못해 **직접 만들어 닫음** |
 | **멈춘 지점** | 모델 성능이 아니라 **콘텐츠.** 그림으로 특정 가능한 곡이 안 모임 (채택 29 / 탈락 278) |
 | **결론** | 소형 모델 온디바이스 생성은 **된다.** 다만 임의 텍스트를 식별 가능한 그림으로 옮기는 용도엔 묘사 폭이 부족하고, 병목은 추론이 아니라 **입력 확보** 쪽에 생긴다 |
@@ -40,7 +40,7 @@
 ```mermaid
 flowchart LR
     A["가사 한 줄<br/>한국어"] --> B["사전 작성 영문 프롬프트<br/>런타임 LLM 없음"]
-    B --> C["시드 파생<br/>곡번호 x 100 + 가사위치"]
+    B --> C["고정 시드<br/>공용 8888 · 곡별 지정 가능"]
 
     subgraph iOS ["iOS Native · Swift"]
         D["ml-stable-diffusion 포크<br/>+ LCMScheduler 체리픽"] --> E["CoreML sd-turbo<br/>384x384 · 4 step · 6bit"]
@@ -57,7 +57,7 @@ flowchart LR
     style I fill:#02569B,color:#fff
 ```
 
-**시드를 곡·가사 위치에서 파생**시켜 같은 곡의 같은 가사는 언제나 같은 그림이 나오게 했다. 랜덤 시드는 묘사 적중률이 눈에 띄게 떨어져서, 재현성뿐 아니라 품질 문제이기도 했다.
+**시드를 고정**해(공용 8888, 구도가 안 맞는 곡만 `songs.json`의 `imageSeed`로 곡 단위 지정) 같은 가사는 언제나 같은 그림이 나오게 했다. 랜덤 시드는 묘사 적중률이 눈에 띄게 떨어져서, 재현성뿐 아니라 품질 문제이기도 했다.
 
 ### 준비 상태 — 56초를 어디서 받을 것인가
 
@@ -87,22 +87,22 @@ stateDiagram-v2
 
 **상태의 소유자는 네이티브 싱글톤**이다. Dart(뷰모델)에 "준비됨" 플래그를 복사해두면 화면 이탈·핫리스타트로 소멸하고, 그 대가가 **중복 컴파일 → 메모리 2배 → 크래시**다. 상태는 그 상태를 만들어내는 쪽이 소유한다.
 
-**앱 스택:** Flutter 3.35 / Dart 3.6 · Bloc(Cubit) · go_router · Hive · flutter_hooks
+**앱 스택:** Flutter 3.47 / Dart 3.13 · Bloc(Cubit) · go_router · Hive · flutter_hooks
 
 ---
 
 ## 2. 실기기 실측
 
-**iPhone 13 mini (A15 / 4GB)** · 릴리즈 빌드 · 384×384 · 4 step · UNet 배치 1 · guidance 0.0 · `cpuAndNeuralEngine` + `reduceMemory`
+**iPhone 13 mini (A15 / 4GB)** · 릴리즈 빌드 · 384×384 · 4 step · UNet 배치 1 · guidance 0.0 · `cpuAndNeuralEngine` + `reduceMemory` (GPU 행만 `cpuAndGPU`, 나머지 동일)
 
 | 항목 | 값 | 성격 |
 |---|---|---|
-| **이미지 1장 생성** | **~1.4초** | 첫 장 제외 10장 평균 (1.26~1.72초). 첫 장은 2.65초 |
+| **이미지 1장 생성** | **~1.4초** | 첫 장 제외 10장 평균 (1.26~1.72초). 첫 장은 2.65초 · 파이프라인 준비 이후 `generateImages` 호출~반환(PNG 저장 제외) |
 | 최초 파이프라인 준비 (ANE 컴파일) | ~56초 | **설치·업데이트당 1회.** 다운로드 아님 |
-| 피크 메모리 | 622MB | `reduceMemory`로 모델 순차 로딩 |
-| 앱 번들 | 1.2GB | 모델 1.0GB 포함 |
-| 크래시 | **없음** | 발열도 없음 |
-| GPU 실행 (`cpuAndGPU`) | **불가** | 같은 모델·같은 설정에서 모델 로드 중 메모리 한도 초과로 강제 종료(Jetsam) |
+| 모델 1개 최대 크기 | 622MB (UNet) | `reduceMemory`로 3개를 동시에 올리지 않음 · 계산값(프로세스 메모리 실측 아님) |
+| 모델 다운로드 | 1.0GB · 17개 파일 | 앱 번들 미포함 — HuggingFace에서 받아 SHA-256 검증 후 설치 |
+| 크래시 (ANE 경로) | **없음** | 발열도 없음 |
+| GPU 실행 (`cpuAndGPU`) | **불가** | 같은 모델·같은 설정에서 모델 로드 중 앱 강제 종료 (같은 시각 JetsamEvent 기록 — 메모리 한도 초과로 추정) |
 
 <details>
 <summary><b>참고 — Mac M3 / 16GB (⚠️ 아이폰으로 전이되지 않는 수치)</b></summary>
@@ -323,7 +323,7 @@ flowchart TD
 
 ```
 lib/
-├── data/            # Hive · Dio · Service (clue · model · song)
+├── data/            # Hive · MethodChannel·EventChannel · Service (clue · model · song)
 ├── domain/          # 엔티티 · 순수 도메인 로직 (round · scoring)
 ├── presentation/    # 화면 · Cubit · 디자인 시스템 · 라우터
 └── utils/
@@ -344,8 +344,10 @@ flutter pub get
 flutter analyze
 ```
 
-> **이미지 생성은 iOS 실기기에서만 동작한다** (CoreML + ANE). 시뮬레이터·안드로이드는 미지원이고, 배포 타겟은 **iOS 16.2+**(`StableDiffusion` 패키지 최소사양)다.
+> **이미지 생성은 iOS 실기기에서만 동작한다** (CoreML + ANE). 시뮬레이터·안드로이드는 미지원이고, 배포 타겟은 **iOS 16.2+**(`StableDiffusionPipeline` API 최소사양)다.
 > 모델 변환 환경을 재현할 때는 **`numpy<2` 고정이 필수**다(트러블슈팅 ③).
+
+> **iOS 빌드에는 별도 포크가 필요하다.** Xcode 프로젝트는 `apple/ml-stable-diffusion`에 LCMScheduler를 추가한 포크를 리포 바깥의 `../picsong-coreml/ml-stable-diffusion`에서 로컬 Swift 패키지로 참조한다. 이 경로에 포크가 없으면 iOS 빌드가 되지 않는다.
 
 ---
 
@@ -354,3 +356,5 @@ flutter analyze
 **Powered by Stability AI.**
 
 이 프로젝트가 사용하는 sd-turbo는 **Stability AI Community License**(2024-07-05판)를 따르며, **비상업 트랙**으로 이용한다. 변환한 파생 모델은 [HuggingFace 저장소](https://huggingface.co/jivenchy/sd-turbo-coreml-384-6bit)에 라이선스 사본 · `NOTICE` · 변경 방법과 함께 공개돼 있다.
+
+앱 소스 코드는 [MIT](LICENSE)다. sd-turbo 파생 모델 가중치는 MIT 대상이 아니며 위 Stability AI Community License를 따른다.
