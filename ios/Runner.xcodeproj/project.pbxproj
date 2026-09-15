@@ -145,9 +145,9 @@
 			children = (
 				A1C0DE0001B7045DB0000020 /* Bridge */,
 				A1C0DE0001B7045DB0000021 /* Entities */,
+				A1C0DE0001B7045DB0000026 /* FileStore */,
 				B85F86BD87F99B454A67826E /* ModelInstaller.swift */,
 				A1C0DE0001B7045DB0000022 /* ModelInstaller+URLSessionDownloadDelegate.swift */,
-				A1C0DE0001B7045DB0000024 /* ModelFileStore.swift */,
 				D6E1F0A2B3C4D5E6F7081901 /* ModelInstallNotifier.swift */,
 			);
 			path = ModelInstall;
@@ -170,6 +170,14 @@
 				A1C0DE0001B7045DB0000005 /* ModelProgressPayload.swift */,
 			);
 			path = Entities;
+			sourceTree = "<group>";
+		};
+		A1C0DE0001B7045DB0000026 /* FileStore */ = {
+			isa = PBXGroup;
+			children = (
+				A1C0DE0001B7045DB0000024 /* ModelFileStore.swift */,
+			);
+			path = FileStore;
 			sourceTree = "<group>";
 		};
 		8D52014E9D269B2909840106 /* Pods */ = {
